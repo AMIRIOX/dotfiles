@@ -92,7 +92,8 @@ $ cp -r neofetch ~/.config/
 
 1. Package `AUR/hyprland.git` may cause the transparency effect 
 of the terminal to fail in tile mode (Good in floating window mode).       
-Solution: use `extra/hyprland` instead of `AUR/hyprland.git`
+Solution: use `extra/hyprland` instead of `AUR/hyprland.git`    
+Remember to replace `AUR/hyprutils-git` with `extra/hyprutils` as well! 
 
 2. Package `extra/rofi` may experience a problem 
 of retaining borders then the height of the candidate area is shortened in Wayland,
