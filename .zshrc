@@ -7,9 +7,15 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/amiriox/dev/sdl2/SDL2-2.0.14/_inst
 alias docker="sudo docker"
 alias j="autojump"
 alias cput="sensors | grep 'Package id 0' | awk '{print \$4}'"
+alias lrec="~/Scripts/liverec/BililiveRecorder.Cli"
+alias lrecweb="lrec run --bind \"http://localhost:2356\" ~/winshare/Users/amiriox/Documents/slice_original/"
 # alias trans="trans -e bing"
+
 # export ALG="$HOME/practice/luogu.org/src"
 export ALG="$HOME/MyLuoguRepo"
+export WIN="$HOME/winshare/Users/amiriox/Documents/slice_original"
+export HYPRSHOT_DIR="/home/amiriox/Pictrues/Screenshots"
+export EDITOR="nvim"
 
 export JAVA_HOME=/usr/bin/java
 export JRE_HOME=${JAVA_HOME}/jre
