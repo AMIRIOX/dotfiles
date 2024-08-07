@@ -18,6 +18,7 @@ but are still configurable
 - [x] Tofi: `tofi/config`
 - [ ] ~~Neofetch~~: `neofetch/*`
 - [x] Brightness: `br.c`
+- [ ] Other Tools: `yazi`, `fzf`...
 
 ## Usage
 
