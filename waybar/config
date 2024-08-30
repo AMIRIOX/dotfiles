@@ -3,7 +3,7 @@
     "position": "top", 
     "height": 36, 
     "spacing": 6,
-    "modules-left": ["hyprland/window", "memory", "cpu"],
+    "modules-left": ["hyprland/window", "battery", "memory", "cpu"],
     "modules-center": ["hyprland/workspaces"],
     "modules-right": ["tray", "clock", "pulseaudio", "network"],
     //"modules-right": ["tray", "clock", "memory", "cpu", "network"],
@@ -60,5 +60,19 @@
         },
         "on-click-right": "pavucontrol",
         "ignored-sinks": ["AudioRelay Virtual Sink", "Recorder Sink"]
+    },
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 10
+        },
+        "format": "\udb84\udea2 {capacity}%",
+        "format-low": "\udb80\udc83 {capacity}%",
+        "format-charging": "\udb80\udc84 {capacity}%",
+        "format-plugged": "\udb80\udc84 {capacity}%",
+        "format-critical": "\udb84\ude5d {capacity}%",
+        "format-full": "\udb84\udea3 {capacity}%",
+        "max-length": 10,
+        "tooltip": true
     }
 }
