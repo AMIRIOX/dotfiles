@@ -71,6 +71,11 @@ $ su
 
 - Backlight
 ```
+$ pacman -S python-pyusb
+$ vim /etc/udev/rules.d/10-alienfx.rules # create if not exist. add the following
+SUBSYSTEM=="usb", ATTR{idVendor}=="0d62", ATTR{idProduct}=="ccbc", MODE:="666", GROUP="users"
+$ udevadm control --reload-rules
+$ udevadm trigger
 $ mkdir Scripts # or anywhere
 $ cp led.py ~/Scripts/led.py
 $ # Modify led.py and hypr/hyprland.conf
