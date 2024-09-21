@@ -18,6 +18,7 @@ but are still configurable
 - [x] Tofi: `tofi/config`
 - [ ] ~~Neofetch~~: `neofetch/*`
 - [x] Brightness: `br.c`
+- [x] Keyboard Backlight: `led.py`
 - [ ] Other Tools: `yazi`, `fzf`...
 
 ## Usage
@@ -68,6 +69,13 @@ $ su
 # setcap cap_dac_override+ep /usr/local/bin/br
 ```
 
+- Backlight
+```
+$ mkdir Scripts # or anywhere
+$ cp led.py ~/Scripts/led.py
+$ # Modify led.py and hypr/hyprland.conf
+```
+
 - i3wm, picom, tofi
 ```
 $ cp -r i3 ~/.config/       # ~/.config/i3/config
@@ -88,6 +96,8 @@ $ cp -r neofetch ~/.config/
 ```
 
 ## Customize
+
+Volume/Brightness/Backlight Settings in `hypr/hyprland.conf`. (search `'bind'`)
 
 ## Necessary Note
 
