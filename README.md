@@ -37,6 +37,9 @@ $ cp -r waybar ~/.config/ # ~/.config/waybar/config ~/.config/waybar/style.css
 ```
 
 - Neovim
+
+This configuration should automatically distinguish between WSL or Linux 
+in order to choose whether to use xclip or clip.exe.
 ```bash
 $ # Also see in nvim/README.md
 $ $ git clone --depth 1 https://github.com/wbthomason/packer.nvim\
