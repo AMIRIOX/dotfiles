@@ -55,18 +55,18 @@ return require('packer').startup(function(use)
   if vim.fn.has('unix') == 1 and vim.fn.system('uname') == 'Linux\n' then
   local wsl_check = vim.fn.system('grep -i microsoft /proc/version')
   if wsl_check ~= '' then
-    vim.opt.clipboard = 'unnamedplus'
+    -- vim.opt.clipboard = 'unnamedplus'
     vim.g.clipboard = {
-    name = 'WslClipboard',
-    copy = {
-        ['+'] = 'clip.exe',
-        ['*'] = 'clip.exe',
-    },
-    paste = {
-        ['+'] = 'powershell.exe Get-Clipboard',
-        ['*'] = 'powershell.exe Get-Clipboard',
-    },
-    cache_enabled = 0,
+      name = 'WslClipboard',
+      copy = {
+          ['+'] = 'clip.exe',
+          ['*'] = 'clip.exe',
+      },
+      paste = {
+          ['+'] = 'powershell.exe Get-Clipboard',
+          ['*'] = 'powershell.exe Get-Clipboard',
+      },
+      cache_enabled = 0,
     }
     end
   end
