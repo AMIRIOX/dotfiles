@@ -35,6 +35,17 @@ return require('packer').startup(function(use)
   use { 'nvim-treesitter/nvim-treesitter' }
   use "numToStr/FTerm.nvim"
   use 'wakatime/vim-wakatime'
+  use { 'neovim/nvim-lspconfig' }
+  use { 'hrsh7th/nvim-cmp', config = [[require('plugin-config.nvim-cmp')]] }
+  use { 'hrsh7th/cmp-nvim-lsp', after = 'nvim-cmp' }
+  use { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' } -- buffer auto-completion
+  use { 'hrsh7th/cmp-path', after = 'nvim-cmp' } -- path auto-completion
+  use { 'hrsh7th/cmp-cmdline', after = 'nvim-cmp' } -- cmdline auto-completion
+  use 'L3MON4D3/LuaSnip'
+  use 'saadparwaiz1/cmp_luasnip'
+
+  use { 'williamboman/mason.nvim' }
+  use { 'williamboman/mason-lspconfig.nvim'}
 
   -- 基础配置
   require('basic')
@@ -50,6 +61,8 @@ return require('packer').startup(function(use)
   require("plugin-config.project")
   require("plugin-config.telescope")
   require('telescope').load_extension('projects')
+  require("plugin-config.nvim-cmp")
+  require("plugin-config.lsp")
 
   -- WSL 下的剪贴板配置，使用 clip.exe
   if vim.fn.has('unix') == 1 and vim.fn.system('uname') == 'Linux\n' then
