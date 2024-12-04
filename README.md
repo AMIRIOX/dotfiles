@@ -19,6 +19,7 @@ but are still configurable
 - [ ] ~~Neofetch~~: `neofetch/*`
 - [x] Brightness: `br.c`
 - [x] Keyboard Backlight: `led.py`
+- [ ] Clang Format: `.clang-format`
 - [ ] Other Tools: `yazi`, `fzf`...
 
 ## Usage

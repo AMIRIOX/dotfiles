@@ -6,6 +6,11 @@ end
 
 local luasnip = require("luasnip")
 local cmp = require("cmp")
+local lspkind = require('lspkind') 
+
+local function oneline(text)
+    return text:gsub("\n", " "):gsub("%s+", " "):gsub("^%s*(.-)%s*$", "%1")
+end
 
 cmp.setup({
     snippet = {
@@ -57,7 +62,15 @@ cmp.setup({
       -- menu: extra text for the popup menu, displayed after "word" or "abbr"
       fields = { 'abbr', 'menu' },
 
+      completion = { border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }, scrollbar = "║" },
+      documentation = {
+            border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+            scrollbar = "║",
+      },
+
       -- customize the appearance of the completion menu
+      
+      --[[
       format = function(entry, vim_item)
           vim_item.menu = ({
               nvim_lsp = '[Lsp]',
@@ -67,6 +80,36 @@ cmp.setup({
           })[entry.source.name]
           return vim_item
       end,
+      ]]
+      format = function(entry, vim_item)
+          vim_item = lspkind.cmp_format({
+            mode = "symbol",
+            maxwidth = 20,
+            ellipsis_char = "...",
+            before = function(entry, vim_item)
+              local word = entry:get_insert_text()
+              if entry.completion_item.insertTextFormat == vim.lsp.protocol.InsertTextFormat.Snippet then
+                word = vim.lsp.util.parse_snippet(word)
+              end
+              word = oneline(word)
+              if entry.completion_item.insertTextFormat == vim.lsp.protocol.InsertTextFormat.Snippet
+              and string.sub(vim_item.abbr, -1, -1) == "~" then
+                word = word .. "~"
+              end
+              vim_item.abbr = word
+              return vim_item
+          end,
+    })(entry, vim_item)  
+
+    vim_item.menu = ( {
+        nvim_lsp = '[Lsp]',
+        luasnip = '[Luasnip]',
+        buffer = '[File]',
+        path = '[Path]',
+    })[entry.source.name] or '[Unknown]'
+
+    return vim_item
+    end
   },
 
   -- Set source precedence

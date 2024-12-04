@@ -131,6 +131,11 @@ _G.packer_plugins = {
     path = "/home/amiriox/.local/share/nvim/site/pack/packer/start/dashboard-nvim",
     url = "https://github.com/glepnir/dashboard-nvim"
   },
+  ["lspkind.nvim"] = {
+    loaded = true,
+    path = "/home/amiriox/.local/share/nvim/site/pack/packer/start/lspkind.nvim",
+    url = "https://github.com/onsails/lspkind.nvim"
+  },
   ["lualine-lsp-progress"] = {
     loaded = true,
     path = "/home/amiriox/.local/share/nvim/site/pack/packer/start/lualine-lsp-progress",
@@ -152,7 +157,7 @@ _G.packer_plugins = {
     url = "https://github.com/williamboman/mason.nvim"
   },
   ["nvim-cmp"] = {
-    after = { "cmp-buffer", "cmp-cmdline", "cmp-nvim-lsp", "cmp-path" },
+    after = { "cmp-buffer", "cmp-nvim-lsp", "cmp-path", "cmp-cmdline" },
     config = { "require('plugin-config.nvim-cmp')" },
     loaded = true,
     only_config = true,
@@ -233,8 +238,8 @@ require('plugin-config.nvim-cmp')
 time([[Config for nvim-cmp]], false)
 -- Load plugins in order defined by `after`
 time([[Sequenced loading]], true)
-vim.cmd [[ packadd cmp-nvim-lsp ]]
 vim.cmd [[ packadd cmp-path ]]
+vim.cmd [[ packadd cmp-nvim-lsp ]]
 vim.cmd [[ packadd cmp-buffer ]]
 vim.cmd [[ packadd cmp-cmdline ]]
 time([[Sequenced loading]], false)

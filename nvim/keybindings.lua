@@ -1,17 +1,15 @@
- 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 local map = vim.api.nvim_set_keymap
 -- 复用 opt 参数
-local opt = {
-
-   noremap = true, silent = true }
-
+local opt = { noremap = true, silent = true }
 
 vim.keymap.set('n', '<C-Space>', '<CMD>lua require("FTerm").toggle()<CR>')
 vim.keymap.set('t', '<C-Space>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
 
+-- 格式化代码 (clang-format)
+map("n", "<A-S-f>", ":lua vim.lsp.buf.format { async = true }<CR>", opt)
 -- 取消 s 默认功能
 map("n", "s", "", opt)
 -- windows 分屏快捷键
@@ -98,7 +96,6 @@ map("n", "<A-m>", ":NvimTreeToggle<CR>", opt)
 -- 列表快捷键
 pluginKeys.nvimTreeList = {
 
-
   -- 打开文件或文件夹
   {
 
@@ -145,4 +142,22 @@ pluginKeys.nvimTreeList = {
 
     key = "s", action = "system_open" },
 }
+
+-- lsp 快捷键
+--[[
+pluginKeys.lspKeybinding = function(mapbuf)
+ -- rename
+ mapbuf("n", "<leader>r", ":lua vim.lsp.buf.rename<CR>", opt)
+ -- code action
+ mapbuf("n", "<leader>ca", ":lua vim.lsp.buf.code_action()<CR>", opt)
+ -- go to definition
+ mapbuf("n", "gd", ":lua vim.lsp.buf.definition()<CR>", opt)
+ -- show hover
+ mapbuf("n", "gh", ":lua vim.lsp.buf.hover()<CR>", opt)
+ -- format
+ mapbuf("n", "<C-y>", ":lua vim.lsp.buf.format { async = true }<CR>", opt)
+end
+--]]
+
 return pluginKeys
+

@@ -47,6 +47,9 @@ return require('packer').startup(function(use)
   use { 'williamboman/mason.nvim' }
   use { 'williamboman/mason-lspconfig.nvim'}
 
+  use { 'onsails/lspkind.nvim' }
+  use { 'nvimtools/none-ls.nvim' }
+
   -- 基础配置
   require('basic')
   -- 快捷键映射
@@ -63,6 +66,7 @@ return require('packer').startup(function(use)
   require('telescope').load_extension('projects')
   require("plugin-config.nvim-cmp")
   require("plugin-config.lsp")
+  require("plugin-config.kind")
 
   -- WSL 下的剪贴板配置，使用 clip.exe
   if vim.fn.has('unix') == 1 and vim.fn.system('uname') == 'Linux\n' then
