@@ -1,3 +1,7 @@
+vim.diagnostic.config({
+    virtual_text = true,
+})
+
 require('mason').setup({
     ui = {
         icons = {
@@ -64,6 +68,26 @@ lspconfig.clangd.setup({
 })
 lspconfig.rust_analyzer.setup({
     on_attach = on_attach,
+    settings = {
+      ["rust-analyzer"] = {
+        diagnostics = {
+          enable = true,  -- 启用诊断
+        },
+        cargo = {
+          allFeatures = true,           -- 启用所有 cargo features
+        },
+        hover = {
+          enable = true,  -- 启用 hover 功能
+        },
+        inlayHints = {
+          enable = true,  -- 启用内联类型提示
+          typeHints = {
+              enable = true,
+          },
+          onlyTyped = false,  -- 显示所有类型提示（而不是仅显示显式标注的类型）
+        },
+      },
+    }
 })
 lspconfig.pylsp.setup({
     on_attach = on_attach,
