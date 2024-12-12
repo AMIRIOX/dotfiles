@@ -14,7 +14,7 @@ require('mason').setup({
 
 require('mason-lspconfig').setup({
     -- A list of servers to automatically install if they're not already installed
-    ensure_installed = { 'clangd', 'rust_analyzer', 'pylsp', 'lua_ls', 'cmake' },
+    ensure_installed = { 'clangd', 'rust_analyzer', 'asm_lsp', 'pylsp', 'lua_ls', 'cmake' },
 })
 
 -- Set different settings for different languages' LSP
@@ -65,11 +65,23 @@ end
 -- 2. add configuration below
 lspconfig.clangd.setup({
     on_attach = on_attach,
+    settings = {
+      clangd = {
+        inlayHints = {
+          enable = true,  -- 启用类型提示
+          parameterHints = true,  -- 启用函数参数类型提示
+          returnTypeHints = true,  -- 启用函数返回值类型提示
+        },
+      },
+    },
+})
+lspconfig.asm_lsp.setup({
+    on_attach = on_attach,
 })
 lspconfig.rust_analyzer.setup({
     on_attach = on_attach,
     settings = {
-      ["rust-analyzer"] = {
+      rust_analyzer = {
         diagnostics = {
           enable = true,  -- 启用诊断
         },
