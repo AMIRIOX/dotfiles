@@ -25,7 +25,8 @@ class AlienwareUSBDriver:
         if self._control_taken:
             return
 
-        self._device = usb.core.find(idVendor=AlienwareUSBDriver.VENDOR_ID, idProduct=AlienwareUSBDriver.PRODUCT_ID)
+        self._device = usb.core.find(
+            idVendor=AlienwareUSBDriver.VENDOR_ID, idProduct=AlienwareUSBDriver.PRODUCT_ID)
 
         if self._device is None:
             logging.error("ERROR: No AlienFX USB controller found; tried VID {}, PID {}"
@@ -34,17 +35,20 @@ class AlienwareUSBDriver:
         try:
             self._device.detach_kernel_driver(0)
         except USBError as exc:
-            logging.error("Cant detach kernel driver. Error : {}".format(exc.strerror))
+            logging.error(
+                "Cant detach kernel driver. Error : {}".format(exc.strerror))
 
         try:
             self._device.set_configuration()
         except USBError as exc:
-            logging.error("Cant set configuration. Error : {}".format(exc.strerror))
+            logging.error(
+                "Cant set configuration. Error : {}".format(exc.strerror))
 
         try:
             usb.util.claim_interface(self._device, 0)
         except USBError as exc:
-            logging.error("Cant claim interface. Error : {}".format(exc.strerror))
+            logging.error(
+                "Cant claim interface. Error : {}".format(exc.strerror))
 
         self._control_taken = True
         logging.debug("USB device acquired, VID={}, PID={}".format(hex(AlienwareUSBDriver.VENDOR_ID),
@@ -57,7 +61,8 @@ class AlienwareUSBDriver:
         try:
             usb.util.release_interface(self._device, 0)
         except USBError as exc:
-            logging.error("Cant release interface. Error : {}".format(exc.strerror))
+            logging.error(
+                "Cant release interface. Error : {}".format(exc.strerror))
 
         try:
             self._device.attach_kernel_driver(0)
@@ -104,6 +109,7 @@ KEYMAP = {
     'rwin': 0x6e, 'rctrl': 0x71, 'left': 0x86, 'down': 0x87, 'right': 0x88
 }
 
+
 def get_key_bytes(a, b, a_color, b_color):
     header = bytes.fromhex('cc8c0200')
     a_bytes = (a << 24 | a_color).to_bytes(4, byteorder='big')
@@ -142,6 +148,8 @@ def split_list(lst, n):
     return [lst[i:i + n] for i in range(0, len(lst), n)]
 
 # 关闭所有灯光
+
+
 def close_all_light(device):
     key_list = split_list(list(KEYMAP.values()), 15)
     for keys in key_list:
@@ -162,9 +170,12 @@ def disable_fluctuation(device):
         'cc8c0700000000000000000000000000000101010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'))
 
 # 开启彩色波动
+
+
 def enable_fluctuation(device):
     device.write_packet(bytes.fromhex(
         'cc800302000001010101000000000000020000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'))
+
 
 def show_chars_with_color(device, chars, color):
     a = 0
@@ -181,6 +192,7 @@ def show_chars_with_color(device, chars, color):
             b = KEYMAP[chars[i - 1]]
             b_color = color
         device.write_packet(get_key_bytes(a, b, a_color, b_color))
+
 
 def show_emacs_light(device):
     rest_chars = list(KEYMAP.keys())
@@ -209,7 +221,8 @@ def show_emacs_light(device):
                 rest_chars.remove(char)
 
     show_chars_with_color(device, rest_chars, 0x00ff00)
-        
+
+
 if __name__ == '__main__':
     device = AlienwareUSBDriver()
     device.acquire()
@@ -220,20 +233,32 @@ if __name__ == '__main__':
             print('[Iridescent] Mode Set. [Amiriox\'s Dell G16 Keyboard Backlight]')
         elif sys.argv[1] == 'cloud':
             disable_fluctuation(device)
-            print('[Fixed Iridescent] Mode Set. [Amiriox\'s Dell G16 Keyboard Backlight]')
+            print(
+                '[Fixed Iridescent] Mode Set. [Amiriox\'s Dell G16 Keyboard Backlight]')
         elif sys.argv[1] == 'itoc':
             disable_fluctuation(device)
             close_all_light(device)
             print('[Close All Light] Mod Set. [Amiriox\'s Dell G16 Keyboard Backlight]')
         elif sys.argv[1] == 'chars':
-            print('Light ', sys.argv[2], ' On. [Amiriox\'s Dell G16 Keyboard Backlight]')
+            print(
+                'Light ', sys.argv[2], ' On. [Amiriox\'s Dell G16 Keyboard Backlight]')
             show_chars(device, sys.argv[2])
         elif sys.argv[1] == 'emacs':
             show_emacs_light(device)
             print('[Emacs] Mode Set. [Amiriox\'s Dell G16 Keyboard Backlight]')
+        elif sys.argv[1] == 'cg':
+            try:
+                color = int(sys.argv[2], 16)
+            except ValueError:
+                print("[Fatal] Invalid color format. It should be like 0x123456")
+            chars = list(KEYMAP.keys())
+            # for char in chars:
+            show_chars_with_color(device, chars, color)
+        elif sys.argv[1] == 'sc':
+            for char in sys.argv[2]:
+                show_chars(device, char)
     except Exception:
         pass
     finally:
         pass
         device.release()
-
