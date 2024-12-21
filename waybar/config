@@ -1,78 +1,135 @@
 {
-    "layer": "top",
-    "position": "top", 
-    "height": 36, 
-    "spacing": 6,
-    "modules-left": ["hyprland/window", "battery", "memory", "cpu"],
+    "layer": "top", // Waybar at top layer
+    "margin-top": 6,
+    "margin-left": 15,
+    "margin-bottom": 0,
+    "margin-right": 15,
+    "spacing": 10, // Gaps between modules (4px)
+
+    "modules-left": ["custom/launcher", "hyprland/window", "cpu", "memory", "battery", "custom/weather"],
     "modules-center": ["hyprland/workspaces"],
-    "modules-right": ["tray", "clock", "pulseaudio", "network"],
-    //"modules-right": ["tray", "clock", "memory", "cpu", "network"],
+    "modules-right": ["tray", "clock", "pulseaudio", "network", "backlight", "custom/power-menu"],
+
     "hyprland/workspaces": {
-        "format": "{name}",
-        "persistent-workspaces": {
-            "*": 10
-        },
-        "on-click": "activate",
-        "on-scroll-up": "hyprctl dispatch workspace e+1",
-        "on-scroll-down": "hyprctl dispatch workspace e-1"
+      "format": "{icon}",
+      "on-click": "activate",
+      "format-icons": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": "",
+        "urgent": "",
+        "active": "",
+        "default": ""
+      }
     },
+
     "hyprland/window": {
-        "format": "\uf061 {initialTitle}",
+        "format": " \uf061 {initialTitle} ",
         "separate-outputs": true
     },
     "tray": {
         "icon-size": 21,
-        "spacing": 10
+        "spacing": 10,
     },
     "clock": {
-        "interval": 1,
-        "format": "\uf017 {:%H:%M:%S}",
-        "format-alt": "\uf133 {:%Y-%m-%d %H:%M:%S}"
+        "format": " <span color='#bf616a'> </span>{:%I:%M %p} ",
+        "format-alt": " <span color='#bf616a'> </span>{:%a %b %d} ",
+        "tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
     },
+
     "cpu": {
-        "interval": 1,
-        "format": "\uf2db {usage}%",
-        "tooltip": true
+      "interval": 10,
+      "format": "\uf2db {}%",
+      "max-length": 10,
+      "on-click": "",
     },
     "memory": {
-        "interval": 1,
-        "format": "\uf538 {used}G",
+        "interval": 30,
+        "format":" {used:0.1f}G",
+        "format-alt": "\uf538 {}%",
+        "max-length": 10,
         "tooltip": true,
         "tooltip-format": "RAM: {used}G / {total}G\nSwap: {swapUsed}G / {swapTotal}G"
     },
+    "backlight": {
+        "device": "DP-1",
+        "format": "{icon} {percent}%",
+        "format-icons": ["", "", "", "", "", "", "", "", ""],
+        "on-click": "",
+    },
     "network": {
-        "interval": 1,
-        "format-wifi": "\uf1eb {essid} ({signalStrength}%)",
+        "format-wifi": "直 {essid} {signalStrength}%",
         "format-ethernet": "\uf6ff {ipaddr}/{cidr}",
         "format-linked": "\uf059 No IP ({ifname})",
-        "format-disconnected": "\uf071 Disconnected",
-        "tooltip-format": "{ifname} {ipaddr}/{cidr} via {gwaddr}",
+        "format-disconnected": "睊",
+        "on-click": "bash ~/.config/waybar/scripts/rofi-wifi-menu.sh",
+        "tooltip-format": "{ifname} {ipaddr}/{cidr} \nvia {gwaddr}",
         "format-alt": "\uf6ff {ifname}: {ipaddr}/{cidr}"
     },
+
     "pulseaudio": {
-        "scroll-step": 5,
         "format": "{icon} {volume}%",
-        "format-muted": "\uf6a9",
-        "format-bluetooth": "{icon}\uf294 {volume}%",
-        "format-bluetooth-muted": "\ufa69 {icon}\uf294",
+        "format-bluetooth": "  {volume}%",
+        "format-bluetooth-muted": " ",
+        "format-muted": "婢",
         "format-icons": {
-            "default": ["\uf026", "\uf027", "\uf028"]
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
         },
-        "on-click-right": "pavucontrol",
-        "ignored-sinks": ["AudioRelay Virtual Sink", "Recorder Sink"]
+        "on-click": "pavucontrol"
     },
+
+    "bluetooth": {
+        "on-click": "~/.config/waybar/scripts/rofi-bluetooth &",
+        "format": " {status}",
+    },
+
     "battery": {
-        "states": {
-            "warning": 30,
-            "critical": 10
-        },
-        "format": "\udb84\udea2 {capacity}%",
-        "format-low": "\udb80\udc83 {capacity}%",
-        "format-charging": "\udb80\udc84 {capacity}%",
-        "format-plugged": "\udb80\udc84 {capacity}%",
-        "format-critical": "\udb84\ude5d {capacity}%",
-        "format-full": "\udb84\udea3 {capacity}%",
-        "max-length": 10,
-        "tooltip": true
-    }
+      "bat": "BAT0",
+      "adapter": "ADP0",
+      "interval": 60,
+      "states": {
+          "warning": 30,
+          "critical": 15
+      },
+      "max-length": 20,
+      "format": "{icon}{capacity}%",
+      "format-warning": "{icon} {capacity}%",
+      "format-critical": "{icon} {capacity}%",
+      "format-charging": "<span font-family='Font Awesome 6 Free'></span> {capacity}%",
+      "format-plugged": "  {capacity}%",
+      "format-alt": "{icon} {time}",
+      "format-full": "  {capacity}%",
+      "format-icons": [" ", " ", " ", " ", " "],
+    },
+    "custom/weather": {
+      "exec": "python3 ~/.config/waybar/scripts/weather.py",
+      "restart-interval": 300,
+      "return-type": "json",
+      "on-click": "xdg-open https://weather.com/en-IN/weather/today/l/a319796a4173829988d68c4e3a5f90c1b6832667ea7aaa201757a1c887ec667a"
+    },
+
+   "custom/spotify": {
+    "exec": "python3 ~/.config/waybar/scripts/mediaplayer.py --player spotify",
+    "format": "{}  ",
+    "return-type": "json",
+    "on-click": "playerctl play-pause",
+    "on-double-click-right": "playerctl next",
+    "on-scroll-down": "playerctl previous",
+    },
+    "custom/power-menu": {
+        "format": " <span color='#6a92d7'>⏻ </span>",
+        "on-click": "bash ~/.config/waybar/scripts/power-menu/powermenu.sh",
+    },
+    "custom/launcher": {
+        "format": " <span color='#6a92d7'> </span>",
+        "on-click": "rofi -show drun",
+    },
 }
