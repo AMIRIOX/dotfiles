@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 
-search_query=$(dnf search "" | awk 'NR > 1 && $1 !~ /^[[:space:]]*$/ {print $1}' | fzf --height=70% --layout=reverse --border --prompt="Search Packages: ")
+search_query=$(dnf search "" | awk 'NR > 1 && $1 !~ /^[[:space:]]*$/ {print $1}' | fzf --height=70% --layout=reverse --border --preview 'dnf info {1} | head -n 10' --preview-window=right:50% --prompt="Search Packages: ")
 
 [ -z "$search_query" ] && exit 1
 
-echo "Chosen: $search_query"
-
+package_name=$(echo "$search_query" | cut -d' ' -f1)
+echo "Chosen: $package_name"
 read -p "Install? (Y/n): " confirm
 
 if [[ -z "$confirm" || "$confirm" =~ ^[Yy]$ ]]; then
-    sudo dnf install "$search_query"
+    sudo dnf install "$package_name"
 else
     echo "Operation canceled."
 fi
