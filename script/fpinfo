@@ -1,0 +1,12 @@
+search_query=$(pacman -Ss "" | grep -oP '^\S+/\S+' | fzf --height=70% --layout=reverse --border --prompt="Search Packages: ")
+
+[ -z "$search_query" ] && exit 1
+
+echo "Chosen: $search_query"
+read -p "Install? (Y/n): " confirm
+
+if [[ -z "$confirm" || "$confirm" =~ ^[Yy]$ ]]; then
+    sudo pacman -S "$search_query"
+else
+    echo "Operation canceled."
+fi
