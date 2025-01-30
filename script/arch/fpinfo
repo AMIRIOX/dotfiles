@@ -6,8 +6,8 @@ search_query=$(pacman -Ss "" | grep -E '^\S+/\S+' | fzf --height=70% --layout=re
 [ -z "$search_query" ] && exit 1
 
 package_name="$search_query"
-package_name_simple=$(echo "$package_name" | cut -d'/' -f2)
-echo "Chosen: $package_name_simple"
+package_name_simple=$(echo "$package_name" | cut -d'/' -f2 | cut -d' ' -f1)
+echo "Chosen: $package_name"
 read -p "Install? (Y/n): " confirm
 
 if [[ -z "$confirm" || "$confirm" =~ ^[Yy]$ ]]; then
