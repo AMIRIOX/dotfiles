@@ -1,0 +1,25 @@
+{
+    "include": ["~/.config/waybar/default"],
+    "layer": "top",
+    "position": "top",
+    "margin-top": 5,
+    "margin-left": 15,
+    "margin-right": 15,
+    "modules-left": [
+        "custom/launcher",
+        "hyprland/workspaces",
+        "custom/separator-left",
+        "custom/weather",
+        "custom/separator-left",
+        "hyprland/window",
+    ],
+    "modules-center": ["custom/spotify"],
+    "modules-right": [
+        "tray",
+        "custom/separator-right",
+        "group/stats",
+        "custom/separator-right",
+        "group/notifications",
+        "clock",
+    ]
+}

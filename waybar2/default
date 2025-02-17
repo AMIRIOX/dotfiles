@@ -1,0 +1,193 @@
+{
+        "custom/launcher": {
+            "format": " <span color='#6a92d7'>  </span>",
+            "on-click": "rofi -modi drun -show drun",
+        },
+        "custom/weather": {
+            "exec": "python3 ~/.config/waybar/scripts/weather.py",
+            "restart-interval": 300,
+            "return-type": "json",
+            "on-click": "xdg-open https://weather.com/en-IN/weather/today/l/a319796a4173829988d68c4e3a5f90c1b6832667ea7aaa201757a1c887ec667a"
+        },
+        "tray": {
+            "icon-size": 21,
+            "spacing": 20,
+        },
+        "hyprland/workspaces": {
+            "format": "{icon}",
+            "format-icons": {
+                "1": "",
+                "2": "",
+                "3": "",
+                "4": "",
+                "5": "󰢹",
+                "6": "",
+                "urgent": "",
+                "default": ""
+            },
+            "on-scroll-up": "hyprctl dispatch workspace e+1",
+            "on-scroll-down": "hyprctl dispatch workspace e-1",
+            /* "persistent-workspaces": {
+                "*": 5
+            } */
+        },
+        "hyprland/window": {
+            "format": "{}",
+            "rewrite": {
+                "(.*) - Google Chrome": "🌎 chrome",
+                "org.pwmt.zathura": "📰 zathura",
+                "Spotify": "🎼 spotify",
+            }
+        },
+        "clock": {
+            "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+            "format": "{:%a %d, %b \n %I:%M %p }",
+            "format-alt": "{:%Y-%m-%d}"
+        },
+        "cpu": {
+            "format": " {usage}%",
+            "on-click": "kitty btop",
+            "tooltip": true
+        },
+        "memory": {
+            "format": "\uf2db {used:0.1f}G",
+            "format-alt": "\uf538 {}%",
+        },
+        "backlight": {
+            "device": "DP-1",
+            "format": " {icon} {percent}%",
+            "format-icons": ["", "", "", "", "", "", "", "", ""],
+            "on-click": "",
+        },
+        "battery": {
+            "bat": "BAT0",
+            "adapter": "ADP0",
+            "interval": 60,
+            "states": {
+                "warning": 30,
+                "critical": 15
+            },
+            "max-length": 20,
+            "format": " {icon}{capacity}%",
+            "format-warning": "{icon} {capacity}%",
+            "format-critical": "{icon} {capacity}%",
+            "format-charging": "<span font-family='Font Awesome 6 Free'></span> {capacity}%",
+            "format-plugged": "  {capacity}%",
+            "format-alt": "{icon} {time}",
+            "format-full": "  {capacity}%",
+            "format-icons": [" ", " ", " ", " ", " "],
+        },
+        "disk": {
+            "format": " {percentage_used}%"
+        },
+        "temperature": {
+            "format": " {temperatureC}°C",
+        },
+        "custom/gpu-temperature": {
+            "exec": "nvidia-smi -q -i 0,1 -d TEMPERATURE | grep -oP 'GPU Current Temp\\s+:\\s+\\K\\d+'",
+            "format": " {}°C",
+            "return-type": "",
+            "interval": 1,
+            "on-click": "nvidia-settings",
+        },
+        "network": {
+            "interval": 1,
+            "format-wifi": " ",
+            "format-ethernet": "",
+            "tooltip-format": " {ifname} via {gwaddr}\nconnected to {essid} at {signalStrength}% strength",
+            "format-linked": " {ifname} (No IP)",
+            "format-disconnected": " Disconnected",
+            "format-alt": "{ifname}: {ipaddr}/{cidr}",
+            "on-click": "bash ~/.config/waybar/scripts/rofi-wifi-menu.sh",
+        },
+        "pulseaudio": {
+            "format": "{icon} {volume}%",
+            "format-bluetooth": "  {icon} {volume}%",
+            "format-muted": "",
+            "format-icons": {
+                "headset": "",
+                "headphone": "󱡏",
+                "phone": "",
+                "car": "",
+                "default": ["", ""]
+            },
+            "scroll-step": 1,
+            "on-click": "pavucontrol",
+            "ignored-sinks": ["Easy Effects Sink"]
+        },
+        "bluetooth": {
+            "format": " {status}",
+            "format-disabled": "", // an empty format will hide the module
+            "format-connected": " {num_connections}",
+            "tooltip-format": "{controller_alias}\t{controller_address}",
+            "tooltip-format-connected": "{controller_alias}\t{controller_address}\n{device_enumerate}",
+            "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+            "on-click": "~/.config/waybar/scripts/rofi-bluetooth &",
+        },
+        "custom/separator-right": {
+            "format": "",
+            "on-click": "sleep 0.1 && bash ~/.config/waybar/scripts/wallpaper.sh",
+            "tooltip": false
+        },
+        "custom/separator-left": {
+            "format": "",
+            "tooltip": false
+        },
+        "custom/github": {
+            "format": " {}",
+            "return-type": "json",
+            "interval": 60,
+            "exec": "$HOME/.config/waybar/scripts/github.sh",
+            "on-click": "xdg-open https://github.com/notifications"
+        },
+        "custom/updates": {
+            "format": "{icon} {0}",
+            "return-type": "json",
+            "format-icons": {
+                "has-updates": "󱍷",
+                "updated": "󰂪"
+            },
+            "exec-if": "which waybar-module-pacman-updates",
+            "exec": "waybar-module-pacman-updates"
+        },
+        "custom/spotify": {
+            "exec": "$HOME/.config/waybar/scripts/spotify.sh",
+            "max-length": 40,
+            "format": " {}",
+            "on-click": "sleep 0.1 && eww open --toggle dashboard",
+            "tooltip": false
+        },
+        "custom/notification": {
+            "escape": true,
+            "exec": "swaync-client -swb",
+            "exec-if": "which swaync-client",
+            "format": " {icon} ",
+            "format-icons": {
+                "dnd-inhibited-none": "󰂚<sup></sup>",
+                "dnd-inhibited-notification": "󰂚<span foreground='#f38ba8'><sup></sup></span>",
+                "dnd-none": "󰂛",
+                "dnd-notification": "󰂛<span foreground='#f38ba8'><sup></sup></span>",
+                "inhibited-none": "󰂚<sup>󰜺</sup>",
+                "inhibited-notification": "󰵙<span foreground='#f38ba8'><sup></sup></span>",
+                "none": "󰂚<span color='#6c7086'><sup></sup></span>",
+                "notification": "󰂚<span foreground='#f38ba8'><sup></sup></span>"
+            },
+            "on-click": "sleep 0.1 && swaync-client -t -sw",
+            "on-click-right": "sleep 0.1 && swaync-client -d -sw",
+            "return-type": "json",
+            "tooltip": false
+        },
+        "group/stats": {
+            "orientation": "horizontal",
+            "modules": ["custom/gpu-temperature", "cpu", "memory", "battery"]
+        },
+        "group/notifications": {
+            "orientation": "horizontal",
+            "modules": [
+                "pulseaudio",
+                "network",
+                "bluetooth",
+                "custom/github",
+            ]
+        }
+}
