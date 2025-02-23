@@ -89,6 +89,11 @@ _G.packer_plugins = {
     path = "/home/amiriox/.local/share/nvim/site/pack/packer/start/bufferline.nvim",
     url = "https://github.com/akinsho/bufferline.nvim"
   },
+  catppuccin = {
+    loaded = true,
+    path = "/home/amiriox/.local/share/nvim/site/pack/packer/start/catppuccin",
+    url = "https://github.com/catppuccin/nvim"
+  },
   ["cmp-buffer"] = {
     after_files = { "/home/amiriox/.local/share/nvim/site/pack/packer/opt/cmp-buffer/after/plugin/cmp_buffer.lua" },
     load_after = {},
@@ -131,6 +136,26 @@ _G.packer_plugins = {
     path = "/home/amiriox/.local/share/nvim/site/pack/packer/start/dashboard-nvim",
     url = "https://github.com/glepnir/dashboard-nvim"
   },
+  ["fidget.nvim"] = {
+    loaded = true,
+    path = "/home/amiriox/.local/share/nvim/site/pack/packer/start/fidget.nvim",
+    url = "https://github.com/j-hui/fidget.nvim"
+  },
+  ["indent-blankline.nvim"] = {
+    loaded = true,
+    path = "/home/amiriox/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim",
+    url = "https://github.com/lukas-reineke/indent-blankline.nvim"
+  },
+  ["leap.nvim"] = {
+    loaded = true,
+    path = "/home/amiriox/.local/share/nvim/site/pack/packer/start/leap.nvim",
+    url = "https://github.com/ggandor/leap.nvim"
+  },
+  ["lsp_signature.nvim"] = {
+    loaded = true,
+    path = "/home/amiriox/.local/share/nvim/site/pack/packer/start/lsp_signature.nvim",
+    url = "https://github.com/ray-x/lsp_signature.nvim"
+  },
   ["lspkind.nvim"] = {
     loaded = true,
     path = "/home/amiriox/.local/share/nvim/site/pack/packer/start/lspkind.nvim",
@@ -162,7 +187,7 @@ _G.packer_plugins = {
     url = "https://github.com/nvimtools/none-ls.nvim"
   },
   ["nvim-cmp"] = {
-    after = { "cmp-buffer", "cmp-path", "cmp-nvim-lsp", "cmp-cmdline" },
+    after = { "cmp-cmdline", "cmp-nvim-lsp", "cmp-path", "cmp-buffer" },
     config = { "require('plugin-config.nvim-cmp')" },
     loaded = true,
     only_config = true,
@@ -173,6 +198,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/amiriox/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
     url = "https://github.com/neovim/nvim-lspconfig"
+  },
+  ["nvim-notify"] = {
+    loaded = true,
+    path = "/home/amiriox/.local/share/nvim/site/pack/packer/start/nvim-notify",
+    url = "https://github.com/rcarriga/nvim-notify"
   },
   ["nvim-tree.lua"] = {
     loaded = true,
@@ -224,6 +254,11 @@ _G.packer_plugins = {
     path = "/home/amiriox/.local/share/nvim/site/pack/packer/start/tokyonight.nvim",
     url = "https://github.com/folke/tokyonight.nvim"
   },
+  ["trouble.nvim"] = {
+    loaded = true,
+    path = "/home/amiriox/.local/share/nvim/site/pack/packer/start/trouble.nvim",
+    url = "https://github.com/folke/trouble.nvim"
+  },
   ["vim-bbye"] = {
     loaded = true,
     path = "/home/amiriox/.local/share/nvim/site/pack/packer/start/vim-bbye",
@@ -245,8 +280,8 @@ time([[Config for nvim-cmp]], false)
 time([[Sequenced loading]], true)
 vim.cmd [[ packadd cmp-nvim-lsp ]]
 vim.cmd [[ packadd cmp-cmdline ]]
-vim.cmd [[ packadd cmp-buffer ]]
 vim.cmd [[ packadd cmp-path ]]
+vim.cmd [[ packadd cmp-buffer ]]
 time([[Sequenced loading]], false)
 
 _G._packer.inside_compile = false

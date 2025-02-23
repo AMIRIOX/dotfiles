@@ -7,6 +7,8 @@ vim.cmd [[packadd packer.nvim]]
 return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
   use("folke/tokyonight.nvim")
+  use { "catppuccin/nvim", as = "catppuccin" }
+  use 'navarasu/onedark.nvim'
   use {
     'kyazdani42/nvim-tree.lua',
     requires = 'kyazdani42/nvim-web-devicons'
@@ -18,7 +20,7 @@ return require('packer').startup(function(use)
   use({
    "nvim-lualine/lualine.nvim", requires = {
    "kyazdani42/nvim-web-devicons" } })
-  use("arkav/lualine-lsp-progress")
+  --use("arkav/lualine-lsp-progress")
 
   use("glepnir/dashboard-nvim")
   use("ahmedkhalf/project.nvim")
@@ -30,7 +32,6 @@ return require('packer').startup(function(use)
     'nvim-telescope/telescope-fzf-native.nvim',
     run = 'make'
   }
-  use 'navarasu/onedark.nvim'
   -- use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use { 'nvim-treesitter/nvim-treesitter' }
   use "numToStr/FTerm.nvim"
@@ -47,8 +48,29 @@ return require('packer').startup(function(use)
   use { 'williamboman/mason.nvim' }
   use { 'williamboman/mason-lspconfig.nvim'}
 
-  use { 'onsails/lspkind.nvim' }
   use { 'nvimtools/none-ls.nvim' }
+  use { 'onsails/lspkind.nvim', after = 'nvim-lspconfig',}
+  use "folke/trouble.nvim"
+  use "ray-x/lsp_signature.nvim"
+  
+  --use "rcarriga/nvim-notify"
+  --vim.notify = require("notify")
+
+  use { "j-hui/fidget.nvim", after = 'nvim-lspconfig' }
+
+  use "lukas-reineke/indent-blankline.nvim"
+  require("ibl").setup {
+    exclude = {
+      filetypes = { "dashboard", "alpha", "starter" } 
+    }
+  }
+  use "ggandor/leap.nvim"
+  require("leap").create_default_mappings()
+
+
+  --use "tpope/vim-repeat"
+  --require("vim-repeat")
+
 
   -- 基础配置
   require('basic')
@@ -67,24 +89,27 @@ return require('packer').startup(function(use)
   require("plugin-config.nvim-cmp")
   require("plugin-config.lsp")
   require("plugin-config.kind")
+  require("plugin-config.trouble")
+  require("plugin-config.lsp_signature")
+  require("plugin-config.fidget")
 
   -- WSL 下的剪贴板配置，使用 clip.exe
   if vim.fn.has('unix') == 1 and vim.fn.system('uname') == 'Linux\n' then
-  local wsl_check = vim.fn.system('grep -i microsoft /proc/version')
-  if wsl_check ~= '' then
-    -- vim.opt.clipboard = 'unnamedplus'
-    vim.g.clipboard = {
-      name = 'WslClipboard',
-      copy = {
-          ['+'] = 'clip.exe',
-          ['*'] = 'clip.exe',
-      },
-      paste = {
-          ['+'] = 'powershell.exe Get-Clipboard',
-          ['*'] = 'powershell.exe Get-Clipboard',
-      },
-      cache_enabled = 0,
-    }
+    local wsl_check = vim.fn.system('grep -i microsoft /proc/version')
+    if wsl_check ~= '' then
+      -- vim.opt.clipboard = 'unnamedplus'
+      vim.g.clipboard = {
+        name = 'WslClipboard',
+        copy = {
+            ['+'] = 'clip.exe',
+            ['*'] = 'clip.exe',
+        },
+        paste = {
+            ['+'] = 'powershell.exe Get-Clipboard',
+            ['*'] = 'powershell.exe Get-Clipboard',
+        },
+        cache_enabled = 0,
+      }
     end
   end
 

@@ -3,13 +3,13 @@ vim.diagnostic.config({
 })
 
 require('mason').setup({
-    ui = {
-        icons = {
-            package_installed = "✓",
-            package_pending = "➜",
-            package_uninstalled = "✗"
-        }
+  ui = {
+    icons = {
+      package_installed = "✓",
+      package_pending = "➜",
+      package_uninstalled = "✗"
     }
+  }
 })
 
 require('mason-lspconfig').setup({
@@ -65,6 +65,7 @@ end
 -- 2. add configuration below
 lspconfig.clangd.setup({
     on_attach = on_attach,
+    cmd = { "clangd", "--background-index", "--clang-tidy", "--completion-style=detailed", "--offset-encoding=utf-16" },
     settings = {
       clangd = {
         inlayHints = {
@@ -86,7 +87,7 @@ lspconfig.rust_analyzer.setup({
           enable = true,  -- 启用诊断
         },
         cargo = {
-          allFeatures = true,           -- 启用所有 cargo features
+          allFeatures = true,  -- 启用所有 cargo features
         },
         hover = {
           enable = true,  -- 启用 hover 功能
