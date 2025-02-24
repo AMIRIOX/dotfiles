@@ -4,39 +4,23 @@ if not status then
   return
 end
 
--- 列表操作快捷键
 local list_keys = require('keybindings').nvimTreeList
 nvim_tree.setup({
 
-
-    -- 不显示 git 状态图标
     git = {
-
-
         enable = false,
     },
-    -- project plugin 需要这样设置
     update_cwd = true,
     update_focused_file = {
-
-
         enable = true,
         update_cwd = true,
     },
-    -- 隐藏 .文件 和 node_modules 文件夹
     filters = {
-
-
-        dotfiles = true,
-        custom = {
-
-    'node_modules' },
+        dotfiles = false,
+        custom = { 'node_modules' },
     },
     view = {
-
-
-        -- 宽度
-        width = 20,
+        width = 30,
         -- 也可以 'right'
         side = 'left',
         -- 隐藏根目录
@@ -53,11 +37,7 @@ nvim_tree.setup({
         signcolumn = 'yes',
     },
     actions = {
-
-
         open_file = {
-
-
             -- 首次打开大小适配
             resize_window = true,
             -- 打开文件时关闭
@@ -67,8 +47,6 @@ nvim_tree.setup({
     -- wsl install -g wsl-open
     -- https://github.com/4U6U57/wsl-open/
     system_open = {
-
-
         cmd = 'wsl-open', -- mac 直接设置为 open
     },
 })

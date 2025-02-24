@@ -28,10 +28,10 @@ db.setup({
     '   ⠘⣿⡄  ⠙⢿⣿⣿⣾⣿⣷⣿⣿⣿⠟⠁  ⣿⣿⣾⣿⡟⣿  ',
     '    ⢻⡇⠸⣆  ⠈⠻⣿⡿⠿⠛⠉    ⢸⣿⣇⣿⣿⢿⣿  ',
     ''
-    }, --your header
+    },
     center = {
       {
-        icon = "  ",
+        icon = "  ",
         desc = "Projects                            ",
         action = "Telescope projects",
       },
@@ -41,7 +41,7 @@ db.setup({
         action = "Telescope oldfiles",
       },
       {
-        icon = "  ",
+        icon = "  ",
         desc = "Edit keybindings                    ",
         action = "edit ~/.config/nvim/keybindings.lua",
       },

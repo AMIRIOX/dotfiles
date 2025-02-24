@@ -36,7 +36,6 @@ require("tokyonight").setup({
 })
 
 -- cat pp uc cin
---[[
 require("catppuccin").setup({
     flavour = "auto", -- latte, frappe, macchiato, mocha
     background = { -- :h background
@@ -85,9 +84,9 @@ require("catppuccin").setup({
         -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
     },
 })
-]]
 
 local colorscheme = "tokyonight"
+-- local colorscheme = "catppuccin"
 local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
 if not status_ok then
     vim.notify("colorscheme " .. colorscheme .. " 没有找到！")

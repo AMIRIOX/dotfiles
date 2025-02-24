@@ -2,13 +2,12 @@
 local lspkind = require("lspkind")
 lspkind.init({
   mode = "symbol_text",
-  preset = "default",
+  preset = "codicons",
   symbol_map = {
-    Error = "[X]",
-    Text = "[T]",
-    Method = "[M]",
-    Function = "[F]",
-    Constructor = "[C]",
+    Text = "",
+    Method = "",
+    Function = "󰊕",
+    Constructor = "",
     Field = "󰜢",
     Variable = "󰀫",
     Class = "󰠱",

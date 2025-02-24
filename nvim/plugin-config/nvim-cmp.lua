@@ -53,63 +53,42 @@ cmp.setup({
         end, { "i", "s" }),
     }),
 
+    window = {
+      -- customize the appearance of the completion menu
+      completion = { border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }, scrollbar = "║" },
+      documentation = { border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }, scrollbar = "║", },
+    },
   -- Let's configure the item's appearance
   -- source: https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance
   formatting = {
-      -- Set order from left to right
-      -- kind: single letter indicating the type of completion
-      -- abbr: abbreviation of "word"; when not empty it is used in the menu instead of "word"
-      -- menu: extra text for the popup menu, displayed after "word" or "abbr"
-      fields = { 'abbr', 'menu' },
+    fields = { 'abbr', 'kind', 'menu' },
 
-      completion = { border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }, scrollbar = "║" },
-      documentation = {
-            border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-            scrollbar = "║",
-      },
+    format = lspkind.cmp_format({
+      mode = "symbol_text",
+      maxwidth = 20,
+      ellipsis_char = "...",
+      show_labelDetails = true, -- show labelDetails in menu. Disabled by default
+      before = function(entry, vim_item)
+        local word = entry:get_insert_text()
+        if entry.completion_item.insertTextFormat == vim.lsp.protocol.InsertTextFormat.Snippet then
+          word = vim.lsp.util.parse_snippet(word)
+        end
+        word = oneline(word)
+        if entry.completion_item.insertTextFormat == vim.lsp.protocol.InsertTextFormat.Snippet 
+            and string.sub(vim_item.abbr, -1, -1) == "~" then
+          word = word .. "~"
+        end
+        vim_item.abbr = word
+        vim_item.menu = ( {
+          nvim_lsp = '[Lsp]',
+          luasnip = '[Luasnip]',
+          buffer = '[File]',
+          path = '[Path]',
+        })[entry.source.name] or '[Unknown]'
 
-      -- customize the appearance of the completion menu
-      
-      --[[
-      format = function(entry, vim_item)
-          vim_item.menu = ({
-              nvim_lsp = '[Lsp]',
-              luasnip = '[Luasnip]',
-              buffer = '[File]',
-              path = '[Path]',
-          })[entry.source.name]
-          return vim_item
+        return vim_item
       end,
-      ]]
-      format = function(entry, vim_item)
-          vim_item = lspkind.cmp_format({
-            mode = "symbol",
-            maxwidth = 20,
-            ellipsis_char = "...",
-            before = function(entry, vim_item)
-              local word = entry:get_insert_text()
-              if entry.completion_item.insertTextFormat == vim.lsp.protocol.InsertTextFormat.Snippet then
-                word = vim.lsp.util.parse_snippet(word)
-              end
-              word = oneline(word)
-              if entry.completion_item.insertTextFormat == vim.lsp.protocol.InsertTextFormat.Snippet
-              and string.sub(vim_item.abbr, -1, -1) == "~" then
-                word = word .. "~"
-              end
-              vim_item.abbr = word
-              return vim_item
-          end,
-    })(entry, vim_item)  
-
-    vim_item.menu = ( {
-        nvim_lsp = '[Lsp]',
-        luasnip = '[Luasnip]',
-        buffer = '[File]',
-        path = '[Path]',
-    })[entry.source.name] or '[Unknown]'
-
-    return vim_item
-    end
+    })
   },
 
   -- Set source precedence
@@ -117,6 +96,22 @@ cmp.setup({
     { name = 'nvim_lsp' },    -- For nvim-lsp
     { name = 'luasnip' },     -- For luasnip user
     { name = 'buffer' },      -- For buffer word completion
-    { name = 'path' },        -- For path completion
+    -- For path completion
+    {
+      name = "path",
+      entry_filter = function(entry, ctx)
+        local line = ctx.cursor_line
+        local col = ctx.cursor.col
+        local char_before = line:sub(col - 1, col - 1)
+        local char_after = line:sub(col, col)
+
+        local in_string = false
+        if char_before == '"' or char_before == "'" or char_after == '"' or char_after == "'" then
+          in_string = true
+        end
+
+        return in_string
+      end
+    }
   })
 })
