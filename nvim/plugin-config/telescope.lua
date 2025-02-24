@@ -46,11 +46,19 @@ telescope.setup {
 
     project = {
       base_dirs = {
-        '/home/amiriox/practice/luogu.org/src/',
-        '/home/amiriox/project/fabricscn/',
-        '/home/amiriox/practice/RustPrac/',
-        '/home/amiriox/practice/thread/'
+        '/home/amiriox/'
       },
     },
   },
 }
+
+vim.cmd [[
+  hi TelescopeNormal guibg=NONE ctermbg=NONE
+  hi TelescopeBorder guibg=NONE ctermbg=NONE
+  hi TelescopePromptNormal guibg=NONE ctermbg=NONE
+  hi TelescopePromptBorder guibg=NONE ctermbg=NONE
+  hi TelescopeResultsNormal guibg=NONE ctermbg=NONE
+  hi TelescopeResultsBorder guibg=NONE ctermbg=NONE
+  hi TelescopePreviewNormal guibg=NONE ctermbg=NONE
+  hi TelescopePreviewBorder guibg=NONE ctermbg=NONE
+]]

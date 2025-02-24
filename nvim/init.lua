@@ -92,6 +92,7 @@ return require('packer').startup(function(use)
   require("plugin-config.trouble")
   require("plugin-config.lsp_signature")
   require("plugin-config.fidget")
+  require("plugin-config.fterm")
 
   -- WSL 下的剪贴板配置，使用 clip.exe
   if vim.fn.has('unix') == 1 and vim.fn.system('uname') == 'Linux\n' then
