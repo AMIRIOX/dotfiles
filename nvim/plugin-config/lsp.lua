@@ -69,9 +69,9 @@ lspconfig.clangd.setup({
     settings = {
       clangd = {
         inlayHints = {
-          enable = true,  -- 启用类型提示
-          parameterHints = true,  -- 启用函数参数类型提示
-          returnTypeHints = true,  -- 启用函数返回值类型提示
+          enable = true,
+          parameterHints = true,
+          returnTypeHints = true,
         },
       },
     },
@@ -84,20 +84,20 @@ lspconfig.rust_analyzer.setup({
     settings = {
       rust_analyzer = {
         diagnostics = {
-          enable = true,  -- 启用诊断
+          enable = true,
         },
         cargo = {
-          allFeatures = true,  -- 启用所有 cargo features
+          allFeatures = true,
         },
         hover = {
-          enable = true,  -- 启用 hover 功能
+          enable = true,
         },
         inlayHints = {
-          enable = true,  -- 启用内联类型提示
+          enable = true,
           typeHints = {
               enable = true,
           },
-          onlyTyped = false,  -- 显示所有类型提示（而不是仅显示显式标注的类型）
+          onlyTyped = false,
         },
       },
     }

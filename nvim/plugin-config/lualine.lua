@@ -6,7 +6,7 @@ end
 
 lualine.setup({
   options = {
-    theme = "tokyonight",
+    theme = require('plugin-config.lualine_theme').theme(),
     component_separators = {
 
     left = "|", right = "|" },
@@ -17,7 +17,8 @@ lualine.setup({
     },
   },
   extensions = {
-    "nvim-tree", "toggleterm" },
+    "nvim-tree", "toggleterm", 
+  },
   sections = {
     lualine_c = {
       "filename",
@@ -32,9 +33,9 @@ lualine.setup({
         --   mac = '', -- e711
         -- },
         symbols = {
-          unix = "LF",
-          dos = "CRLF",
-          mac = "CR",
+          unix = " LF",
+          dos = " CRLF",
+          mac = " CR",
         },
       },
       "encoding",

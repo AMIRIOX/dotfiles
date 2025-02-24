@@ -17,3 +17,5 @@ require("trouble").setup({
   use_diagnostic_signs = false  -- 使用 Neovim 内置诊断图标
 })
 
+vim.cmd [[highlight TroubleNormal guibg=NONE]]
+vim.cmd [[highlight TroubleBorder guibg=NONE]]

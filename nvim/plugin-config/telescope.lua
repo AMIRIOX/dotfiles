@@ -26,10 +26,14 @@ telescope.setup {
       prompt_position = "bottom",
       horizontal = {
         mirror = false,
+        preview_width = 0.5,
       },
       vertical = {
         mirror = false,
       },
+      width = 0.9,
+      height = 0.9,
+      preview_cutoff = 0,
     },
     file_ignore_patterns = {},
     generic_sorter = sorters.get_generic_fuzzy_sorter,

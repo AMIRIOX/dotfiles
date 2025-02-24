@@ -115,3 +115,8 @@ cmp.setup({
     }
   })
 })
+
+vim.cmd [[highlight Pmenu guibg=NONE]]
+--vim.cmd [[highlight PmenuSel guibg=NONE]]
+--vim.cmd [[highlight PmenuThumb guibg=NONE]]
+vim.cmd [[highlight PmenuSbar guibg=NONE]]
