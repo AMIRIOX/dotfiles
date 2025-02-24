@@ -37,6 +37,8 @@ return require('packer').startup(function(use)
   use "numToStr/FTerm.nvim"
   use 'wakatime/vim-wakatime'
   use { 'neovim/nvim-lspconfig' }
+  use { 'onsails/lspkind.nvim' } --, after = 'nvim-lspconfig' }
+  use { "j-hui/fidget.nvim" } --, after = 'nvim-lspconfig' }
   use { 'hrsh7th/nvim-cmp', config = [[require('plugin-config.nvim-cmp')]] }
   use { 'hrsh7th/cmp-nvim-lsp', after = 'nvim-cmp' }
   use { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' } -- buffer auto-completion
@@ -49,14 +51,12 @@ return require('packer').startup(function(use)
   use { 'williamboman/mason-lspconfig.nvim'}
 
   use { 'nvimtools/none-ls.nvim' }
-  use { 'onsails/lspkind.nvim', after = 'nvim-lspconfig',}
   use "folke/trouble.nvim"
   use "ray-x/lsp_signature.nvim"
   
   --use "rcarriga/nvim-notify"
   --vim.notify = require("notify")
 
-  use { "j-hui/fidget.nvim", after = 'nvim-lspconfig' }
 
   use "lukas-reineke/indent-blankline.nvim"
   require("ibl").setup {
