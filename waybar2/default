@@ -34,7 +34,10 @@
         "hyprland/window": {
             "format": "{}",
             "rewrite": {
-                "(.*) - Google Chrome": "🌎 chrome",
+                "(.*) - .*Microsoft.*Edge.*": " edge",
+                "(.*) - YesPlayMusic":  " Music",
+                "(.*) - Google Chrome": " chrome",
+                "(.*) — Okular":  " Okular",
                 "org.pwmt.zathura": "📰 zathura",
                 "Spotify": "🎼 spotify",
             }
@@ -101,7 +104,7 @@
             "on-click": "bash ~/.config/waybar/scripts/rofi-wifi-menu.sh",
         },
         "pulseaudio": {
-            "format": "{icon} {volume}%",
+            "format": "{icon}  {volume}%",
             "format-bluetooth": "  {icon} {volume}%",
             "format-muted": "",
             "format-icons": {
