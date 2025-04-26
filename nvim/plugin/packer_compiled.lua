@@ -131,6 +131,12 @@ _G.packer_plugins = {
     path = "/home/amiriox/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
+  ["crates.nvim"] = {
+    config = { "\27LJ\2\n4\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\vcrates\frequire\0" },
+    loaded = true,
+    path = "/home/amiriox/.local/share/nvim/site/pack/packer/start/crates.nvim",
+    url = "https://github.com/Saecki/crates.nvim"
+  },
   ["dashboard-nvim"] = {
     loaded = true,
     path = "/home/amiriox/.local/share/nvim/site/pack/packer/start/dashboard-nvim",
@@ -182,7 +188,7 @@ _G.packer_plugins = {
     url = "https://github.com/nvimtools/none-ls.nvim"
   },
   ["nvim-cmp"] = {
-    after = { "cmp-buffer", "cmp-cmdline", "cmp-path", "cmp-nvim-lsp" },
+    after = { "cmp-nvim-lsp", "cmp-buffer", "cmp-path", "cmp-cmdline" },
     config = { "require('plugin-config.nvim-cmp')" },
     loaded = true,
     only_config = true,
@@ -266,11 +272,15 @@ time([[Defining packer_plugins]], false)
 time([[Config for nvim-cmp]], true)
 require('plugin-config.nvim-cmp')
 time([[Config for nvim-cmp]], false)
+-- Config for: crates.nvim
+time([[Config for crates.nvim]], true)
+try_loadstring("\27LJ\2\n4\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\vcrates\frequire\0", "config", "crates.nvim")
+time([[Config for crates.nvim]], false)
 -- Load plugins in order defined by `after`
 time([[Sequenced loading]], true)
 vim.cmd [[ packadd cmp-path ]]
-vim.cmd [[ packadd cmp-nvim-lsp ]]
 vim.cmd [[ packadd cmp-buffer ]]
+vim.cmd [[ packadd cmp-nvim-lsp ]]
 vim.cmd [[ packadd cmp-cmdline ]]
 time([[Sequenced loading]], false)
 

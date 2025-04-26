@@ -1,10 +1,10 @@
 local status, nvim_tree = pcall(require, "nvim-tree")
 if not status then
     vim.notify("没有找到 nvim-tree")
-  return
+    return
 end
 
-local list_keys = require('keybindings').nvimTreeList
+-- local list_keys = require("keybindings").nvimTreeList
 nvim_tree.setup({
 
     git = {
@@ -17,11 +17,11 @@ nvim_tree.setup({
     },
     filters = {
         dotfiles = false,
-        custom = { 'node_modules' },
+        custom = { "node_modules" },
     },
     view = {
         width = 30,
-        side = 'left',
+        side = "left",
         -- hide_root_folder = false,
         -- mappings = {
         --    custom_only = false,
@@ -29,8 +29,8 @@ nvim_tree.setup({
         -- },
         number = false,
         relativenumber = false,
-        -- 显示图标
-        signcolumn = 'yes',
+        -- show icons
+        signcolumn = "yes",
     },
     actions = {
         open_file = {
@@ -38,20 +38,21 @@ nvim_tree.setup({
             quit_on_open = true,
         },
     },
+
     -- wsl install -g wsl-open
     -- https://github.com/4U6U57/wsl-open/
     system_open = {
-        cmd = 'wsl-open', -- mac 直接设置为 open
+        cmd = "wsl-open", -- todo!("mac: open")
     },
 })
--- 自动关闭
+
+-- auto closed
 vim.cmd([[
   autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif
 ]])
 
-vim.cmd [[
+-- transparency
+vim.cmd([[
   hi NvimTreeNormal guibg=NONE ctermbg=NONE
   hi NvimTreeNormalNC guibg=NONE ctermbg=NONE
-]]
-
-
+]])

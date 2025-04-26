@@ -4,8 +4,9 @@ vim.g.maplocalleader = " "
 local map = vim.api.nvim_set_keymap
 local opt = { noremap = true, silent = true }
 
-vim.keymap.set('n', '<C-Space>', '<CMD>lua require("FTerm").toggle()<CR>')
-vim.keymap.set('t', '<C-Space>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
+-- Terminal
+map("n", "<C-Space>", '<CMD>lua require("FTerm").toggle()<CR>', opt)
+map("t", "<C-Space>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>', opt)
 
 -- Format code
 map("n", "<A-S-f>", ":lua vim.lsp.buf.format { async = true }<CR>", opt)
@@ -49,10 +50,11 @@ map("v", "J", ":move '>+1<CR>gv-gv", opt)
 map("v", "K", ":move '<-2<CR>gv-gv", opt)
 
 -- Scrolling navigate
-map("n", "<C-j>", "4j", opt)
-map("n", "<C-k>", "4k", opt)
-map("n", "<C-u>", "9k", opt)
-map("n", "<C-d>", "9j", opt)
+-- unessential
+-- map("n", "<C-j>", "4j", opt)
+-- map("n", "<C-k>", "4k", opt)
+-- map("n", "<C-u>", "9k", opt)
+-- map("n", "<C-d>", "9j", opt)
 
 -- Paste with copying in v-mode
 map("v", "p", '"_dP', opt)
@@ -66,60 +68,59 @@ map("i", "<C-l>", "<ESC>A", opt)
 map("n", "<Tab>", ":BufferLineCycleNext<CR>", opt)
 map("n", "<C-h>", ":BufferLineCyclePrev<CR>", opt)
 map("n", "<C-l>", ":BufferLineCycleNext<CR>", opt)
-map("n", "<C-w>", ":Bdelete!<CR>", opt)
+map("n", "<leader>d", ":Bdelete!<CR>", opt)
 map("n", "<leader>bl", ":BufferLineCloseRight<CR>", opt)
 map("n", "<leader>bh", ":BufferLineCloseLeft<CR>", opt)
 map("n", "<leader>bc", ":BufferLinePickClose<CR>", opt)
 
 -- trouble
-map('n', '<leader>xx', ':Trouble diagnostics toggle<CR>', opt)
-map('n', '<leader>xX', ':Trouble diagnostics toggle filter.buf=0<CR>', opt)
-map('n', '<leader>cs', ':Trouble symbols toggle focus=false<CR>', opt)
-map('n', '<leader>cl', ':Trouble lsp toggle focus=false win.position=right<CR>', opt)
-map('n', '<leader>xL', ':Trouble loclist toggle<CR>', opt)
-map('n', '<leader>xQ', ':Trouble qflist toggle<CR>', opt)
+map("n", "<leader>xx", ":Trouble diagnostics toggle<CR>", opt)
+map("n", "<leader>xX", ":Trouble diagnostics toggle filter.buf=0<CR>", opt)
+map("n", "<leader>cs", ":Trouble symbols toggle focus=false<CR>", opt)
+map(
+    "n",
+    "<leader>cl",
+    ":Trouble lsp toggle focus=false win.position=right<CR>",
+    opt
+)
+map("n", "<leader>xL", ":Trouble loclist toggle<CR>", opt)
+map("n", "<leader>xQ", ":Trouble qflist toggle<CR>", opt)
 
 -- leap
-map('n', 's', '<Plug>(leap-forward-to)', opt)
-map('n', 'S', '<Plug>(leap-backward-to)', opt)
-map('n', 't', '<Plug>(leap-forward-till)', opt)
-map('n', 'T', '<Plug>(leap-backward-till)', opt)
+map("n", "s", "<Plug>(leap-forward-to)", opt)
+map("n", "S", "<Plug>(leap-backward-to)", opt)
+map("n", "t", "<Plug>(leap-forward-till)", opt)
+map("n", "T", "<Plug>(leap-backward-till)", opt)
 
-local pluginKeys = {}
-
--- nvim-tree
+-- management
 map("n", "<A-m>", ":NvimTreeToggle<CR>", opt)
+map("n", "<leader>fg", "<CMD>Telescope live_grep<CR>", opt)
+map("n", "<leader>st", "<CMD>Telescope git_status<CR>", opt)
+-- map("n", "<leader>fr", "<cmd>Telescope lsp_references<CR>", opt)
+-- map("n", "<leader>fd", "<cmd>Telescope lsp_definitions<CR>", opt)
+-- map("n", "<leader>fi", "<cmd>Telescope lsp_implementations<CR>", opt)
+
+
+--[[
+local pluginKeys = {}
 pluginKeys.nvimTreeList = {
-  -- Open folder
-  { key = { "<CR>", "o", "<2-LeftMouse>"}, action = "edit" },
-  -- Split window and open file
-  { key = "v", action = "vsplit" },
-  { key = "h", action = "split" },
-  -- Show hidden files
-  { key = "i", action = "toggle_custom" },
-  { key = ".", action = "toggle_dotfiles" }, -- Hide (dotfiles)
-  -- File operation
-  { key = "<F5>", action = "refresh" },
-  { key = "a", action = "create" },
-  { key = "d", action = "remove" },
-  { key = "r", action = "rename" },
-  { key = "x", action = "cut" },
-  { key = "c", action = "copy" },
-  { key = "p", action = "paste" },
-  { key = "s", action = "system_open" },
+    -- Open folder
+    { key = { "<CR>", "o", "<2-LeftMouse>" }, action = "edit" },
+    -- Split window and open file
+    { key = "v", action = "vsplit" },
+    { key = "h", action = "split" },
+    -- Show hidden files
+    { key = "i", action = "toggle_custom" },
+    { key = ".", action = "toggle_dotfiles" }, -- Hide (dotfiles)
+    -- File operation
+    { key = "<F5>", action = "refresh" },
+    { key = "a", action = "create" },
+    { key = "d", action = "remove" },
+    { key = "r", action = "rename" },
+    { key = "x", action = "cut" },
+    { key = "c", action = "copy" },
+    { key = "p", action = "paste" },
+    { key = "s", action = "system_open" },
 }
-
--- lsp 快捷键
-pluginKeys.lspKeybinding = function(mapbuf)
- -- rename
- mapbuf("n", "<leader>r", ":lua vim.lsp.buf.rename<CR>", opt)
- -- code action
- mapbuf("n", "<leader>ca", ":lua vim.lsp.buf.code_action()<CR>", opt)
- -- go to definition
- mapbuf("n", "gd", ":lua vim.lsp.buf.definition()<CR>", opt)
- -- show hover
- mapbuf("n", "gh", ":lua vim.lsp.buf.hover()<CR>", opt)
-end
-
 return pluginKeys
-
+--]]
