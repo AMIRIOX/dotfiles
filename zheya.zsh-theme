@@ -27,11 +27,11 @@ typeset -g LAST_EXIT_CODE=0
 typeset -g CMD_DURATION=0
 
 preexec() {
-  CMD_START_TIME=$SECONDS
+  CMD_START_TIME=$EPOCHREALTIME
 }
 
 _format_cmd_duration() {
-  CMD_DURATION=$((SECONDS - CMD_START_TIME))
+  CMD_DURATION=$((EPOCHREALTIME - CMD_START_TIME))
   if (( CMD_DURATION >= 3600 )); then
     printf "%dh%02dm%02ds" $((CMD_DURATION/3600)) $((CMD_DURATION%3600/60)) $((CMD_DURATION%60))
   elif (( CMD_DURATION >= 60 )); then
