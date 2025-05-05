@@ -66,19 +66,22 @@ get_space() {
   printf ' %.0s' {1..$spaces}
 }
 
-battery=$(acpi -b | grep -o "[0-9]*%")
-percent=${battery%\%}
-color=$([[ $percent -ge 70 ]] && echo green || \
-         [[ $percent -ge 50 ]] && echo blue || \
-         [[ $percent -ge 30 ]] && echo yellow || \
-         echo red)
-
-_1LEFT="$_PATH ⟦%{$fg[yellow]%}\$(_format_cmd_duration)%{$reset_color%}⟧ %F{$color}$battery% $reset_color"
-_1RIGHT="$_USERNAME ⟦%*⟧ ⟦\$(_get_last_exit_code)⟧ %F{yellow}[%(1j.%j jobs.)]%f"
+_get_battery() {
+  local battery=$(acpi -b | grep -o "[0-9]*%")
+  local percent=${battery%\%}
+  local color=$([[ $percent -ge 70 ]] && echo green || \
+               [[ $percent -ge 50 ]] && echo cyan || \
+               [[ $percent -ge 30 ]] && echo yellow || \
+               echo red)
+  echo "%F{$color}$battery%%f"
+}
 
 pre_prompt() {
   LAST_EXIT_CODE=$?
-  
+
+  _1LEFT="$_PATH ⟦%F{yellow}\$(_format_cmd_duration)%f⟧ $(_get_battery)"
+  _1RIGHT="$_USERNAME ⟦%*⟧ ⟦\$(_get_last_exit_code)⟧ %F{yellow}[%(1j.%j jobs.)]%f"
+ 
   _1SPACES=$(get_space "$_1LEFT" "$_1RIGHT")
   print
   print -rP "$_1LEFT$_1SPACES$_1RIGHT"
@@ -91,4 +94,3 @@ RPROMPT='$(nvm_prompt_info) $(git_prompt_info)'
 autoload -U add-zsh-hook
 add-zsh-hook preexec preexec
 add-zsh-hook precmd pre_prompt
-
