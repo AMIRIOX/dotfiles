@@ -21,6 +21,7 @@ require("mason-lspconfig").setup({
         "pylsp",
         "lua_ls",
         "cmake",
+        --        "racket-langserver",
     },
 })
 
@@ -32,6 +33,7 @@ require("mason-lspconfig").setup({
 --     - the settings table is sent to the LSP
 --     - on_attach: a lua callback function to run after LSP atteches to a given buffer
 local lspconfig = require("lspconfig")
+local util = require("lspconfig.util")
 
 -- Customized on_attach function
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -73,6 +75,20 @@ local on_attach = function(client, bufnr)
     end, bufopts)
 end
 
+-- X11 required
+local configs = require("lspconfig.configs")
+if not configs.racket_langserver then
+    configs.racket_langserver = {
+        default_config = {
+            cmd = { "racket", "--lib", "racket-langserver" },
+            filetypes = { "scheme", "racket" },
+            root_dir = util.path.dirname,
+            single_file_support = true,
+            settings = {},
+        },
+    }
+end
+
 -- Configure each language
 lspconfig.clangd.setup({
     on_attach = on_attach,
@@ -92,6 +108,12 @@ lspconfig.clangd.setup({
             },
         },
     },
+})
+lspconfig.racket_langserver.setup({
+    on_attach = on_attach,
+    capabilities = capabilities,
+    cmd = { "racket", "--lib", "racket-langserver" },
+    filetypes = { "scheme", "racket" },
 })
 lspconfig.asm_lsp.setup({
     on_attach = on_attach,

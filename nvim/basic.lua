@@ -98,6 +98,14 @@ vim.wo.foldmethod = "expr"
 vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
 vim.wo.foldlevel = 99
 
+vim.filetype.add({
+  extension = {
+    scheme = "scheme",
+    scm = "scheme",
+    rkt = "racket"
+  }
+})
+
 --[[
 require('nvim-treesitter.configs').setup({                                               
     ensure_installed = {"rust", "java", "html", "css", "vim", "lua", "javascript", "typescript", "c", "cpp", "python"},

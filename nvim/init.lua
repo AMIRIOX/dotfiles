@@ -135,6 +135,22 @@ return require("packer").startup(function(use)
         end
     end
 
+    -- Tests
+    --[[
+    vim.api.nvim_create_autocmd("FileType", {
+        pattern = { "scheme", "racket" },
+        callback = function()
+            vim.lsp.start({
+                name = "racket-lsp",
+                cmd = { "racket", "--lib", "racket-langserver" },
+                root_dir = vim.fn.getcwd(),
+                on_attach = on_attach,
+                capabilities = require("cmp_nvim_lsp").default_capabilities(),
+            })
+        end,
+    })
+    ]]
+
     if packer_bootstrap then
         require("packer").sync()
     end
