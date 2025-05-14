@@ -13,6 +13,7 @@ require("mason").setup({
 })
 
 require("mason-lspconfig").setup({
+    automatic_enable = false,
     -- A list of servers to automatically install if they're not already installed
     ensure_installed = {
         "clangd",
@@ -21,6 +22,7 @@ require("mason-lspconfig").setup({
         "pylsp",
         "lua_ls",
         "cmake",
+        "jdtls",
         --        "racket-langserver",
     },
 })
@@ -88,6 +90,21 @@ if not configs.racket_langserver then
         },
     }
 end
+
+-- Isolated jdtls config
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "java",
+    callback = function()
+        local jdtls_custom_conf = require("plugin-config.jdtls_conf")
+        if not jdtls_custom_conf then
+            print("Error: Could not load jdtls_conf")
+            return
+        end
+        jdtls_custom_conf.setup()
+        print("JDTLS setup initiated for Java file.")
+    end,
+    desc = "Setup JDTLS for Java files",
+})
 
 -- Configure each language
 lspconfig.clangd.setup({
