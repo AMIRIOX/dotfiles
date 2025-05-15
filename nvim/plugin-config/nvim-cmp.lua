@@ -81,6 +81,46 @@ cmp.setup({
             show_labelDetails = true, -- show labelDetails in menu. Disabled by default
             before = function(entry, vim_item)
                 local word = entry:get_insert_text()
+                local is_snippet = entry.completion_item.insertTextFormat == vim.lsp.protocol.InsertTextFormat.Snippet
+
+                if is_snippet then
+                    local vsnip_ok, vsnip = pcall(require, "vim.snippet")
+                    if vsnip_ok and vsnip.parse then
+                        local parsed_ok, snip_obj = vsnip.parse(word)
+                        if parsed_ok and snip_obj then
+                            word = tostring(snip_obj)
+                        else
+                            vim.notify("nvim-cmp: Failed to parse snippet text: " .. word, vim.log.levels.DEBUG)
+                        end
+                    else
+                        vim.notify("nvim-cmp: vim.snippet module or parse function not found.", vim.log.levels.WARN)
+                    end
+                end
+
+                -- TODO
+                if oneline and type(oneline) == 'function' then
+                    word = oneline(word)
+                else
+                    word = string.gsub(word, "\n", " ")
+                end
+
+                if is_snippet and vim_item.abbr and string.sub(vim_item.abbr, -1, -1) == "~" then
+                    word = word .. "~"
+                end
+
+                vim_item.abbr = word
+                vim_item.menu = ({
+                    nvim_lsp = "[Lsp]",
+                    luasnip = "[Luasnip]",
+                    buffer = "[File]",
+                    path = "[Path]",
+                })[entry.source.name] or "[" .. (entry.source.name or "Unknown") .. "]"
+
+                return vim_item
+            end,
+           --[[
+           before = function(entry, vim_item)
+                local word = entry:get_insert_text()
                 if
                     entry.completion_item.insertTextFormat
                     == vim.lsp.protocol.InsertTextFormat.Snippet
@@ -105,6 +145,7 @@ cmp.setup({
 
                 return vim_item
             end,
+            ]]
         }),
     },
 

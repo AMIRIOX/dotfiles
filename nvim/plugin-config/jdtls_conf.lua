@@ -2,6 +2,8 @@
 
 local M = {}
 
+local JAVA_HOME = os.getenv("JAVA_HOME")
+
 local function get_project_settings(root_dir)
     local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
 
@@ -73,7 +75,7 @@ local function get_project_settings(root_dir)
         print(
             "Maven project detected. Consider setting specific Maven JDK if needed."
         )
-        project_sdk_path = "/usr/lib/jvm/java-24-openjdk/"
+        project_sdk_path = JAVA_HOME
     end
 
     return {
@@ -94,8 +96,12 @@ local function get_project_settings(root_dir)
                 configuration = {
                     runtimes = {
                         {
+                            name = "JavaSE-21",
+                            path = "/usr/lib/jvm/java-21-openjdk/",
+                        },
+                        {
                             name = "JavaSE-24",
-                            path = "/usr/lib/jvm/java-24-openjdk/",
+                            path = "/usr/lib/jvm/java-24-openjdk/"
                         },
                     },
                 },
