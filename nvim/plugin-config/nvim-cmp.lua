@@ -92,8 +92,10 @@ cmp.setup({
                         else
                             vim.notify("nvim-cmp: Failed to parse snippet text: " .. word, vim.log.levels.DEBUG)
                         end
+                    --[[
                     else
                         vim.notify("nvim-cmp: vim.snippet module or parse function not found.", vim.log.levels.WARN)
+                    ]]
                     end
                 end
 
@@ -117,36 +119,8 @@ cmp.setup({
                 })[entry.source.name] or "[" .. (entry.source.name or "Unknown") .. "]"
 
                 return vim_item
-            end,
-           --[[
-           before = function(entry, vim_item)
-                local word = entry:get_insert_text()
-                if
-                    entry.completion_item.insertTextFormat
-                    == vim.lsp.protocol.InsertTextFormat.Snippet
-                then
-                    word = vim.lsp.util.parse_snippet(word)
-                end
-                word = oneline(word)
-                if
-                    entry.completion_item.insertTextFormat
-                        == vim.lsp.protocol.InsertTextFormat.Snippet
-                    and string.sub(vim_item.abbr, -1, -1) == "~"
-                then
-                    word = word .. "~"
-                end
-                vim_item.abbr = word
-                vim_item.menu = ({
-                    nvim_lsp = "[Lsp]",
-                    luasnip = "[Luasnip]",
-                    buffer = "[File]",
-                    path = "[Path]",
-                })[entry.source.name] or "[Unknown]"
-
-                return vim_item
-            end,
-            ]]
-        }),
+            end
+        })
     },
 
     -- Set source precedence
