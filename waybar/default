@@ -1,6 +1,6 @@
 {
         "custom/launcher": {
-            "format": " <span color='#6a92d7'></span>",
+            "format": "  ",
             "on-click": "rofi -modi drun -show drun",
         },
         "custom/weather": {
@@ -10,18 +10,18 @@
             "on-click": "xdg-open https://weather.com/en-IN/weather/today/l/a319796a4173829988d68c4e3a5f90c1b6832667ea7aaa201757a1c887ec667a"
         },
         "tray": {
-            "icon-size": 21,
-            "spacing": 20,
+            "icon-size": 17,
+            "spacing": 15,
         },
         "hyprland/workspaces": {
             "format": "{icon}",
             "format-icons": {
-                "1": "",
-                "2": "",
-                "3": "",
-                "4": "",
+                "1": "",
+                "2": "",
+                "3": "",
+                "4": "",
                 "5": "󰢹",
-                "6": "",
+                "6": "",
                 "urgent": "",
                 "default": ""
             },
@@ -34,12 +34,10 @@
         "hyprland/window": {
             "format": " {}",
             "rewrite": {
-                "(.*) - .*Microsoft.*Edge.*": " edge",
-                "(.*) - YesPlayMusic":  " Music",
-                "(.*) - Google Chrome": " chrome",
-                "(.*) — Okular":  " Okular",
-                "org.pwmt.zathura": "📰 zathura",
-                "Spotify": "🎼 spotify",
+                "(.*) - .*Microsoft.*Edge.*": "  edge",
+                "(.*) - YesPlayMusic":  "  Music",
+                "(.*) - Google Chrome": "  chrome",
+                "(.*) — Okular":  "  Okular",
             }
         },
         "clock": {
@@ -48,12 +46,12 @@
             "format-alt": "{:%Y-%m-%d}"
         },
         "cpu": {
-            "format": " {usage}%",
+            "format": "\uf2db {usage}%",
             "on-click": "kitty btop",
             "tooltip": true
         },
         "memory": {
-            "format": "\uf2db {used:0.1f}G",
+            "format":  "\uf538 {used:0.1f}G",
             "format-alt": "\uf538 {}%",
         },
         "backlight": {
@@ -84,7 +82,14 @@
             "format": " {percentage_used}%"
         },
         "temperature": {
-            "format": " {temperatureC}°C",
+            "hwmon-path-abs": "/sys/devices/platform/coretemp.0/hwmon",
+            "input-filename": "temp1_input",
+            "critical-threshold": 80,
+            "format": " {temperatureC}°C",
+            "format-critical": " {temperatureC}°C ",
+            "tooltip": true,
+            "tooltip-format": "CPU Temp: {temperatureC}°C (High: {high}C, Crit: {crit}C)",
+            "interval": 2,
         },
         "network": {
             "interval": 1,
@@ -181,7 +186,7 @@
             "modules": [
                 "battery",
                 "pulseaudio",
-                "network",
+                "temperature",
                 "bluetooth",
                 "custom/github",
             ]
