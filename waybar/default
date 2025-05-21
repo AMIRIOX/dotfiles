@@ -149,9 +149,10 @@
         "custom/spotify": {
             "exec": "$HOME/.config/waybar/scripts/spotify.sh",
             "max-length": 40,
-            "format": " {}",
+            "format": "{}",
             "on-click": "sleep 0.1 && eww open --toggle dashboard",
-            "tooltip": false
+            "tooltip": false,
+            "return-type": "json"
         },
         "custom/notification": {
             "escape": true,
