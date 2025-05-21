@@ -152,7 +152,9 @@
             "format": "{}",
             "on-click": "sleep 0.1 && eww open --toggle dashboard",
             "tooltip": false,
-            "return-type": "json"
+            "return-type": "json",
+            "playerctl_player_name": ["*"],
+            "playerctl_listen": true,
         },
         "custom/notification": {
             "escape": true,
