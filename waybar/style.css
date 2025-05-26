@@ -131,6 +131,11 @@ window#waybar {
     /* padding-bottom: 1px; margin-bottom: 1px; */
 }
 
+#custom-weather {
+    padding-top: 5px;
+    font-size: 16px;
+}
+
 /* --- Separators --- */
 #custom-separator-left,
 #custom-separator-right {

@@ -42,7 +42,7 @@
         },
         "clock": {
             "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-            "format": "{:%a %d, %b %I:%M %p }",
+            "format": "{:%a %d 󱫟  %b %I:%M %p }",
             "format-alt": "{:%Y-%m-%d}"
         },
         "cpu": {
@@ -153,7 +153,7 @@
         },
         "custom/spotify": {
             "exec": "$HOME/.config/waybar/scripts/spotify.sh",
-            "max-length": 40,
+            "max-length": 33,
             "format": "{}",
             "on-click": "sleep 0.1 && eww open --toggle dashboard",
             "tooltip": false,
