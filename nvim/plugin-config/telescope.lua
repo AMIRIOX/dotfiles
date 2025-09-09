@@ -6,6 +6,8 @@ local action_state = require("telescope.actions.state")
 local sorters = require("telescope.sorters")
 local previewers = require("telescope.previewers")
 
+local username = os.getenv("USER")
+
 telescope.setup({
     defaults = {
         mappings = {
@@ -50,7 +52,7 @@ telescope.setup({
 
         project = {
             base_dirs = {
-                "/home/amiriox/",
+                "/home/" .. username,
             },
         },
     },
