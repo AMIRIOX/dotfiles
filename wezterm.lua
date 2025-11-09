@@ -32,7 +32,7 @@ local function apply_mode(window, which)
   end
 
   window:set_config_overrides(o)
-  window:toast_notification("WezTerm", (which == 'PSAVE') and "Powersave" or "Normal", 1800)
+  -- window:toast_notification("WezTerm", (which == 'PSAVE') and "Powersave" or "Normal", 1800)
 end
 
 wezterm.on("toggle-powersave", function(window, _)
@@ -55,8 +55,8 @@ wezterm.on("window-focus-changed",   function(w, _) best_effort_auto(w) end)
 
 return {
   launch_menu = {
-    { label = "Fedora 40", args = { "wsl.exe", "-d", "Fedora" } },
-    { label = "NixOS",     args = { "wsl.exe", "-d", "NixOS"  } },
+    { label = "Fedora 40", args = { "wsl.exe", "-d", "Fedora", "--cd", "~"} },
+    { label = "NixOS",     args = { "wsl.exe", "-d", "NixOS", "--cd", "~" } },
   },
   default_prog = { "wsl.exe", "-d", "Fedora", "--cd", "~"},
 
@@ -85,6 +85,7 @@ return {
     { key = "N", mods = "CTRL|SHIFT", action = wezterm.action.SpawnWindow },
     -- 手动切换省电：Ctrl+Shift+P
     { key = "P", mods = "CTRL|SHIFT", action = wezterm.action.EmitEvent('toggle-powersave') },
+    { key = "L", mods = "CTRL|SHIFT", action = wezterm.action.ShowLauncherArgs { flags = "LAUNCH_MENU_ITEMS" } },
   },
   mouse_bindings = {
     { event = { Down = { streak = 1, button = "Left" } }, mods = "ALT", action = wezterm.action.StartWindowDrag },

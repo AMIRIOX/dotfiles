@@ -130,7 +130,7 @@
   (general-create-definer my-leader-keys
     :keymaps '(normal insert visual emacs)
     :prefix "SPC"
-    :global-prefix "C-SPC"))
+    :global-prefix "SPC"))
 
 (use-package which-key
   :config
@@ -141,6 +141,19 @@
 (use-package projectile
   :config
   (projectile-mode +1))
+
+
+(with-eval-after-load 'general
+  (my-leader-keys
+    "f f" '(my/find-file-in-new-tab :which-key "Find file (new tab)")))
+
+(with-eval-after-load 'recentf
+  (defun my/recentf-open-in-new-tab ()
+    (interactive)
+    (call-interactively 'my/find-file-in-new-tab))
+  (with-eval-after-load 'general
+    (my-leader-keys
+      "f r" '(my/recentf-open-in-new-tab :which-key "Recent file (new tab)"))))
 
 
 ;; 6. Directory Tree (Treemacs)
@@ -408,6 +421,64 @@
 
 (with-eval-after-load 'evil
   (add-hook 'evil-ex-setup-hook #'my/disable-corfu-in-minibuffer))
+
+;;; =========================================
+(require 'cl-lib)
+(require 'seq)
+(global-tab-line-mode 1)
+
+(defun my/tab-line-file-buffers ()
+  "Return a stable list containing only file buffers, sorted by buffer name.
+This ensures consistent ordering that doesn't change during navigation."
+  (let* ((all-buffers (buffer-list))
+         (files (seq-filter (lambda (b)
+                              (and (buffer-live-p b)
+                                   (buffer-file-name b)
+                                   (not (string-prefix-p " " (buffer-name b)))))
+                            all-buffers)))
+    (sort files (lambda (a b)
+                  (string< (buffer-name a) (buffer-name b))))))
+
+(setq tab-line-tabs-function #'my/tab-line-file-buffers
+      tab-line-close-button-show nil
+      tab-line-new-button-show   nil
+      tab-line-separator         "  ")
+
+(defvar my/tabline-keys-map
+  (let ((m (make-sparse-keymap)))
+    (define-key m (kbd "C-h") #'tab-line-switch-to-prev-tab)
+    (define-key m (kbd "<backspace>") #'tab-line-switch-to-prev-tab)
+    (define-key m (kbd "C-l") #'tab-line-switch-to-next-tab)
+    (define-key m (kbd "gt")  #'tab-line-switch-to-next-tab)
+    (define-key m (kbd "gT")  #'tab-line-switch-to-prev-tab)
+    m)
+  "Keymap for tab-line navigation in Evil normal/visual/motion states.")
+
+(define-minor-mode my/tabline-keys-mode
+  "Enable high-priority tab-line keys in Evil normal/visual/motion states."
+  :init-value nil
+  :lighter ""
+  :keymap my/tabline-keys-map)
+
+(with-eval-after-load 'evil
+  ;; 进入 normal/visual/motion 开启按键层
+  (dolist (hook '(evil-normal-state-entry-hook
+                  evil-visual-state-entry-hook
+                  evil-motion-state-entry-hook))
+    (add-hook hook (lambda () (my/tabline-keys-mode 1))))
+  ;; 进入 insert/emacs 关闭按键层
+  (add-hook 'evil-insert-state-entry-hook (lambda () (my/tabline-keys-mode -1)))
+  (add-hook 'evil-emacs-state-entry-hook  (lambda () (my/tabline-keys-mode -1))))
+
+(define-key key-translation-map (kbd "C-h") (kbd "<C-h>"))
+
+(when (eq help-char ?\C-h)
+  (setq help-char nil))
+
+(when (boundp 'my/tabline-keys-map)
+  (define-key my/tabline-keys-map (kbd "<C-h>") #'tab-line-switch-to-prev-tab)
+  (define-key my/tabline-keys-map (kbd "C-h") nil))
+
 
 ;; Configuration loaded
 (message "init.el (final version) loaded successfully!")
