@@ -144,12 +144,35 @@ lspconfig.rust_analyzer.setup({
             },
             cargo = {
                 allFeatures = true,
+                allTargets = true,
                 extraEnv = {
                     AX_CONFIG_PATH = vim.fn.getcwd() .. "/.axconfig.toml",
                 },
+                buildScripts = {
+                    enable = true,
+                },
+            },
+            procMacro = {
+                enable = true,
             },
             hover = {
                 enable = true,
+            },
+            completion = {
+                autoimport = {
+                    enable = true,
+                },
+                fullFunctionSignatures = {
+                    enable = true,
+                },
+            },
+            workspace = {
+                symbol = {
+                    search = {
+                        kind = "all_symbols",
+                        limit = 128,
+                    },
+                },
             },
             inlayHints = {
                 enable = true,

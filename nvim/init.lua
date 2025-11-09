@@ -1,8 +1,8 @@
-local username = os.getenv("USER")
+local homedir = os.getenv("HOME")
 
-package.path = package.path .. ";/home/" .. username .. "/.config/nvim/?.lua"
+package.path = package.path .. ";" .. homedir .. "/.config/nvim/?.lua"
 package.path = package.path
-    .. ";/home/" .. username .. "/.local/share/nvim/site/pack/packer/start/packer.nvim/?.lua"
+    .. ";" .. homedir .. "/.local/share/nvim/site/pack/packer/start/packer.nvim/?.lua"
 
 vim.cmd([[packadd packer.nvim]])
 
