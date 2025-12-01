@@ -91,7 +91,9 @@ return require("packer").startup(function(use)
         },
     })
     use("ggandor/leap.nvim")
-    require("leap").create_default_mappings()
+    -- require("leap").add_default_mappings()
+    local leap = require("leap")
+    vim.keymap.set({ "n", "x", "o" }, "s", "<Plug>(leap-forward)", { silent = true })
 
     --use "tpope/vim-repeat"
     --require("vim-repeat")
@@ -127,12 +129,12 @@ return require("packer").startup(function(use)
             vim.g.clipboard = {
                 name = "WslClipboard",
                 copy = {
-                    ["+"] = "clip.exe",
-                    ["*"] = "clip.exe",
+                    ["+"] = "win32yank.exe -i",
+                    ["*"] = "win32yank.exe -i",
                 },
                 paste = {
-                    ["+"] = "powershell.exe Get-Clipboard",
-                    ["*"] = "powershell.exe Get-Clipboard",
+                    ["+"] = "win32yank.exe -o",
+                    ["*"] = "win32yank.exe -o",
                 },
                 cache_enabled = 0,
             }
