@@ -1,4 +1,4 @@
--- gen by default 
+-- gen by default
 
 cfg = {
     debug = false, -- set to true to enable debug logging

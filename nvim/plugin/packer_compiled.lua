@@ -49,8 +49,8 @@ local function save_profiles(threshold)
 end
 
 time([[Luarocks path setup]], true)
-local package_path_str = "/home/amiriox/.cache/nvim/packer_hererocks/2.1.1720049189/share/lua/5.1/?.lua;/home/amiriox/.cache/nvim/packer_hererocks/2.1.1720049189/share/lua/5.1/?/init.lua;/home/amiriox/.cache/nvim/packer_hererocks/2.1.1720049189/lib/luarocks/rocks-5.1/?.lua;/home/amiriox/.cache/nvim/packer_hererocks/2.1.1720049189/lib/luarocks/rocks-5.1/?/init.lua"
-local install_cpath_pattern = "/home/amiriox/.cache/nvim/packer_hererocks/2.1.1720049189/lib/lua/5.1/?.so"
+local package_path_str = "/home/amiriox/.cache/nvim/packer_hererocks/2.1.1764593432/share/lua/5.1/?.lua;/home/amiriox/.cache/nvim/packer_hererocks/2.1.1764593432/share/lua/5.1/?/init.lua;/home/amiriox/.cache/nvim/packer_hererocks/2.1.1764593432/lib/luarocks/rocks-5.1/?.lua;/home/amiriox/.cache/nvim/packer_hererocks/2.1.1764593432/lib/luarocks/rocks-5.1/?/init.lua"
+local install_cpath_pattern = "/home/amiriox/.cache/nvim/packer_hererocks/2.1.1764593432/lib/lua/5.1/?.so"
 if not string.find(package.path, package_path_str, 1, true) then
   package.path = package.path .. ';' .. package_path_str
 end
@@ -182,7 +182,7 @@ _G.packer_plugins = {
     url = "https://github.com/nvimtools/none-ls.nvim"
   },
   ["nvim-cmp"] = {
-    after = { "cmp-buffer", "cmp-cmdline", "cmp-nvim-lsp", "cmp-path" },
+    after = { "cmp-path", "cmp-buffer", "cmp-cmdline", "cmp-nvim-lsp" },
     config = { "require('plugin-config.nvim-cmp')" },
     loaded = true,
     only_config = true,
@@ -234,6 +234,12 @@ _G.packer_plugins = {
     path = "/home/amiriox/.local/share/nvim/site/pack/packer/start/project.nvim",
     url = "https://github.com/ahmedkhalf/project.nvim"
   },
+  ["sidekick.nvim"] = {
+    config = { "\27LJ\2\nO\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\tname\fcopilot\vtoggle\17sidekick.cli\frequireM\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\tname\fcopilot\tsend\17sidekick.cli\frequire¡\2\1\0\6\0\19\0\0276\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\6\0=\3\a\2B\0\2\0016\0\b\0009\0\t\0009\0\n\0'\2\v\0'\3\f\0003\4\r\0005\5\14\0B\0\5\0016\0\b\0009\0\t\0009\0\n\0'\2\15\0'\3\16\0003\4\17\0005\5\18\0B\0\5\1K\0\1\0\1\0\3\tdesc\30Send selection to Copilot\fnoremap\2\vsilent\2\0\15<leader>sd\6v\1\0\3\tdesc\23Toggle Copilot CLI\fnoremap\2\vsilent\2\0\15<leader>ai\6n\bset\vkeymap\bvim\bcli\1\0\1\fenabled\2\bnes\1\0\2\bcli\0\bnes\0\1\0\1\fenabled\1\nsetup\rsidekick\frequire\0" },
+    loaded = true,
+    path = "/home/amiriox/.local/share/nvim/site/pack/packer/start/sidekick.nvim",
+    url = "https://github.com/folke/sidekick.nvim"
+  },
   ["telescope-fzf-native.nvim"] = {
     loaded = true,
     path = "/home/amiriox/.local/share/nvim/site/pack/packer/start/telescope-fzf-native.nvim",
@@ -271,12 +277,16 @@ time([[Defining packer_plugins]], false)
 time([[Config for nvim-cmp]], true)
 require('plugin-config.nvim-cmp')
 time([[Config for nvim-cmp]], false)
+-- Config for: sidekick.nvim
+time([[Config for sidekick.nvim]], true)
+try_loadstring("\27LJ\2\nO\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\tname\fcopilot\vtoggle\17sidekick.cli\frequireM\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\tname\fcopilot\tsend\17sidekick.cli\frequire¡\2\1\0\6\0\19\0\0276\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\6\0=\3\a\2B\0\2\0016\0\b\0009\0\t\0009\0\n\0'\2\v\0'\3\f\0003\4\r\0005\5\14\0B\0\5\0016\0\b\0009\0\t\0009\0\n\0'\2\15\0'\3\16\0003\4\17\0005\5\18\0B\0\5\1K\0\1\0\1\0\3\tdesc\30Send selection to Copilot\fnoremap\2\vsilent\2\0\15<leader>sd\6v\1\0\3\tdesc\23Toggle Copilot CLI\fnoremap\2\vsilent\2\0\15<leader>ai\6n\bset\vkeymap\bvim\bcli\1\0\1\fenabled\2\bnes\1\0\2\bcli\0\bnes\0\1\0\1\fenabled\1\nsetup\rsidekick\frequire\0", "config", "sidekick.nvim")
+time([[Config for sidekick.nvim]], false)
 -- Load plugins in order defined by `after`
 time([[Sequenced loading]], true)
-vim.cmd [[ packadd cmp-nvim-lsp ]]
 vim.cmd [[ packadd cmp-path ]]
-vim.cmd [[ packadd cmp-buffer ]]
 vim.cmd [[ packadd cmp-cmdline ]]
+vim.cmd [[ packadd cmp-nvim-lsp ]]
+vim.cmd [[ packadd cmp-buffer ]]
 time([[Sequenced loading]], false)
 
 _G._packer.inside_compile = false

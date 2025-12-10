@@ -2,7 +2,9 @@ local homedir = os.getenv("HOME")
 
 package.path = package.path .. ";" .. homedir .. "/.config/nvim/?.lua"
 package.path = package.path
-    .. ";" .. homedir .. "/.local/share/nvim/site/pack/packer/start/packer.nvim/?.lua"
+    .. ";"
+    .. homedir
+    .. "/.local/share/nvim/site/pack/packer/start/packer.nvim/?.lua"
 
 vim.cmd([[packadd packer.nvim]])
 
@@ -93,10 +95,49 @@ return require("packer").startup(function(use)
     use("ggandor/leap.nvim")
     -- require("leap").add_default_mappings()
     local leap = require("leap")
-    vim.keymap.set({ "n", "x", "o" }, "s", "<Plug>(leap-forward)", { silent = true })
+    vim.keymap.set(
+        { "n", "x", "o" },
+        "s",
+        "<Plug>(leap-forward)",
+        { silent = true }
+    )
 
     --use "tpope/vim-repeat"
     --require("vim-repeat")
+
+    use({
+        "folke/sidekick.nvim",
+        requires = {
+            "nvim-lua/plenary.nvim",
+        },
+        config = function()
+            require("sidekick").setup({
+                nes = { enabled = false },
+                cli = {
+                    enabled = true,
+                    context = {
+                        enabled = true,
+                        files = true,
+                    },
+                },
+            })
+            vim.keymap.set("n", "<leader>ai", function()
+                require("sidekick.cli").toggle({ name = "copilot" })
+            end, {
+                desc = "Toggle Copilot CLI",
+                silent = true,
+                noremap = true,
+            })
+
+            vim.keymap.set("v", "<leader>sd", function()
+                require("sidekick.cli").send({ name = "copilot" })
+            end, {
+                desc = "Send selection to Copilot",
+                silent = true,
+                noremap = true,
+            })
+        end,
+    })
 
     -- settings
     require("basic")

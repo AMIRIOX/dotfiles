@@ -101,7 +101,7 @@ local function get_project_settings(root_dir)
                         },
                         {
                             name = "JavaSE-24",
-                            path = "/usr/lib/jvm/java-24-openjdk/"
+                            path = "/usr/lib/jvm/java-24-openjdk/",
                         },
                     },
                 },
@@ -194,7 +194,6 @@ local function get_project_settings(root_dir)
                     )
                 end, opts)
             end
-
         end,
         capabilities = lsp_capabilities,
 

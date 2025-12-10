@@ -101,7 +101,6 @@ map("n", "<leader>ff", "<CMD>Telescope find_files<CR>", opt)
 -- map("n", "<leader>fd", "<cmd>Telescope lsp_definitions<CR>", opt)
 -- map("n", "<leader>fi", "<cmd>Telescope lsp_implementations<CR>", opt)
 
-
 --[[
 local pluginKeys = {}
 pluginKeys.nvimTreeList = {
