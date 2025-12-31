@@ -131,7 +131,6 @@ lsp_setup("clangd", {
 
 lsp_setup("racket_langserver", {
     on_attach = on_attach,
-    capabilities = capabilities,
     cmd = { "racket", "--lib", "racket-langserver" },
     filetypes = { "scheme", "racket" },
 })

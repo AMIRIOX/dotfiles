@@ -19,21 +19,17 @@ vim.wo.colorcolumn = "80"
 
 -- indent
 vim.o.tabstop = 4
-vim.bo.tabstop = 4
 vim.o.softtabstop = 4
 vim.o.shiftround = true
 
 -- >> << indent
 vim.o.shiftwidth = 4
-vim.bo.shiftwidth = 4
 
 -- Space tab
 vim.o.expandtab = true
-vim.bo.expandtab = true
 
 -- auto indent
 vim.o.autoindent = true
-vim.bo.autoindent = true
 vim.o.smartindent = true
 
 -- ignore case
@@ -49,7 +45,6 @@ vim.o.cmdheight = 2
 
 -- auto read if modified
 vim.o.autoread = true
-vim.bo.autoread = true
 
 -- no wrap
 vim.wo.wrap = false
@@ -80,14 +75,13 @@ vim.o.splitbelow = true
 vim.o.splitright = true
 
 -- comp
-vim.g.completeopt = "menu,menuone,noselect,noinsert"
+vim.opt.completeopt = "menu,menuone,noselect,noinsert"
 vim.o.wildmenu = true
 vim.o.pumheight = 10
 
 -- style
 vim.o.background = "dark"
 vim.o.termguicolors = true
-vim.opt.termguicolors = true
 
 -- invisable
 vim.o.list = true

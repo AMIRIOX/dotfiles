@@ -12,7 +12,6 @@ map("t", "<C-Space>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>', opt)
 map("n", "<A-S-f>", ":lua vim.lsp.buf.format { async = true }<CR>", opt)
 
 -- Split window
-map("n", "s", "", opt)
 map("n", "sv", ":vsp<CR>", opt)
 map("n", "sh", ":sp<CR>", opt)
 map("n", "sc", "<C-w>c", opt)
@@ -64,8 +63,9 @@ map("i", "<C-h>", "<ESC>I", opt)
 map("i", "<C-l>", "<ESC>A", opt)
 
 -- bufferline
--- Tab to switch
+-- Tab and Ctrl-h/l to switch buffers
 map("n", "<Tab>", ":BufferLineCycleNext<CR>", opt)
+map("n", "<S-Tab>", ":BufferLineCyclePrev<CR>", opt)
 map("n", "<C-h>", ":BufferLineCyclePrev<CR>", opt)
 map("n", "<C-l>", ":BufferLineCycleNext<CR>", opt)
 map("n", "<leader>d", ":Bdelete!<CR>", opt)
@@ -86,11 +86,7 @@ map(
 map("n", "<leader>xL", ":Trouble loclist toggle<CR>", opt)
 map("n", "<leader>xQ", ":Trouble qflist toggle<CR>", opt)
 
--- leap
-map("n", "s", "<Plug>(leap-forward-to)", opt)
-map("n", "S", "<Plug>(leap-backward-to)", opt)
-map("n", "t", "<Plug>(leap-forward-till)", opt)
-map("n", "T", "<Plug>(leap-backward-till)", opt)
+-- leap (configured in init.lua with vim.keymap.set)
 
 -- management
 map("n", "<A-m>", ":NvimTreeToggle<CR>", opt)

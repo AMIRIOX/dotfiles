@@ -109,7 +109,7 @@ db.setup({
 
     theme = "doom",
     config = {
-        header = misaki,
+        header = zerotwo,
         center = {
             {
                 icon = "  ",

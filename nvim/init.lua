@@ -8,7 +8,7 @@ package.path = package.path
 
 vim.cmd([[packadd packer.nvim]])
 
-return require("packer").startup(function(use)
+require("packer").startup(function(use)
     -- load addons
 
     -- packer
@@ -87,20 +87,7 @@ return require("packer").startup(function(use)
     --vim.notify = require("notify")
 
     use("lukas-reineke/indent-blankline.nvim")
-    require("ibl").setup({
-        exclude = {
-            filetypes = { "dashboard", "alpha", "starter" },
-        },
-    })
     use("ggandor/leap.nvim")
-    -- require("leap").add_default_mappings()
-    local leap = require("leap")
-    vim.keymap.set(
-        { "n", "x", "o" },
-        "s",
-        "<Plug>(leap-forward)",
-        { silent = true }
-    )
 
     --use "tpope/vim-repeat"
     --require("vim-repeat")
@@ -139,66 +126,58 @@ return require("packer").startup(function(use)
         end,
     })
 
-    -- settings
-    require("basic")
-    require("keybindings")
-    require("colorscheme")
-
-    -- load plugin-config
-    require("plugin-config.nvim-tree")
-    require("plugin-config.bufferline")
-    require("plugin-config.lualine")
-    require("plugin-config.dashboard")
-    require("plugin-config.project")
-    require("plugin-config.telescope")
-    require("telescope").load_extension("projects")
-    require("plugin-config.nvim-cmp")
-    require("plugin-config.lsp")
-    require("plugin-config.kind")
-    require("plugin-config.trouble")
-    require("plugin-config.lsp_signature")
-    require("plugin-config.fidget")
-    require("plugin-config.fterm")
-    require("plugin-config.nonels")
-    -- require("plugin-config.toml")
-
-    -- WSL clipboard config，by clip.exe
-    if vim.fn.has("unix") == 1 and vim.fn.system("uname") == "Linux\n" then
-        local wsl_check = vim.fn.system("grep -i microsoft /proc/version")
-        if wsl_check ~= "" then
-            -- vim.opt.clipboard = 'unnamedplus'
-            vim.g.clipboard = {
-                name = "WslClipboard",
-                copy = {
-                    ["+"] = "win32yank.exe -i",
-                    ["*"] = "win32yank.exe -i",
-                },
-                paste = {
-                    ["+"] = "win32yank.exe -o",
-                    ["*"] = "win32yank.exe -o",
-                },
-                cache_enabled = 0,
-            }
-        end
-    end
-
-    -- Tests
-    --[[
-    vim.api.nvim_create_autocmd("FileType", {
-        pattern = { "scheme", "racket" },
-        callback = function()
-            vim.lsp.start({
-                name = "racket-lsp",
-                cmd = { "racket", "--lib", "racket-langserver" },
-                root_dir = vim.fn.getcwd(),
-                on_attach = on_attach,
-                capabilities = require("cmp_nvim_lsp").default_capabilities(),
-            })
-        end,
-    })
-    ]]
-
     if packer_bootstrap then
         require("packer").sync()
     end
 end)
+
+-- Load basic settings
+require("basic")
+require("keybindings")
+require("colorscheme")
+
+-- Load plugin configurations
+require("plugin-config.nvim-tree")
+require("plugin-config.bufferline")
+require("plugin-config.lualine")
+require("plugin-config.dashboard")
+require("plugin-config.project")
+require("plugin-config.telescope")
+require("telescope").load_extension("projects")
+require("plugin-config.nvim-cmp")
+require("plugin-config.lsp")
+require("plugin-config.kind")
+require("plugin-config.trouble")
+require("plugin-config.lsp_signature")
+require("plugin-config.fidget")
+require("plugin-config.fterm")
+require("plugin-config.nonels")
+
+-- Configure indent-blankline
+require("ibl").setup({
+    exclude = {
+        filetypes = { "dashboard", "alpha", "starter" },
+    },
+})
+
+-- Configure leap.nvim
+vim.keymap.set({ "n", "x", "o" }, "s", "<Plug>(leap-forward)", { silent = true })
+
+-- WSL clipboard config
+if vim.fn.has("unix") == 1 and vim.fn.system("uname") == "Linux\n" then
+    local wsl_check = vim.fn.system("grep -i microsoft /proc/version")
+    if wsl_check ~= "" then
+        vim.g.clipboard = {
+            name = "WslClipboard",
+            copy = {
+                ["+"] = "win32yank.exe -i",
+                ["*"] = "win32yank.exe -i",
+            },
+            paste = {
+                ["+"] = "win32yank.exe -o",
+                ["*"] = "win32yank.exe -o",
+            },
+            cache_enabled = 0,
+        }
+    end
+end
