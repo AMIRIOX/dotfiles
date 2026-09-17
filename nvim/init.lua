@@ -1,102 +1,107 @@
-local homedir = os.getenv("HOME")
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+    local ok = vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable",
+        lazypath,
+    })
+    if ok ~= 0 then
+        vim.notify("lazy.nvim 安装失败,请检查网络后重试", vim.log.levels.ERROR)
+    end
+end
+vim.opt.rtp:prepend(lazypath)
 
-package.path = package.path .. ";" .. homedir .. "/.config/nvim/?.lua"
-package.path = package.path
-    .. ";"
-    .. homedir
-    .. "/.local/share/nvim/site/pack/packer/start/packer.nvim/?.lua"
-
-vim.cmd([[packadd packer.nvim]])
-
-require("packer").startup(function(use)
-    -- load addons
-
-    -- packer
-    use("wbthomason/packer.nvim")
-
+require("lazy").setup({
     -- colorscheme
-    use("folke/tokyonight.nvim")
-    use({ "catppuccin/nvim", as = "catppuccin" })
-    use("navarasu/onedark.nvim")
+    "folke/tokyonight.nvim",
+    { "catppuccin/nvim", name = "catppuccin" },
+    "navarasu/onedark.nvim",
 
     -- UI
-    use({
-        "kyazdani42/nvim-tree.lua",
-        requires = "kyazdani42/nvim-web-devicons",
-    })
-    use({
+    {
+        "nvim-tree/nvim-tree.lua",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+    },
+    {
         "akinsho/bufferline.nvim",
-        requires = {
-            "kyazdani42/nvim-web-devicons",
-            "moll/vim-bbye",
-        },
-    })
-    use({
+        dependencies = { "nvim-tree/nvim-web-devicons", "moll/vim-bbye" },
+    },
+    {
         "nvim-lualine/lualine.nvim",
-        requires = {
-            "kyazdani42/nvim-web-devicons",
-        },
-    })
-    use("glepnir/dashboard-nvim")
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+    },
+    "nvimdev/dashboard-nvim",
 
     -- multi file
-    use("ahmedkhalf/project.nvim")
-    use({
+    "ahmedkhalf/project.nvim",
+    {
         "nvim-telescope/telescope.nvim",
-        requires = {
-            "nvim-lua/plenary.nvim",
-        },
-    })
-    use({
-        "nvim-telescope/telescope-fzf-native.nvim",
-        run = "make",
-    })
+        dependencies = { "nvim-lua/plenary.nvim" },
+    },
+    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 
     -- syntax
-    use({ "nvim-treesitter/nvim-treesitter" })
-    use("numToStr/FTerm.nvim")
-    use("wakatime/vim-wakatime")
-    use({ "neovim/nvim-lspconfig" })
-    use({ "onsails/lspkind.nvim" }) --, after = 'nvim-lspconfig' }
-    use({ "j-hui/fidget.nvim" }) --, after = 'nvim-lspconfig' }
-    use({ "hrsh7th/nvim-cmp", config = [[require('plugin-config.nvim-cmp')]] })
-    use({ "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" })
-    use({ "hrsh7th/cmp-buffer", after = "nvim-cmp" })
-    use({ "hrsh7th/cmp-path", after = "nvim-cmp" })
-    use({ "hrsh7th/cmp-cmdline", after = "nvim-cmp" })
-    use("L3MON4D3/LuaSnip")
-    use("saadparwaiz1/cmp_luasnip")
-    use({ "williamboman/mason.nvim", opts = {} })
-    use({ "williamboman/mason-lspconfig.nvim", opts = {} })
-    use({ "mfussenegger/nvim-jdtls" })
+    "numToStr/FTerm.nvim",
+    "wakatime/vim-wakatime",
 
-    use({ "nvimtools/none-ls.nvim" })
-    use("folke/trouble.nvim")
-    use("ray-x/lsp_signature.nvim")
-    --[[
-    use({
-        "Saecki/crates.nvim",
-        requires = { "nvim-lua/plenary.nvim" },
+    -- LSP / completion
+    "neovim/nvim-lspconfig",
+    "onsails/lspkind.nvim",
+    "j-hui/fidget.nvim",
+    {
+        "hrsh7th/nvim-cmp",
+        dependencies = {
+            "hrsh7th/cmp-nvim-lsp",
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-path",
+            "hrsh7th/cmp-cmdline",
+            "L3MON4D3/LuaSnip",
+            "saadparwaiz1/cmp_luasnip",
+        },
+    },
+    "williamboman/mason.nvim",
+    "williamboman/mason-lspconfig.nvim",
+    "mfussenegger/nvim-jdtls",
+
+    "stevearc/conform.nvim",
+    "lewis6991/gitsigns.nvim",
+    "folke/trouble.nvim",
+    "ray-x/lsp_signature.nvim",
+
+    -- 编辑增强
+    "kylechui/nvim-surround",
+    {
+        "MeanderingProgrammer/render-markdown.nvim",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        ft = "markdown",
         config = function()
-            require("crates").setup()
+            require("render-markdown").setup({
+                heading = {
+                    icons = { "󰲡 ", "󰲣 ", "󰲥 ", "󰲧 ", "󰲩 ", "󰲫 " },
+                },
+            })
         end,
-    })
+    },
+    --[[
+    {
+        "Saecki/crates.nvim",
+        dependencies = { "nvim-lua/plenary.nvim" },
+    },
     --]]
 
-    --use "rcarriga/nvim-notify"
-    --vim.notify = require("notify")
+    -- "rcarriga/nvim-notify"
 
-    use("lukas-reineke/indent-blankline.nvim")
-    use("ggandor/leap.nvim")
+    "lukas-reineke/indent-blankline.nvim",
+    -- "ggandor/leap.nvim"
 
-    --use "tpope/vim-repeat"
-    --require("vim-repeat")
+    -- "tpope/vim-repeat"
 
-    use({
+    {
         "folke/sidekick.nvim",
-        requires = {
-            "nvim-lua/plenary.nvim",
-        },
+        dependencies = { "nvim-lua/plenary.nvim" },
         config = function()
             require("sidekick").setup({
                 nes = { enabled = false },
@@ -124,12 +129,22 @@ require("packer").startup(function(use)
                 noremap = true,
             })
         end,
-    })
+    },
 
-    if packer_bootstrap then
-        require("packer").sync()
-    end
-end)
+    --[[
+    {
+        "MeanderingProgrammer/render-markdown.nvim",
+        dependencies = { "nvim-tree/nvim-web-devicons", "nvim-treesitter/nvim-treesitter" },
+        config = function()
+            require("render-markdown").setup({
+                heading = {
+                    icons = { "󰲡 ", "󰲣 ", "󰲥 ", "󰲧 ", "󰲩 ", "󰲫 " },
+                },
+            })
+        end,
+    },
+    --]]
+})
 
 -- Load basic settings
 require("basic")
@@ -143,7 +158,6 @@ require("plugin-config.lualine")
 require("plugin-config.dashboard")
 require("plugin-config.project")
 require("plugin-config.telescope")
-require("telescope").load_extension("projects")
 require("plugin-config.nvim-cmp")
 require("plugin-config.lsp")
 require("plugin-config.kind")
@@ -151,7 +165,9 @@ require("plugin-config.trouble")
 require("plugin-config.lsp_signature")
 require("plugin-config.fidget")
 require("plugin-config.fterm")
-require("plugin-config.nonels")
+require("plugin-config.conform")
+require("plugin-config.gitsigns")
+require("plugin-config.treesitter")
 
 -- Configure indent-blankline
 require("ibl").setup({
@@ -160,10 +176,7 @@ require("ibl").setup({
     },
 })
 
--- Configure leap.nvim
-vim.keymap.set({ "n", "x", "o" }, "s", "<Plug>(leap-forward)", { silent = true })
-
--- WSL clipboard config
+-- WSL config(clipboard + 系统打开)
 if vim.fn.has("unix") == 1 and vim.fn.system("uname") == "Linux\n" then
     local wsl_check = vim.fn.system("grep -i microsoft /proc/version")
     if wsl_check ~= "" then
@@ -179,5 +192,13 @@ if vim.fn.has("unix") == 1 and vim.fn.system("uname") == "Linux\n" then
             },
             cache_enabled = 0,
         }
+        -- nvim-tree 的 system_open 已移除,统一走 vim.ui.open();
+        -- WSL 下若安装了 wsl-open(原 system_open 的行为),则覆盖用它
+        -- https://github.com/4U6U57/wsl-open/
+        if vim.fn.executable("wsl-open") == 1 then
+            vim.ui.open = function(path)
+                return vim.system({ "wsl-open", path }, { detach = true })
+            end
+        end
     end
 end

@@ -1,0 +1,74 @@
+{
+    "recommendations": [
+        // ============================================
+        // LSP 语言服务器 (对应 mason + nvim-lspconfig 安装的服务器)
+        // ============================================
+        "llvm-vs-code-extensions.vscode-clangd",    // clangd
+        "rust-lang.rust-analyzer",                   // rust_analyzer
+        "golang.go",                                 // gopls
+        "ms-python.python",                          // pylsp → Pylance 更好
+        "ms-python.vscode-pylance",
+        "redhat.java",                               // jdtls
+        "redhat.vscode-xml",
+        "sumneko.lua",                               // lua_ls
+        "ms-vscode.cmake-tools",                     // cmake
+        "ms-vscode.cmake-tools-helper",
+        // asm_lsp 的替代
+        "13xforever.language-x86-64-assembly",
+        // racket-langserver 的替代
+        "evzen-wybitul.magic-racket",
+
+        // ============================================
+        // 格式化 (对应 none-ls: stylua + clang_format)
+        // ============================================
+        "JohnnyMorganz.stylua",                      // stylua
+        "xaver.clang-format",                        // clang_format
+        "ms-python.black-formatter",
+
+        // ============================================
+        // 缩进参考线 (对应 indent-blankline)
+        // ============================================
+        "oderwat.indent-rainbow",
+
+        // ============================================
+        // AI / Copilot (对应 sidekick.nvim)
+        // ============================================
+        "GitHub.copilot",
+        "GitHub.copilot-chat",
+
+        // ============================================
+        // WakaTime (对应 wakatime)
+        // ============================================
+        "WakaTime.vscode-wakatime",
+
+        // ============================================
+        // 项目管理 (对应 project.nvim)
+        // ============================================
+        "alefragnani.project-manager",
+
+        // ============================================
+        // 增强编辑器体验
+        // ============================================
+        "vscodevim.vim",                             // Vim 键位模拟 (可选)
+        "eamodio.gitlens",                           // Git 增强 (部分替代 Telescope git_status)
+        "EditorConfig.EditorConfig",                 // 跨编辑器缩进配置
+        "usernamehw.errorlens",                       // 行内显示诊断 (类似 Trouble 的简化版)
+        "gruntfuggly.todo-tree",                     // TODO 管理
+        "wayou.vscode-todo-highlight",
+
+        // ============================================
+        // Markdown 增强 (对应 render-markdown.nvim)
+        // ============================================
+        "yzhang.markdown-all-in-one",
+
+        // ============================================
+        // 括号高亮
+        // ============================================
+        "CoenraadS.bracket-pair-colorizer-2",
+
+        // ============================================
+        // Git
+        // ============================================
+        "mhutchie.git-graph"
+    ]
+}

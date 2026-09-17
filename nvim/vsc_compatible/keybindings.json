@@ -1,0 +1,61 @@
+[
+    // ====================================================================
+    // 本文件仅包含 vscodevim 不处理的键位:
+    //   终端内按键、补全菜单内按键、全局面板快捷键
+    //
+    // normal/insert/visual 模式键位 → settings.json 中 vim.* 配置
+    // ====================================================================
+
+    // --- 终端内: <Esc> 退回 normal 后聚焦编辑器 ---
+    {
+        "key": "escape",
+        "command": "workbench.action.focusActiveEditorGroup",
+        "when": "terminalFocus && terminalHasBeenCreated && !terminalTextSelected"
+    },
+
+    // --- 终端内窗口导航 (keybindings.lua:41-44) ---
+    {
+        "key": "alt+h",
+        "command": "workbench.action.terminal.focusPreviousPane",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "alt+l",
+        "command": "workbench.action.terminal.focusNextPane",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "alt+j",
+        "command": "workbench.action.terminal.focusNextPane",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "alt+k",
+        "command": "workbench.action.terminal.focusPreviousPane",
+        "when": "terminalFocus"
+    },
+
+    // --- 补全文档翻页 (nvim-cmp.lua:33-34, Ctrl+b/f scroll_docs) ---
+    {
+        "key": "ctrl+b",
+        "command": "editor.action.pageDownHover",
+        "when": "editorHoverVisible"
+    },
+    {
+        "key": "ctrl+f",
+        "command": "editor.action.pageUpHover",
+        "when": "editorHoverVisible"
+    },
+
+    // --- Smart Select (treesitter.lua 增量选择等价) ---
+    {
+        "key": "shift+alt+right",
+        "command": "editor.action.smartSelect.expand",
+        "when": "editorFocus"
+    },
+    {
+        "key": "shift+alt+left",
+        "command": "editor.action.smartSelect.shrink",
+        "when": "editorFocus"
+    }
+]

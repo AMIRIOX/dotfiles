@@ -1,0 +1,498 @@
+{
+    // ============================================
+    // 对应 basic.lua - 基础编辑器设置
+    // ============================================
+
+    // --- 编码 ---
+    "files.encoding": "utf8",
+    "files.autoGuessEncoding": false,
+
+    // --- 滚动留白 (scrolloff=8) ---
+    "editor.cursorSurroundingLines": 8,
+    "editor.cursorSurroundingLinesStyle": "default",
+
+    // --- 行号 (number + relativenumber) ---
+    "editor.lineNumbers": "relative",
+    // 当 VSCode 不支持混合行号时用 relative, 需要绝对行号可按 Ctrl+G
+
+    // --- 高亮当前行 (cursorline) ---
+    "editor.renderLineHighlight": "all",
+
+    // --- 符号列 + 80字符标线 (signcolumn + colorcolumn=80) ---
+    "editor.rulers": [80],
+    // VSCode 的 glyph margin 等价于 signcolumn
+    "editor.glyphMargin": true,
+
+    // --- 缩进 (tabstop=4, shiftwidth=4, expandtab) ---
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false,
+
+    // --- 自动缩进 (autoindent + smartindent) ---
+    "editor.autoIndent": "full",
+
+    // --- 搜索 (ignorecase, smartcase, incsearch, nohlsearch) ---
+    "editor.find.seedSearchStringFromSelection": "selection",
+    "editor.find.autoFindInSelection": "multiline",
+
+    // --- 自动读取外部修改 (autoread) ---
+    "files.autoSave": "off",
+    "files.watcherExclude": {
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/node_modules/**": true,
+        "**/.hg/store/**": true
+    },
+
+    // --- 不折行 (nowrap) ---
+    "editor.wordWrap": "off",
+
+    // --- 鼠标支持 ---
+    "editor.mouseWheelZoom": false,
+
+    // --- 补全 (completeopt: menu,menuone,noselect,noinsert) ---
+    "editor.suggestSelection": "first",
+    "editor.suggest.insertMode": "replace",
+    "editor.quickSuggestions": {
+        "other": true,
+        "comments": false,
+        "strings": true
+    },
+    "editor.suggest.showSnippets": true,
+    "editor.suggest.showWords": true,
+    "editor.suggest.showFiles": true,
+    "editor.suggest.showReferences": true,
+    "editor.suggest.showInlineDetails": true,
+    "editor.suggest.preview": false,
+    "editor.suggest.maxVisibleSuggestions": 10,
+    // 类似 pumheight=10
+    "editor.suggest.localityBonus": true,
+    "editor.acceptSuggestionOnCommitCharacter": true,
+
+    // --- 显示不可见字符 (list, listchars: tab + space) ---
+    "editor.renderWhitespace": "all",
+    "editor.unicodeHighlight.ambiguousCharacters": false,
+    "editor.unicodeHighlight.invisibleCharacters": false,
+
+    // --- 折叠 (foldmethod=expr, treesitter折叠) ---
+    "editor.folding": true,
+    "editor.foldingStrategy": "auto",
+    "editor.foldingImportsByDefault": false,
+    "editor.showFoldingControls": "always",
+
+    // --- 补全菜单透明 (Pmenu guibg=NONE) ---
+    // VSCode 无原生支持, 需主题自定义
+
+    // --- 文件类型关联 (scheme/racket) ---
+    "files.associations": {
+        "*.scm": "scheme",
+        "*.rkt": "racket"
+    },
+
+    // --- 终端 (对应 FTerm: blend=0, rounded border) ---
+    "terminal.integrated.fontFamily": "monospace",
+    "terminal.integrated.cursorBlinking": true,
+    "terminal.integrated.cursorStyle": "line",
+    "terminal.integrated.scrollback": 10000,
+    "terminal.integrated.enablePersistentSessions": true,
+
+    // --- 分屏默认方向 (splitbelow + splitright) ---
+    "workbench.editor.splitInGroupLayout": "horizontal",
+
+    // --- 关闭预览模式 (类似 hidden) ---
+    "workbench.editor.enablePreview": false,
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+
+    // --- editor 无备份 (noswapfile/nowritebackup/nobackup) ---
+    // VSCode 默认不创建 swap/backup 文件, 但可配置 hot exit
+    "files.hotExit": "onExitAndWindowClose",
+
+    // --- 状态栏 ---
+    "workbench.statusBar.visible": true,
+
+    // --- Tab 行显示 (showtabline=2) ---
+    "workbench.editor.showTabs": "multiple",
+    "workbench.editor.tabSizing": "shrink",
+    "workbench.editor.labelFormat": "short",
+
+    // --- Activity bar 位置 (类似 nvim-tree 在左) ---
+    "workbench.sideBar.location": "left",
+
+    // --- 终端字体 ---
+    "terminal.integrated.tabs.enabled": true,
+
+    // --- 背景图片 ---
+    "background.fullscreen": {
+        "images": ["/Users/amiriox/Backup/AnimeWaiting.png"],
+        "opacity": 0.3,
+        "size": "cover",
+        "position": "center",
+        "interval": 0,
+        "random": false
+    },
+
+    // --- ChatGPT 语言 ---
+    "chatgpt.localeOverride": "zh-CN",
+
+    // ============================================
+    // LSP / IntelliSense (对应 lsp.lua)
+    // ============================================
+
+    // 诊断配置
+    "editor.semanticHighlighting.enabled": true,
+    "editor.semanticTokenColorCustomizations": {},
+    "editor.inlayHints.enabled": "on",
+
+    // Rust Analyzer 等价
+    "rust-analyzer.diagnostics.enable": true,
+    "rust-analyzer.cargo.allFeatures": true,
+    "rust-analyzer.cargo.allTargets": true,
+    "rust-analyzer.cargo.buildScripts.enable": true,
+    "rust-analyzer.procMacro.enable": true,
+    "rust-analyzer.hover.enable": true,
+    "rust-analyzer.completion.autoimport.enable": true,
+    "rust-analyzer.completion.fullFunctionSignatures.enable": true,
+    "rust-analyzer.workspace.symbol.search.kind": "all_symbols",
+    "rust-analyzer.workspace.symbol.search.limit": 128,
+    "rust-analyzer.inlayHints.enable": true,
+    "rust-analyzer.inlayHints.typeHints.enable": true,
+
+    // C/C++ 禁用默认 IntelliSense (用 clangd 替代)
+    "C_Cpp.intelliSenseEngine": "disabled",
+
+    // Clangd 等价
+    "clangd.arguments": [
+        "--background-index",
+        "--clang-tidy",
+        "--completion-style=detailed",
+        "--offset-encoding=utf-16"
+    ],
+    "clangd.inlayHints.enable": true,
+    "clangd.inlayHints.parameterHints": true,
+    "clangd.inlayHints.returnTypeHints": true,
+
+    // Go (gopls) 等价
+    "go.useLanguageServer": true,
+    "go.toolsManagement.autoUpdate": true,
+
+    // Python (pylsp 等价 → Pylance 是更好的 VSCode 替代)
+    "python.languageServer": "Pylance",
+    "python.analysis.typeCheckingMode": "basic",
+
+    // Java (JDTLS 等价)
+    "java.jdt.ls.vmargs": "-Xms1g -Xmx2g --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED",
+    "java.configuration.runtimes": [
+        { "name": "JavaSE-21", "path": "/usr/lib/jvm/java-21-openjdk/" },
+        { "name": "JavaSE-24", "path": "/usr/lib/jvm/java-24-openjdk/" }
+    ],
+    "java.configuration.maven.userSettings": "",
+    "java.import.maven.enabled": true,
+    "java.import.gradle.enabled": false,
+    "java.eclipse.downloadSources": true,
+    "java.signatureHelp.enabled": true,
+    "java.implementationsCodeLens.enabled": true,
+    "java.referencesCodeLens.enabled": true,
+    "java.references.includeDecompiledSources": true,
+    "java.saveActions.organizeImports": true,
+    "java.format.enabled": true,
+    "java.format.comments.enabled": true,
+    "java.contentProvider.preferred": "fernflower",
+    "java.inlayHints.parameterNames.enabled": "literals",
+
+    // Lua
+    "Lua.workspace.checkThirdParty": false,
+    "Lua.completion.enable": true,
+    "Lua.diagnostics.enable": true,
+
+    // CMake
+    "cmake.configureOnOpen": true,
+
+    // ============================================
+    // 格式化 (对应 none-ls: stylua + clang_format)
+    // ============================================
+    "[lua]": {
+        "editor.defaultFormatter": "JohnnyMorganz.stylua",
+        "editor.formatOnSave": true
+    },
+    "[c]": {
+        "editor.defaultFormatter": "xaver.clang-format",
+        "editor.formatOnSave": true
+    },
+    "[cpp]": {
+        "editor.defaultFormatter": "xaver.clang-format",
+        "editor.formatOnSave": true
+    },
+    "[rust]": {
+        "editor.defaultFormatter": "rust-lang.rust-analyzer",
+        "editor.formatOnSave": true
+    },
+    "[go]": {
+        "editor.defaultFormatter": "golang.go",
+        "editor.formatOnSave": true
+    },
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true,
+        "editor.tabSize": 4
+    },
+    "[java]": {
+        "editor.defaultFormatter": "redhat.java",
+        "editor.formatOnSave": true
+    },
+
+    // ============================================
+    // 缩进参考线 (对应 indent-blankline)
+    // ============================================
+    "editor.guides.indentation": true,
+    "editor.guides.bracketPairs": "active",
+
+    // ============================================
+    // 文件资源管理器 (对应 nvim-tree)
+    // ============================================
+    "explorer.compactFolders": false,
+    "explorer.confirmDelete": true,
+    "explorer.sortOrder": "default",
+    "explorer.autoReveal": true,
+    "explorer.fileNesting.enabled": false,
+    // nvim-tree 的 node_modules 过滤
+    "files.exclude": {
+        "**/node_modules": true
+    },
+
+    // ============================================
+    // Trouble 等价 → Problems 面板
+    // ============================================
+    "problems.autoReveal": true,
+    "problems.decorations.enabled": true,
+    "problems.showCurrentInStatus": true,
+
+    // ============================================
+    // 杂项
+    // ============================================
+    "workbench.startupEditor": "newUntitledFile",
+    // 类似 dashboard-nvim
+    "breadcrumbs.enabled": true,
+    "editor.minimap.enabled": true,
+    "editor.smoothScrolling": true,
+    "editor.cursorBlinking": "solid",
+    "editor.cursorStyle": "line",
+    "editor.fontLigatures": true,
+    "telemetry.telemetryLevel": "off",
+
+    // ============================================
+    // Markdown 预览 (对应 render-markdown.nvim)
+    // ============================================
+    "markdown.preview.breaks": true,
+    "markdown.preview.linkify": true,
+    "markdown.preview.typographer": true,
+
+    // ============================================
+    // WakaTime
+    // ============================================
+    "wakatime.apikey": "",
+
+    // ============================================
+    // Copilot / AI (对应 sidekick.nvim)
+    // ============================================
+    "github.copilot.enable": {
+        "*": true,
+        "yaml": true,
+        "plaintext": false,
+        "markdown": true
+    },
+    "github.copilot.editor.enableAutoCompletions": true,
+
+    // ============================================
+    // 分屏和布局
+    // ============================================
+    "workbench.editor.splitOnDragAndDrop": true,
+    "workbench.editor.centeredLayoutFixedWidth": false,
+
+    // ============================================
+    // SCSS / CSS (无直接对应，额外增强)
+    // ============================================
+    "css.validate": true,
+    "scss.validate": true,
+
+    // ============================================
+    // 语言特定缩进覆盖
+    // ============================================
+    "[go]": {
+        "editor.tabSize": 4
+    },
+    "[rust]": {
+        "editor.tabSize": 4
+    },
+    "[javascript]": {
+        "editor.tabSize": 2
+    },
+    "[typescript]": {
+        "editor.tabSize": 2
+    },
+    "[json]": {
+        "editor.tabSize": 2
+    },
+    "[yaml]": {
+        "editor.tabSize": 2
+    },
+
+    // ====================================================================
+    // vscodevim - 以正常/插入/可视模式精确复刻 Neovim 键位
+    // ====================================================================
+
+    // --- vim 基础选项 (等价 basic.lua) ---
+    "vim.leader": "<space>",
+    "vim.useSystemClipboard": true,
+    "vim.hlsearch": false,
+    "vim.incsearch": true,
+    "vim.ignorecase": true,
+    "vim.smartcase": true,
+    "vim.timeoutlen": 500,
+    "vim.showmodename": false,
+    "vim.cursorSurroundingLines": 8,
+
+    // 哪些键不交给 vscodevim 处理, 留给 VSCode keybindings.json
+    "vim.handleKeys": {
+        "<C-h>": true,
+        "<C-l>": true,
+        "<C-b>": false,
+        "<C-f>": false,
+        "<C-j>": false,
+        "<C-k>": false,
+        "<C-Space>": false,
+        "<C-Left>": false,
+        "<C-Right>": false,
+        "<C-Up>": false,
+        "<C-Down>": false
+    },
+
+    // 确保 vscodevim 扩展优先处理按键
+    "extensions.experimental.affinity": {
+        "vscodevim.vim": 1
+    },
+
+    // ====================================================================
+    // normal 模式键位 (等价 keybindings.lua + lsp.lua + jdtls_conf.lua)
+    // ====================================================================
+    "vim.normalModeKeyBindingsNonRecursive": [
+        // --- 分屏 (keybindings.lua:15-34) ---
+        { "before": ["s", "v"], "commands": ["workbench.action.splitEditor"] },
+        { "before": ["s", "h"], "commands": ["workbench.action.splitEditorOrthogonal"] },
+        { "before": ["s", "c"], "commands": ["workbench.action.closeActiveEditor"] },
+        { "before": ["s", "o"], "commands": ["workbench.action.closeOtherEditors"] },
+        { "before": ["s", "="], "commands": ["workbench.action.evenEditorWidths"] },
+        { "before": ["s", ","], "commands": ["workbench.action.decreaseViewWidth"] },
+        { "before": ["s", "."], "commands": ["workbench.action.increaseViewWidth"] },
+        { "before": ["s", "j"], "commands": ["workbench.action.increaseViewHeight"] },
+        { "before": ["s", "k"], "commands": ["workbench.action.decreaseViewHeight"] },
+
+        // --- 窗口导航 (keybindings.lua:19-22) ---
+        { "before": ["<A-h>"], "commands": ["workbench.action.focusLeftGroup"] },
+        { "before": ["<A-j>"], "commands": ["workbench.action.focusBelowGroup"] },
+        { "before": ["<A-k>"], "commands": ["workbench.action.focusAboveGroup"] },
+        { "before": ["<A-l>"], "commands": ["workbench.action.focusRightGroup"] },
+
+        // --- 窗口微调 (keybindings.lua:24-33) ---
+        { "before": ["<C-Left>"], "commands": ["workbench.action.decreaseViewWidth"] },
+        { "before": ["<C-Right>"], "commands": ["workbench.action.increaseViewWidth"] },
+        { "before": ["<C-Up>"], "commands": ["workbench.action.decreaseViewHeight"] },
+        { "before": ["<C-Down>"], "commands": ["workbench.action.increaseViewHeight"] },
+
+        // --- Buffer 切换 (keybindings.lua:67-70) ---
+        { "before": ["<Tab>"], "commands": ["workbench.action.nextEditor"] },
+        { "before": ["<S-Tab>"], "commands": ["workbench.action.previousEditor"] },
+        { "before": ["<C-h>"], "commands": ["workbench.action.previousEditor"] },
+        { "before": ["<C-l>"], "commands": ["workbench.action.nextEditor"] },
+
+        // --- Buffer 关闭 (keybindings.lua:71-74) ---
+        { "before": ["<leader>", "d"], "commands": ["workbench.action.closeActiveEditor"] },
+        { "before": ["<leader>", "b", "l"], "commands": ["workbench.action.closeEditorsToTheRight"] },
+        { "before": ["<leader>", "b", "h"], "commands": ["workbench.action.closeEditorsToTheLeft"] },
+        { "before": ["<leader>", "b", "c"], "commands": ["workbench.action.closeAllEditors"] },
+
+        // --- 终端 (keybindings.lua:37-38) ---
+        { "before": ["<leader>", "t"], "commands": ["workbench.action.createTerminalEditorSide"] },
+        { "before": ["<leader>", "v", "t"], "commands": ["workbench.action.createTerminalEditor"] },
+        { "before": ["<C-Space>"], "commands": ["workbench.action.terminal.toggleTerminal"] },
+
+        // --- 格式化 (keybindings.lua:12) ---
+        { "before": ["<A-S-f>"], "commands": ["editor.action.formatDocument"] },
+
+        // --- Telescope 等价 (keybindings.lua:92-98) ---
+        { "before": ["<leader>", "f", "f"], "commands": ["workbench.action.quickOpen"] },
+        { "before": ["<leader>", "f", "g"], "commands": ["workbench.action.findInFiles"] },
+        { "before": ["<leader>", "s", "t"], "commands": ["workbench.view.scm"] },
+        { "before": ["<leader>", "f", "r"], "commands": ["references-view.findReferences"] },
+        { "before": ["<leader>", "f", "d"], "commands": ["editor.action.revealDefinition"] },
+        { "before": ["<leader>", "f", "i"], "commands": ["editor.action.goToImplementation"] },
+
+        // --- Trouble 等价 (keybindings.lua:77-87) ---
+        { "before": ["<leader>", "x", "x"], "commands": ["workbench.actions.view.problems"] },
+        { "before": ["<leader>", "x", "X"], "commands": ["workbench.actions.view.problems"] },
+        { "before": ["<leader>", "c", "s"], "commands": ["workbench.action.gotoSymbol"] },
+        { "before": ["<leader>", "c", "l"], "commands": ["workbench.action.showAllSymbols"] },
+
+        // --- 文件树 (keybindings.lua:92) ---
+        { "before": ["<A-m>"], "commands": ["workbench.explorer.fileView.focus"] },
+
+        // --- LSP 诊断 (lsp.lua:54-57) ---
+        { "before": ["<leader>", "e"], "commands": ["editor.action.showHover"] },
+        { "before": ["[", "d"], "commands": ["editor.action.marker.prev"] },
+        { "before": ["]", "d"], "commands": ["editor.action.marker.next"] },
+        { "before": ["<leader>", "q"], "commands": ["workbench.actions.view.problems"] },
+
+        // --- LSP 跳转 (lsp.lua:63-66) ---
+        { "before": ["g", "D"], "commands": ["editor.action.goToDeclaration"] },
+        { "before": ["g", "d"], "commands": ["editor.action.revealDefinition"] },
+        { "before": ["K"], "commands": ["editor.action.showHover"] },
+        { "before": ["g", "i"], "commands": ["editor.action.goToImplementation"] },
+        { "before": ["<C-k>"], "commands": ["editor.action.triggerParameterHints"] },
+        { "before": ["g", "r"], "commands": ["references-view.findReferences"] },
+
+        // --- LSP 工作区 (lsp.lua:68-77) ---
+        { "before": ["<leader>", "w", "a"], "commands": ["workbench.action.addRootFolder"] },
+        { "before": ["<leader>", "w", "r"], "commands": ["workbench.action.removeRootFolder"] },
+        { "before": ["<leader>", "D"], "commands": ["editor.action.goToTypeDefinition"] },
+
+        // --- LSP 操作 (lsp.lua:79-84) ---
+        { "before": ["<leader>", "r", "n"], "commands": ["editor.action.rename"] },
+        { "before": ["<leader>", "c", "a"], "commands": ["editor.action.quickFix"] },
+        { "before": ["<leader>", "f"], "commands": ["editor.action.formatDocument"] },
+
+        // --- Sidekick / Copilot (init.lua:118-132) ---
+        { "before": ["<leader>", "a", "i"], "commands": ["workbench.action.chat.open"] },
+
+        // --- Java JDTLS (jdtls_conf.lua:166-196) ---
+        { "before": ["<leader>", "l", "f"], "commands": ["editor.action.formatDocument"] },
+        { "before": ["<leader>", "l", "a"], "commands": ["editor.action.quickFix"] },
+        { "before": ["<leader>", "l", "r"], "commands": ["editor.action.rename"] },
+        { "before": ["<leader>", "l", "j", "c"], "commands": ["java.workspace.compile"] },
+        { "before": ["<leader>", "j", "c", "o"], "commands": ["java.action.organizeImports"] },
+        { "before": ["<leader>", "j", "c", "a"], "commands": ["editor.action.sourceAction"] },
+        { "before": ["<leader>", "j", "c", "e"], "commands": ["java.refactor.extract.constant"] },
+        { "before": ["<leader>", "j", "c", "v"], "commands": ["java.refactor.extract.variable"] },
+        { "before": ["<leader>", "j", "c", "m"], "commands": ["java.refactor.extract.method"] },
+        { "before": ["<leader>", "l", "h"], "commands": ["editor.toggleInlayHints"] }
+    ],
+
+    // ====================================================================
+    // visual 模式键位 (keybindings.lua:46-58)
+    // ====================================================================
+    "vim.visualModeKeyBindingsNonRecursive": [
+        { "before": ["<"], "commands": ["editor.action.outdentLines"] },
+        { "before": [">"], "commands": ["editor.action.indentLines"] },
+        { "before": ["J"], "commands": ["editor.action.moveLinesDownAction"] },
+        { "before": ["K"], "commands": ["editor.action.moveLinesUpAction"] },
+        { "before": ["p"], "after": ["\"", "_", "d", "P"] },
+        { "before": ["<leader>", "s", "d"], "commands": ["inlineChat.start"] },
+        { "before": ["<leader>", "j", "c", "m"], "commands": ["java.refactor.extract.method"] }
+    ],
+
+    // ====================================================================
+    // insert 模式键位 (keybindings.lua:61-62)
+    // ====================================================================
+    "vim.insertModeKeyBindingsNonRecursive": [
+        { "before": ["<C-h>"], "after": ["<Esc>", "I"] },
+        { "before": ["<C-l>"], "after": ["<Esc>", "A"] }
+    ]
+}
