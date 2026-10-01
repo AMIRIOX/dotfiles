@@ -1,0 +1,203 @@
+# Ghostty config - migrated from kitty (~/.config/kitty/kitty.conf)
+# Docs: https://ghostty.org/docs/config
+
+# ---------- Font ----------
+font-family = Iosevka Cervantes
+font-size = 15
+# kitty symbol_map -> Per-codepoint font fallback for CJK (LXGW WenKai).
+# 你好
+font-codepoint-map = U+4E00-U+9FFF,U+3400-U+4DBF,U+3000-U+303F=LXGWWenKai-Regular
+
+# ---------- Font rendering ----------
+# Thicken strokes -- macOS only. Tried and rejected (too heavy/ugly).
+# font-thicken = true
+# font-thicken-strength = 40
+# Programming ligatures: Iosevka Cervantes enables them via `calt`.
+# Turn them off (or turn off most):
+# font-feature = -calt
+# font-feature = -calt,-liga,-dlig
+# Fine-tune font metrics. Values are an AMOUNT of change (px or %), not absolutes.
+# adjust-cell-height = 20%
+# adjust-cell-width = -5%
+# adjust-cursor-thickness = 2
+# adjust-underline-thickness = 1
+
+# ---------- Background image (disabled for now) ----------
+# kitty: background_image /Users/amiriox/workbench/bg.jpg + background_image_layout scaled
+# background-image = /Users/amiriox/workbench/bg.jpg
+# background-image-fit = cover
+
+# ---------- Opacity / blur ----------
+# kitty was background_opacity 0.95 -- near-opaque, which is why kitty's text
+# read as crisp. At 0.76 the desktop wallpaper bled through and washed out the
+# whole window (background *and* the contrast of every glyph). 0.9 keeps a hint
+# of blur without the haze; use 0.95 for exact kitty parity, 0.76 to go glassy.
+# NOTE (macOS): this option only takes effect after quitting Ghostty COMPLETELY
+# and reopening it -- reloading the config does NOT apply it.
+background-opacity = 0.76
+# kitty: background_blur 30
+# NOTE: `macos-glass-*` has a known active/inactive inversion in 1.3.1 (issue
+# #13914, fixed in 1.4.0): the FOCUSED window renders more opaque than the
+# unfocused one, and it can't be corrected via parameters. The classic numeric
+# blur behaves consistently across focus states, so use it for now.
+# Switch back to macos-glass-clear (or -regular) once 1.4.0 is released.
+background-blur = 30
+
+# ---------- Theme / colors ----------
+# Ghostty ships 400+ built-in themes (browse with `ghostty +list-themes`).
+# "Nord" matches the bg/fg migrated from kitty and supplies the full 16-color
+# palette; Ghostty auto-generates the remaining 256 colors from it.
+theme = Nord
+# Alternatives (swap the line above):
+# theme = Nord Light
+# theme = Nordfox
+# theme = Onenord
+# theme = Rose Pine
+# theme = Gruvbox Material
+# theme = Everforest Dark Hard
+
+# Extra saturation knob (macOS only): interpreting colors as Display P3 makes
+# them noticeably more vivid on a P3 display. Uncomment to try -- it shifts the
+# entire palette (background included), so decide it together with the block below.
+# window-colorspace = display-p3
+
+# ---------- ANSI palette: exact kitty-default parity ----------
+# THE FIX: the kitty config only ever set `background`/`foreground` (Nord) -- it
+# never set the 16-colour ANSI palette, so kitty was using ITS OWN DEFAULTS,
+# which are fully saturated: #cc0403 red, #19cb00 green, #0d73cc blue,
+# #0dcdcd cyan. THAT is the "vivid" you saw in kitty. Ghostty meanwhile was
+# inheriting Nord's deliberately muted palette. These are kitty's defaults verbatim.
+palette = 0=#000000
+palette = 1=#cc0403
+palette = 2=#19cb00
+palette = 3=#cecb00
+palette = 4=#0d73cc
+palette = 5=#cb1ed1
+palette = 6=#0dcdcd
+palette = 7=#dddddd
+palette = 8=#767676
+palette = 9=#f2201f
+palette = 10=#23fd00
+palette = 11=#fffd00
+palette = 12=#1a8fff
+palette = 13=#fd28ff
+palette = 14=#14ffff
+palette = 15=#ffffff
+# Preview:  for i in {0..15}; do printf '\e[38;5;%dm███\e[0m' $i $i; done; echo
+
+# Softer alternative: keep Nord's hues, just brighten them. If the neon palette
+# above feels like too much, comment it out and uncomment this one.
+# (Optional extra: `bold-color = bright` makes BOLD text use the bright slots --
+# kitty does NOT do this, so it's off by default here.)
+# palette = 0=#3b4252
+# palette = 1=#e06c77
+# palette = 2=#a7d586
+# palette = 3=#f5cc7b
+# palette = 4=#7ca8de
+# palette = 5=#d586c6
+# palette = 6=#86cbdf
+# palette = 7=#d8dee9
+# palette = 8=#616e88
+# palette = 9=#ff8b94
+# palette = 10=#c4e8a0
+# palette = 11=#ffe09e
+# palette = 12=#9cc4f5
+# palette = 13=#e9a8dc
+# palette = 14=#a0e4f2
+# palette = 15=#eceff4
+
+# ---------- Cursor ----------
+# Style: uncomment the one you want (Ghostty's default is block).
+# NOTE: shell integration shows a bar at the prompt regardless of this;
+# disable that with `shell-integration-features = no-cursor`.
+cursor-style = block
+# cursor-style = bar
+# cursor-style = underline
+# cursor-style = block_hollow
+# Blink: leaving it unset lets programs decide (DEC mode 12); true/false force it.
+# cursor-style-blink = true
+# cursor-style-blink = false
+# Color/opacity come from `theme = Nord` (cursor #eceff4). Override if you like:
+# cursor-color = cell-foreground
+# cursor-opacity = 1
+
+# ---------- Window ----------
+# NOT MIGRATED 1:1: kitty initial_window_width/height = 1500x1000 are PIXELS,
+# but Ghostty's window-width/height are in grid CELLS. Adjust and uncomment:
+# window-width = 150
+# window-height = 40
+window-padding-x = 10
+window-padding-y = 10
+
+# New tabs start in $HOME instead of inheriting the focused tab's directory.
+# `working-directory` is only consulted once the inherit switch is off.
+# (Splits/windows keep inheriting; add split-inherit-working-directory = false
+#  or window-inherit-working-directory = false if you want those too.)
+tab-inherit-working-directory = false
+working-directory = home
+
+# ---------- macOS window ----------
+# kitty: hide_window_decorations titlebar-only
+# Title-bar / tab-bar style. Uncomment the one you want, comment the rest.
+# NOTE: changing this only applies to NEW windows (cmd+n), not existing ones.
+macos-titlebar-style = tabs
+# macos-titlebar-style = transparent
+# macos-titlebar-style = native
+# macos-titlebar-style = hidden
+# kitty: macos_option_as_alt (left, then both -> effective value "both")
+macos-option-as-alt = true
+# kitty: macos_traditional_fullscreen yes  ->  non-native fullscreen, BUT native
+# tabs do not work in that mode. Left off to keep tabs working; uncomment if you
+# accept losing tabs while fullscreen.
+# macos-non-native-fullscreen = true
+
+# ---------- Selection / clipboard ----------
+# kitty: copy_on_select yes
+copy-on-select = true
+# kitty: strip_trailing_spaces smart
+clipboard-trim-trailing-spaces = true
+
+# ---------- Bell ----------
+# kitty: enable_audio_bell no + window_alert_on_bell yes + bell_on_tab "🔔 "
+# (attention = alert/focus, title = prepend 🔔 to the tab title)
+bell-features = no-audio,attention,title
+
+# ---------- Keybindings ----------
+# kitty: map cmd+f toggle_fullscreen
+keybind = cmd+f=toggle_fullscreen
+# kitty: map cmd+, edit_config_file
+keybind = cmd+,=open_config
+# kitty: dynamic_background_opacity yes (Ghostty needs an explicit keybind)
+keybind = cmd+shift+o=toggle_background_opacity
+# kitty: map cmd+1..9 goto_tab N
+keybind = cmd+1=goto_tab:1
+keybind = cmd+2=goto_tab:2
+keybind = cmd+3=goto_tab:3
+keybind = cmd+4=goto_tab:4
+keybind = cmd+5=goto_tab:5
+keybind = cmd+6=goto_tab:6
+keybind = cmd+7=goto_tab:7
+keybind = cmd+8=goto_tab:8
+keybind = cmd+9=goto_tab:9
+
+# --- kitty-parity: reload config / rename tab / move tab / switch tab ---
+# Reload config: kitty's macOS default is ctrl+cmd+,  (kitty_mod+f5 elsewhere).
+keybind = ctrl+cmd+,=reload_config
+# Rename tab title: kitty default is cmd+shift+i (kitty_mod+alt+t).
+keybind = cmd+shift+i=prompt_tab_title
+keybind = ctrl+shift+option+t=prompt_tab_title
+# Move tab left/right: kitty default is kitty_mod+, / kitty_mod+.
+# NOTE: this deliberately overrides Ghostty's built-in cmd+shift+, (= reload_config),
+# exactly as kitty does -- reload now lives on ctrl+cmd+, above.
+keybind = cmd+shift+,=move_tab:-1
+keybind = cmd+shift+.=move_tab:1
+# Switch tabs: kitty_mod+left/right is cmd+shift+left/right on macOS; the
+# ctrl+shift+left/right pair is kitty's Linux default. Both are added here.
+# (cmd+shift+[ / ] already switch tabs in Ghostty, matching kitty.)
+keybind = cmd+shift+left=previous_tab
+keybind = cmd+shift+right=next_tab
+keybind = ctrl+shift+left=previous_tab
+keybind = ctrl+shift+right=next_tab
+
+# kitty: map shift+enter send_text all \x1b[13;2u
+keybind = shift+enter=csi:13;2u
