@@ -46,6 +46,15 @@ require("lazy").setup({
     -- syntax
     "numToStr/FTerm.nvim",
     "wakatime/vim-wakatime",
+    -- treesitter:main 分支提供 parser 与官方查询;高亮/折叠由 Neovim 内置提供
+    {
+        "nvim-treesitter/nvim-treesitter",
+        branch = "main",
+        lazy = false,
+        build = ":TSUpdate",
+    },
+    -- 语法对象(自带 queries/*/textobjects.scm)
+    { "nvim-treesitter/nvim-treesitter-textobjects", branch = "main" },
 
     -- LSP / completion
     "neovim/nvim-lspconfig",

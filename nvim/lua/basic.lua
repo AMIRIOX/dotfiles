@@ -1,3 +1,10 @@
+-- temporary
+vim.opt.wrap = true
+vim.opt.linebreak = true
+vim.opt.breakindent = true
+vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+
 -- utf8
 vim.o.fileencoding = "utf-8"
 
@@ -43,7 +50,7 @@ vim.o.incsearch = true
 vim.o.autoread = true
 
 -- no wrap
-vim.wo.wrap = false
+-- vim.wo.wrap = false
 
 -- first-end moving
 vim.o.whichwrap = "<,>,[,]"

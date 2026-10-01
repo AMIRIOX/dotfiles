@@ -16,14 +16,22 @@ Then, run `:Lazy sync`(首次启动也会自动安装 spec 中声明的插件)�
 - `:Lazy update` 更新插件
 - `:Lazy check` 检查插件更新
 
-## Configure your custom
-
-In `init.lua`:
-`/home/amiriox/` -> `/home/${username}` (2 fix)
-
-## Treesitter parsers
-
-parser 安装在 `stdpath('data')/parser`(即 `~/.local/share/nvim/parser`),
-需要新语言时执行 `:TSInstall <lang>`。
-
 It is recommended to use a proxy if necessary.
+
+## Requirements
+
+- Neovim **0.12+**(treesitter 高亮/折叠/选中是内置功能,需显式启用)
+- `tree-sitter-cli`(nvim-treesitter 编译 parser 用;brew 里是独立 formula
+  `tree-sitter-cli`,不是只含库的 `tree-sitter`)+ C 编译器
+
+## Treesitter
+
+parser 与查询由 `nvim-treesitter`(main 分支)提供,装在 `stdpath('data')/site/`
+(即 `~/.local/share/nvim/site/parser` 和 `~/.local/share/nvim/site/queries`)。
+
+- 安装新语言:`:TSInstall <lang>`
+- 更新已装语言:`:TSUpdate`
+
+高亮/折叠/选中是 Neovim 内置功能,启用方式见 `lua/plugin-config/treesitter.lua`
+(通过 `FileType` autocmd 调 `vim.treesitter.start()`);语法对象由
+`nvim-treesitter-textobjects` 提供。
