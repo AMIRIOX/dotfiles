@@ -158,6 +158,7 @@ require("lazy").setup({
 -- Load basic settings
 require("basic")
 require("keybindings")
+require("skhole")
 require("colorscheme")
 
 -- Load plugin configurations
