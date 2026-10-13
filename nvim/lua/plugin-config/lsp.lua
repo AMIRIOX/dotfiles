@@ -1,5 +1,10 @@
 vim.diagnostic.config({
-    virtual_text = true,
+    virtual_text = {
+        current_line = false,
+        severity = { min = vim.diagnostic.severity.WARN },
+    },
+    virtual_lines = { current_line = true },
+    severity_sort = true,
     signs = true,
     update_in_insert = false,
 })
@@ -128,49 +133,16 @@ lsp_setup("asm_lsp", {
 lsp_setup("rust_analyzer", {
     on_attach = on_attach,
     settings = {
-        rust_analyzer = {
-            diagnostics = {
-                enable = true,
-            },
-            cargo = {
-                allFeatures = true,
-                allTargets = true,
-                extraEnv = {
-                    AX_CONFIG_PATH = vim.fn.getcwd() .. "/.axconfig.toml",
-                },
-                buildScripts = {
-                    enable = true,
-                },
-            },
-            procMacro = {
-                enable = true,
-            },
-            hover = {
-                enable = true,
-            },
-            completion = {
-                autoimport = {
-                    enable = true,
-                },
-                fullFunctionSignatures = {
-                    enable = true,
-                },
-            },
-            workspace = {
-                symbol = {
-                    search = {
-                        kind = "all_symbols",
-                        limit = 128,
-                    },
-                },
-            },
-            inlayHints = {
-                enable = true,
-                typeHints = {
-                    enable = true,
-                },
-                onlyTyped = false,
-            },
+        -- 配置节名必须是带连字符的 "rust-analyzer";写成 rust_analyzer 会被 lspconfig 忽略。
+        ["rust-analyzer"] = {
+            -- 先注释掉:AX_CONFIG_PATH 要按每个项目根求值,而 vim.fn.getcwd() 只在 nvim
+            -- 启动时算一次,会让所有项目都指向同一个路径。要用就改成按 config.root_dir
+            -- 求值(放 before_init 里),再取消注释。
+            -- cargo = {
+            --     extraEnv = {
+            --         AX_CONFIG_PATH = vim.fn.getcwd() .. "/.axconfig.toml",
+            --     },
+            -- },
         },
     },
 })

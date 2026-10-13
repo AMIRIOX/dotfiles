@@ -13,6 +13,27 @@ end
 local luasnip = require("luasnip")
 local cmp = require("cmp")
 local lspkind = require("lspkind")
+local compare = require("cmp.config.compare")
+local kinds = vim.lsp.protocol.CompletionItemKind
+
+-- cmp 自带的 compare.kind 会把 CompletionItemKind.Snippet 排在所有项之前,
+-- 而 rust-analyzer 的后缀补全(ref/ok/some/let/match/dbg/...)正是 Snippet 类型,
+-- 所以它们会全部挤到补全菜单开头。这里改成把 Snippet(以及 Text)排到最后。
+local function cmp_kind(entry1, entry2)
+    local function rank(entry)
+        local kind = entry:get_kind()
+        if kind == kinds.Text or kind == kinds.Snippet then
+            return 100
+        end
+        return kind
+    end
+
+    local k1, k2 = rank(entry1), rank(entry2)
+    if k1 == k2 then
+        return nil
+    end
+    return k1 < k2
+end
 
 local function oneline(text)
     return text:gsub("\n", " "):gsub("%s+", " "):gsub("^%s*(.-)%s*$", "%1")
@@ -22,6 +43,19 @@ cmp.setup({
     preselect = cmp.PreselectMode.None,
     completion = {
         completeopt = 'menu,menuone,noinsert,noselect',
+    },
+    sorting = {
+        comparators = {
+            compare.offset,
+            compare.exact,
+            compare.score,
+            compare.recently_used,
+            compare.locality,
+            cmp_kind, -- 想恢复 cmp 默认(snippet 排最前)就换成 compare.kind
+            compare.sort_text,
+            compare.length,
+            compare.order,
+        },
     },
     snippet = {
         -- REQUIRED - you must specify a snippet engine

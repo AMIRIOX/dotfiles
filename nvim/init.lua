@@ -161,6 +161,9 @@ require("keybindings")
 require("skhole")
 require("colorscheme")
 
+-- 输入法自动切换(macOS only,见 lua/ime.lua)
+require("ime").setup()
+
 -- Load plugin configurations
 require("plugin-config.nvim-tree")
 require("plugin-config.bufferline")
