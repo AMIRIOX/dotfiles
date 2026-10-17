@@ -24,11 +24,21 @@ local function have(exe)
 end
 
 -- ensure_installed 只检查 mason 自己的安装目录，不看 PATH。
--- 系统里已有的 server 再列进来，只会被 mason 重复安装一遍，
--- 装不上的（例如需要 cargo/go/racket 的）会在每次启动重试并报错。
-local ensure_installed = { "lua_ls", "pylsp", "rust_analyzer", "cmake", "jdtls" }
-if not have("clangd") then
-    table.insert(ensure_installed, "clangd")
+-- 用“server -> 可执行文件”的表统一判断：PATH 里已有就不让 mason 再装一份。
+local managed_servers = {
+    { "lua_ls", "lua-language-server" },
+    { "pylsp", "pylsp" },
+    { "rust_analyzer", "rust-analyzer" },
+    { "cmake", "cmake-language-server" },
+    { "jdtls", "jdtls" },
+    { "clangd", "clangd" },
+}
+
+local ensure_installed = {}
+for _, spec in ipairs(managed_servers) do
+    if not have(spec[2]) then
+        table.insert(ensure_installed, spec[1])
+    end
 end
 
 require("mason-lspconfig").setup({
