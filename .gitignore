@@ -1,2 +1,6 @@
 jdtls-config
 .DS_Store
+*.bak*
+.commandcode/
+.pi/
+.claude/
