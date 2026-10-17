@@ -19,19 +19,21 @@ require("mason").setup({
     },
 })
 
+local function have(exe)
+    return vim.fn.executable(exe) == 1
+end
+
+-- ensure_installed 只检查 mason 自己的安装目录，不看 PATH。
+-- 系统里已有的 server 再列进来，只会被 mason 重复安装一遍，
+-- 装不上的（例如需要 cargo/go/racket 的）会在每次启动重试并报错。
+local ensure_installed = { "lua_ls", "pylsp", "rust_analyzer", "cmake", "jdtls" }
+if not have("clangd") then
+    table.insert(ensure_installed, "clangd")
+end
+
 require("mason-lspconfig").setup({
     automatic_enable = false,
-    ensure_installed = {
-        "clangd",
-        "rust_analyzer",
-        "gopls",
-        "asm_lsp",
-        "pylsp",
-        "lua_ls",
-        "cmake",
-        "jdtls",
-        "racket-langserver",
-    },
+    ensure_installed = ensure_installed,
 })
 
 -- Neovim 0.11+ 新 LSP API(需 nvim >= 0.11)
@@ -164,6 +166,37 @@ lsp_setup("lua_ls", {
 
 lsp_setup("cmake", {
     on_attach = on_attach,
+})
+
+-- 可执行文件缺失时，在打开对应文件类型时提示一次。
+-- 这样“没装成功”不会静默，也不至于每次启动都刷屏。
+local lsp_executables = {
+    c = "clangd",
+    cpp = "clangd",
+    objc = "clangd",
+    go = "gopls",
+    asm = "asm-lsp",
+    scheme = "racket",
+    racket = "racket",
+    lua = "lua-language-server",
+    python = "pylsp",
+    rust = "rust-analyzer",
+    java = "java",
+}
+local warned_missing = {}
+vim.api.nvim_create_autocmd("FileType", {
+    callback = function(ev)
+        local ft = vim.bo[ev.buf].filetype
+        local exe = lsp_executables[ft]
+        if exe and not warned_missing[exe] and not have(exe) then
+            warned_missing[exe] = true
+            vim.notify(
+                ("LSP 未启动:找不到 %s(打开 %s 文件)"):format(exe, ft),
+                vim.log.levels.WARN
+            )
+        end
+    end,
+    desc = "Warn once when an LSP executable is missing",
 })
 
 local signs = { Error = "󰅙", Info = "󰋼", Hint = "󰌵", Warn = "" }
