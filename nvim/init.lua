@@ -190,9 +190,13 @@ require("ibl").setup({
 })
 
 -- WSL config(clipboard + 系统打开)
-if vim.fn.has("unix") == 1 and vim.fn.system("uname") == "Linux\n" then
-    local wsl_check = vim.fn.system("grep -i microsoft /proc/version")
-    if wsl_check ~= "" then
+if vim.fn.has("linux") == 1 then
+    local version_file = io.open("/proc/version", "r")
+    local version = version_file and version_file:read("*a") or ""
+    if version_file then
+        version_file:close()
+    end
+    if version:lower():find("microsoft", 1, true) then
         vim.g.clipboard = {
             name = "WslClipboard",
             copy = {

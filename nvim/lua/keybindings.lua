@@ -3,9 +3,12 @@ vim.g.maplocalleader = " "
 
 local map = vim.api.nvim_set_keymap
 local opt = { noremap = true, silent = true }
--- Save buffer (macOS: Cmd+S; 对应 Linux/Win 的 Ctrl+S)
+-- Save buffer (macOS: Cmd+S; Linux/Win: Ctrl+S)
 map("n", "<D-s>", ":w<CR>", opt)
 map("i", "<D-s>", "<C-o>:w<CR>", opt)
+-- 部分终端把 Ctrl+S 当流控(XON/XOFF); kitty 默认不会吞,其他终端可配合 stty -ixon
+map("n", "<C-s>", ":w<CR>", opt)
+map("i", "<C-s>", "<C-o>:w<CR>", opt)
 -- Terminal
 map("n", "<C-Space>", '<CMD>lua require("FTerm").toggle()<CR>', opt)
 map("t", "<C-Space>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>', opt)

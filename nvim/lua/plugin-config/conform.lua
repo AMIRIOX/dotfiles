@@ -1,8 +1,7 @@
 -- conform.nvim 接管格式化(替代 none-ls 的 formatting 部分)
--- 缺失的 formatter 会在保存时提示安装,如:
---   brew install stylua          (lua)
---   brew install black           (python,可选)
--- rustfmt 随 rustup 自带,gofmt 随 Go 自带
+-- 缺失的 formatter 会在保存时提示安装,按平台用包管理器装即可:
+--   stylua / black / clang-format 需单独安装
+--   rustfmt 随 rustup toolchain 自带,gofmt 随 Go 自带
 require("conform").setup({
     formatters_by_ft = {
         lua = { "stylua" },

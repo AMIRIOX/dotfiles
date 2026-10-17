@@ -1,4 +1,6 @@
-local cmd = { vim.fn.expand("~/devs/skhole/target/release/skhole-tui") }
+local cmd = {
+    vim.env.SKHOLE_BIN or vim.fn.expand("~/devs/skhole/target/release/skhole-tui"),
+}
 local terminal_buf
 
 -- Re-sourcing this config should adopt the running TUI rather than spawn another.

@@ -4,21 +4,59 @@ local M = {}
 
 local JAVA_HOME = os.getenv("JAVA_HOME")
 
--- 检测本机已安装的 JDK(macOS Homebrew / Linux 常见路径),找不到就返回空表
--- 让 jdtls 使用系统默认 JVM
+-- 检测本机已安装的 JDK
+-- 顺序:JAVA_HOME -> PATH 上的 java(可覆盖 NixOS /nix/store、Homebrew、发行版路径)
+--      -> 常见固定路径(macOS Homebrew / Linux /usr/lib/jvm)
+local function realpath(path)
+    local uv = vim.uv or vim.loop
+    return uv.fs_realpath(path) or path
+end
+
+local function version_from_path(path)
+    return path:match("openjdk@(%d+)")
+        or path:match("java%-?(%d+)%-openjdk")
+        or path:match("openjdk%-(%d+)")
+end
+
 local function detect_jdk_runtimes()
     local runtimes = {}
-    local candidates = {
-        { name = "JavaSE-17", mac = "/opt/homebrew/opt/openjdk@17/libexec/openjdk", linux = "/usr/lib/jvm/java-17-openjdk" },
-        { name = "JavaSE-21", mac = "/opt/homebrew/opt/openjdk@21/libexec/openjdk", linux = "/usr/lib/jvm/java-21-openjdk" },
-        { name = "JavaSE-24", mac = "/opt/homebrew/opt/openjdk@24/libexec/openjdk", linux = "/usr/lib/jvm/java-24-openjdk" },
-    }
-    for _, c in ipairs(candidates) do
-        local p = vim.fn.has("macunix") == 1 and c.mac or c.linux
-        if vim.fn.isdirectory(p) == 1 then
-            table.insert(runtimes, { name = c.name, path = p })
+    local seen = {}
+
+    local function add(path)
+        if not path or path == "" then
+            return
         end
+        path = realpath(path)
+        if seen[path] or vim.fn.isdirectory(path) ~= 1 then
+            return
+        end
+        seen[path] = true
+        local version = version_from_path(path)
+        table.insert(runtimes, {
+            name = version and ("JavaSE-" .. version) or "JavaSE-current",
+            path = path,
+        })
     end
+
+    add(JAVA_HOME)
+
+    local java = vim.fn.exepath("java")
+    if java ~= "" then
+        add(vim.fn.fnamemodify(realpath(java), ":h:h"))
+    end
+
+    local candidates = {
+        "/opt/homebrew/opt/openjdk@17/libexec/openjdk",
+        "/opt/homebrew/opt/openjdk@21/libexec/openjdk",
+        "/opt/homebrew/opt/openjdk@24/libexec/openjdk",
+        "/usr/lib/jvm/java-17-openjdk",
+        "/usr/lib/jvm/java-21-openjdk",
+        "/usr/lib/jvm/java-24-openjdk",
+    }
+    for _, path in ipairs(candidates) do
+        add(path)
+    end
+
     return runtimes
 end
 
