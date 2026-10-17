@@ -151,6 +151,17 @@ lsp_setup("pylsp", {
     on_attach = on_attach,
 })
 
+lsp_setup("lua_ls", {
+    on_attach = on_attach,
+    settings = {
+        Lua = {
+            runtime = { version = "LuaJIT" },
+            diagnostics = { globals = { "vim" } },
+            workspace = { checkThirdParty = false },
+        },
+    },
+})
+
 lsp_setup("cmake", {
     on_attach = on_attach,
 })
