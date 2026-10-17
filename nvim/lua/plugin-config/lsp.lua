@@ -5,7 +5,14 @@ vim.diagnostic.config({
     },
     virtual_lines = { current_line = true },
     severity_sort = true,
-    signs = true,
+    signs = {
+        text = {
+            [vim.diagnostic.severity.ERROR] = "󰅙",
+            [vim.diagnostic.severity.WARN] = "",
+            [vim.diagnostic.severity.INFO] = "󰋼",
+            [vim.diagnostic.severity.HINT] = "󰌵",
+        },
+    },
     update_in_insert = false,
 })
 
@@ -60,7 +67,7 @@ vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
 vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist, opts)
 
 local on_attach = function(client, bufnr)
-    vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+    vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
 
     local bufopts = { noremap = true, silent = true, buffer = bufnr }
     vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
@@ -209,8 +216,3 @@ vim.api.nvim_create_autocmd("FileType", {
     desc = "Warn once when an LSP executable is missing",
 })
 
-local signs = { Error = "󰅙", Info = "󰋼", Hint = "󰌵", Warn = "" }
-for type, icon in pairs(signs) do
-    local hl = "DiagnosticSign" .. type
-    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-end

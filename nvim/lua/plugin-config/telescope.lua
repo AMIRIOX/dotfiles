@@ -4,8 +4,6 @@ local action_state = require("telescope.actions.state")
 local sorters = require("telescope.sorters")
 local previewers = require("telescope.previewers")
 
-local username = os.getenv("HOME")
-
 telescope.setup({
     defaults = {
         mappings = {
@@ -47,12 +45,6 @@ telescope.setup({
         file_previewer = previewers.vim_buffer_cat.new,
         grep_previewer = previewers.vim_buffer_vimgrep.new,
         qflist_previewer = previewers.vim_buffer_qflist.new,
-
-        project = {
-            base_dirs = {
-                username,
-            },
-        },
     },
 })
 

@@ -158,7 +158,10 @@ require("lazy").setup({
 -- Load basic settings
 require("basic")
 require("keybindings")
-require("skhole")
+local skhole_ok, skhole_err = pcall(require, "skhole")
+if not skhole_ok then
+    vim.notify("skhole 加载失败:" .. tostring(skhole_err), vim.log.levels.WARN)
+end
 require("colorscheme")
 
 -- 输入法自动切换(macOS only,见 lua/ime.lua)

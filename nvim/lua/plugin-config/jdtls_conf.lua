@@ -140,7 +140,7 @@ local function get_project_settings(root_dir)
             "-data",
             vim.fn.stdpath("data") .. "/jdtls-workspace/" .. project_name,
             "-configuration",
-            vim.fn.stdpath("config") .. "/jdtls-config",
+            vim.fn.stdpath("state") .. "/jdtls-config",
         },
         root_dir = root_dir,
         settings = {
