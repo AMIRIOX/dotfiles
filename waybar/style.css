@@ -1,153 +1,114 @@
-/*
- * Waybar Style (Blue Transparent - Compact & Refined)
- *
- * ~/.config/waybar/style.css
- */
+/* @import "frappe.css"; */
+@import "macchiato.css";
 
-@import "frappe.css";
+/**
+* Catppuccin Macchiato waybar theme
+* 设计约束：单一强调色（blue）+ 状态色（green/yellow/red），其余为中性灰
+* */
 
-@define-color highlight_blue  #6a92d7;
-@define-color teal_accent     #7fdbca;
-@define-color bar_bg          alpha(@base, 0.10);
-@define-color module_hover_bg alpha(@mantle, 0.3);
-@define-color tooltip_bg      alpha(@crust, 0.92);
-@define-color tooltip_border  @highlight_blue;
-@define-color separator_color alpha(@highlight_blue, 0.5);
-
-/* --- Global --- */
 * {
-    border: none;
-    border-radius: 0;
-    font-family: "LXGW WenKai Screen","Font Awesome 6 Free Solid", "Font Awesome 6 Free Brands", sans-serif;
-    font-size: 20px;
-    min-height: 0;
-    background: none;
-    box-shadow: none;
-    padding: 0;
-    margin: 0;
+  /* JetBrainsMono Nerd Font：图标与文字同一 em 度量；其余为兜底 */
+  font-family: JetBrainsMono Nerd Font, Symbols Nerd Font, Noto Sans CJK SC, sans-serif;
+  font-size: 20px;
+  border-radius: 8px;
 }
 
-/* --- Waybar Window --- */
 window#waybar {
-    background-color: @bar_bg;
-    color: @text;
-    border-radius: 10px;
-    transition-property: background-color;
-    transition-duration: .5s;
-    padding-top: 1px;
-    padding-bottom: 0px;
-    padding-left: 0px;
-    padding-right: 0px;
+  background: rgba(36, 39, 58, 0.86);
+  border: 1px solid @surface1;
+  border-radius: 12px;
+  color: @subtext0;
 }
 
-/* --- General Module Styling --- */
+tooltip {
+  background: @base;
+  border: 1px solid @blue;
+}
+
+tooltip label {
+  color: @text;
+}
+
+/* 两个分组容器：工作区 / 状态区，同一套胶囊样式 */
 #workspaces,
-#custom-launcher,
-#custom-weather,
-#hyprland-window,
-#custom-spotify,
-#tray,
-#cpu, #memory, #battery, #pulseaudio, #network, #bluetooth, #custom-github,
-#custom-updates, #custom-notification, #clock, #disk, #temperature, #backlight,
-#custom-separator-left, #custom-separator-right {
-    padding: 2px 8px;
-    margin: 2px 3px;
-    padding-top: 2px;
-    padding-bottom: 0px;
-    margin-top: 2px;
-    margin-bottom: 0px;
-    color: @text;
-    background-color: transparent;
+#status {
+  margin: 0 0.4em;
+  padding: 0 0.5em;
+  background: @surface0;
+  border-radius: 8px;
+  color: @text;
 }
 
-/* --- Hover effect for most modules --- */
-#custom-launcher:hover,
-#backlight:hover {
-    background-color: @module_hover_bg;
-    border-radius: 6px;
-}
-
-/* --- Launcher --- */
-#custom-launcher {
-    color: #000000;
-    font-size: 20px;
-    padding: 0px 0px;
-    margin-top: 2px;
-    margin-bottom: 0px;
-}
-
-/* --- Workspaces --- */
 #workspaces button {
-    padding: 1px 6px;
-    margin: 1px 2px;
-    color: @subtext;
-    background-color: transparent;
-    border-radius: 4px;
-    transition: all 0.2s ease-out;
+  padding: 0 0.35em;
+  background: transparent;
+  color: @subtext0;
+  border: none;
+  box-shadow: none;
+}
+
+#workspaces button:hover {
+  background: @surface1;
 }
 
 #workspaces button.active {
-    padding: 1px 6px;
-    margin: 1px 2px;
-    color: @teal_accent;
-    background-color: transparent;
-    border-radius: 4px;
-    transition: all 0.2s ease-out;
+  color: @blue;
 }
 
-
-/* --- Window Title --- */
-#hyprland-window {
-    color: @sky_blue;
-    font-weight: 900;
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-top: 2px; padding-bottom: 0px; margin-top: 2px; margin-bottom: 0px;
+#workspaces button.urgent {
+  color: @red;
 }
 
-/* --- Clock --- */
+#workspaces button.empty {
+  color: @overlay0;
+}
+
+/* 间距取代箭头分隔符 */
+#custom-launcher,
+#custom-weather,
+#cpu,
+#custom-gpu-temperature,
+#memory,
+#battery,
+#bluetooth,
+#pulseaudio,
+#network,
+#window {
+  padding: 0 0.45em;
+}
+
+#custom-launcher {
+  color: @blue;
+}
+
+#window {
+  margin-left: 0.4em;
+  color: @subtext1;
+}
+
 #clock {
-    color: @teal_accent;
-    font-weight: 600;
-    padding-right: 10px;
-    padding-top: 2px;
-    padding-bottom: 0px;
-    margin-top: 2px;
-    margin-bottom: 0px;
+  font-weight: 700;
+  padding: 0 0.5em;
+  color: @text;
 }
 
-/* --- Tray --- */
-#tray {
-    padding: 1px 5px;
-    margin-top: 2px; margin-bottom: 0px;
+/* 状态色只在真正需要时出现 */
+#battery.charging {
+  color: @green;
 }
 
-
-/* --- System Info Modules (CPU, Memory, etc.) --- */
-#cpu, #memory, #disk, #temperature, #backlight,
-#battery, #network, #pulseaudio, #bluetooth,
-#custom-weather, #custom-spotify, #custom-github,
-#custom-updates, #custom-notification {
-    /* padding-bottom: 1px; margin-bottom: 1px; */
+#battery.warning:not(.charging) {
+  color: @yellow;
 }
 
-#custom-weather {
-    padding-top: 5px;
-    font-size: 16px;
+#battery.critical:not(.charging) {
+  color: @red;
 }
 
-/* --- Separators --- */
-#custom-separator-left,
-#custom-separator-right {
-    color: @separator_color;
-    font-size: 15px;
-    padding: 1px 1px;
-    margin-top: 2px; margin-bottom: 0px;
+#network.disconnected {
+  color: @overlay0;
 }
 
-/* --- Tooltip --- */
-tooltip { /* ... */ }
-tooltip label { /* ... */ }
-
-/* --- Animations --- */
-@keyframes blink_critical_text { /* ... */ }
+#pulseaudio.muted {
+  color: @overlay0;
+}

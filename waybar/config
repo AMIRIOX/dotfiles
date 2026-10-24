@@ -2,27 +2,19 @@
     "include": ["~/.config/waybar/default"],
     "layer": "top",
     "position": "top",
-    "exclusive": true,
+    "height": 40,
     "margin-top": 5,
-    "margin-left": 5,
-    "margin-right": 5,
-    "margin-bottom": 0,
+    "margin-left": 15,
+    "margin-right": 15,
     "modules-left": [
         "custom/launcher",
-        "hyprland/workspaces",
-        "custom/separator-left",
+        "niri/workspaces",
         "custom/weather",
-        "cpu",
-        "memory",
-        "custom/separator-left",
-        "hyprland/window",
+        "niri/window"
     ],
-    "modules-center": ["custom/spotify"],
     "modules-right": [
-        "clock",
-        "custom/separator-right",
         "tray",
-        "custom/separator-right",
-        "group/notifications",
+        "group/status",
+        "clock"
     ]
 }

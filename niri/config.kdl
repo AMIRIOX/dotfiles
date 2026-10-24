@@ -1,0 +1,400 @@
+// ─────────────────────────────────────────────────────────────
+//  niri config — 由 Hyprland 配置迁移而来
+//  窗口操作保持 niri 原生; 外观/应用/规则来自 Hyprland
+// ─────────────────────────────────────────────────────────────
+
+// ─────────────────────────────────────────────────────────────
+// 顶级设置 — 来自 Hyprland
+// ─────────────────────────────────────────────────────────────
+
+// 隐藏 CSD 窗口标题栏，等同 Hyprland 的无标题栏行为
+prefer-no-csd
+
+// 全局模糊设置 — 匹配 Hyprland: size=3, passes=4, new_optimizations
+blur {
+    passes 4
+    offset 3.0
+    noise 0.02
+    saturation 1.0
+}
+
+// ═══════════════════════════════════════════════════════════════
+// 输入设备
+// ═══════════════════════════════════════════════════════════════
+input {
+    keyboard {
+        xkb {
+            layout "us"
+        }
+        numlock
+    }
+
+    touchpad {
+        tap
+        natural-scroll
+    }
+
+    mouse {
+        accel-profile "flat"        // 关闭鼠标加速度
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// 显示器
+// ═══════════════════════════════════════════════════════════════
+output "eDP-1" {
+    mode "2560x1600@240.000"
+    variable-refresh-rate
+    scale 1
+    transform "normal"
+}
+
+// ═══════════════════════════════════════════════════════════════
+// 布局 & 外观 — 来自 Hyprland
+// ═══════════════════════════════════════════════════════════════
+layout {
+    gaps 8                         // Hyprland: gaps_in=2, gaps_out=5
+
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+    }
+
+    default-column-width { proportion 0.5; }
+
+    focus-ring {
+        width 3
+        active-color "#5e81ac"      // Hyprland col.active_border
+        inactive-color "#00000000"   // Hyprland col.inactive_border
+    }
+
+    border {
+        off
+    }
+
+    shadow {
+        on
+        softness 20
+        spread 3
+        offset x=0 y=4
+        color "#00000030"
+    }
+}
+
+// 全局圆角 — 对应 Hyprland decoration.rounding=15
+// 同时对所有窗口启用背景模糊
+window-rule {
+    match is-active=false
+    geometry-corner-radius 14
+    clip-to-geometry true
+
+    background-effect {
+        blur true
+    }
+}
+
+window-rule {
+    match is-active=true
+    geometry-corner-radius 14
+    clip-to-geometry true
+
+    background-effect {
+        blur true
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// 启动项 — 来自 Hyprland exec-once
+// ═══════════════════════════════════════════════════════════════
+spawn-at-startup "waybar"
+spawn-at-startup "dunst"
+spawn-at-startup "swaybg" "-o" "*" "-i" "/home/amiriox/Pictures/wallpapers/pexels-eberhardgross-20459771.jpg" "-m" "fill"
+spawn-at-startup "fcitx5" "-D"
+spawn-at-startup "blueman-applet"
+spawn-at-startup "wl-paste" "--type" "text" "--watch" "cliphist" "store"
+spawn-at-startup "wl-paste" "--type" "image" "--watch" "cliphist" "store"
+
+spawn-sh-at-startup "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+spawn-sh-at-startup "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+
+// ═══════════════════════════════════════════════════════════════
+// 截图路径
+// ═══════════════════════════════════════════════════════════════
+screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+// ═══════════════════════════════════════════════════════════════
+// 窗口规则 — 来自 Hyprland windowrulev2
+// ═══════════════════════════════════════════════════════════════
+
+// 音量控制
+window-rule {
+    match title="^Volume Control$"
+    open-floating true
+}
+
+// 画中画
+window-rule {
+    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    open-floating true
+}
+window-rule {
+    match app-id=r#"^org\.mozilla\.firefox$"# title="^Picture-in-Picture$"
+    open-floating true
+}
+window-rule {
+    match app-id=r#"^(brave|librewolf)$"# title="^Picture-in-Picture$"
+    open-floating true
+}
+
+// 文件保存/打开对话框
+window-rule {
+    match app-id=r#"^(brave|librewolf)$"# title="^(Save|Open) File$"
+    open-floating true
+}
+
+// 蓝牙 / 网络管理器
+window-rule {
+    match app-id=r#"^(blueman-manager|org\.twosheds\.iwgtk|blueberry\.py)$"#
+    open-floating true
+}
+
+// Portal 弹窗
+window-rule {
+    match app-id=r#"^xdg-desktop-portal-gtk$"#
+    open-floating true
+}
+
+// 图片浏览器
+window-rule {
+    match app-id=r#"^(geeqie)$"#
+    open-floating true
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Layer 规则 — 对应 Hyprland blurls
+// ═══════════════════════════════════════════════════════════════
+
+// waybar 背景模糊 — 对应 Hyprland: blurls = waybar
+layer-rule {
+    match namespace="^waybar$"
+
+    background-effect {
+        blur true
+    }
+}
+
+// 锁屏背景模糊 — 对应 Hyprland: blurls = lockscreen
+layer-rule {
+    match namespace="^lockscreen$"
+
+    background-effect {
+        blur true
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// 快捷键 — 窗口操作保持 niri 原生，应用快捷键来自 Hyprland
+// ═══════════════════════════════════════════════════════════════
+binds {
+    // ── 热键提示 ──────────────────────────────────────────
+    Mod+Shift+Slash { show-hotkey-overlay; }
+
+    // ═══════════════════════════════════════════════════════
+    // 应用启动 — 来自 Hyprland
+    // ═══════════════════════════════════════════════════════
+    Mod+Return   { spawn "kitty"; }
+    Mod+D        { spawn-sh "rofi -modi drun -show drun"; }
+    Mod+Backspace { spawn-sh "rofi -show system -modi 'system:~/Scripts/interact.sh'"; }
+    Mod+E        { spawn "kitty" "-e" "yazi"; }
+    Mod+Shift+C  { spawn-sh "cliphist list | rofi -dmenu -i | cliphist decode | wl-copy"; }
+
+    // ═══════════════════════════════════════════════════════
+    // 窗口管理 — niri 原生
+    // ═══════════════════════════════════════════════════════
+    Mod+Q { close-window; }
+    Mod+Shift+E { quit; }
+    Ctrl+Alt+Delete { quit; }
+
+    Mod+F       { maximize-column; }
+    Mod+Shift+F { fullscreen-window; }
+    Mod+Ctrl+F  { expand-column-to-available-width; }
+
+    Mod+V       { toggle-window-floating; }
+    Mod+Shift+V { switch-focus-between-floating-and-tiling; }
+
+    Mod+W { toggle-column-tabbed-display; }
+
+    Mod+R       { switch-preset-column-width; }
+    Mod+Shift+R { switch-preset-window-height; }
+    Mod+Ctrl+R  { reset-window-height; }
+
+    Mod+Minus { set-column-width "-10%"; }
+    Mod+Equal { set-column-width "+10%"; }
+    Mod+Shift+Minus { set-window-height "-10%"; }
+    Mod+Shift+Equal { set-window-height "+10%"; }
+
+    Mod+C     { center-column; }
+    Mod+Ctrl+C { center-visible-columns; }
+
+    // 焦点移动
+    Mod+H { focus-column-left; }
+    Mod+J { focus-window-down; }
+    Mod+K { focus-window-up; }
+    Mod+L { focus-column-right; }
+    Mod+Left  { focus-column-left; }
+    Mod+Down  { focus-window-down; }
+    Mod+Up    { focus-window-up; }
+    Mod+Right { focus-column-right; }
+    Mod+Home { focus-column-first; }
+    Mod+End  { focus-column-last; }
+
+    // 移动窗口/列
+    Mod+Ctrl+H { move-column-left; }
+    Mod+Ctrl+J { move-window-down; }
+    Mod+Ctrl+K { move-window-up; }
+    Mod+Ctrl+L { move-column-right; }
+    Mod+Ctrl+Left  { move-column-left; }
+    Mod+Ctrl+Down  { move-window-down; }
+    Mod+Ctrl+Up    { move-window-up; }
+    Mod+Ctrl+Right { move-column-right; }
+    Mod+Ctrl+Home { move-column-to-first; }
+    Mod+Ctrl+End  { move-column-to-last; }
+
+    // 列合并/拆分
+    Mod+BracketLeft  { consume-or-expel-window-left; }
+    Mod+BracketRight { consume-or-expel-window-right; }
+    Mod+Comma  { consume-window-into-column; }
+    Mod+Period { expel-window-from-column; }
+
+    // 显示器间导航
+    Mod+Shift+H { focus-monitor-left; }
+    Mod+Shift+J { focus-monitor-down; }
+    Mod+Shift+K { focus-monitor-up; }
+    Mod+Shift+L { focus-monitor-right; }
+    Mod+Shift+Left  { focus-monitor-left; }
+    Mod+Shift+Down  { focus-monitor-down; }
+    Mod+Shift+Up    { focus-monitor-up; }
+    Mod+Shift+Right { focus-monitor-right; }
+
+    Mod+Shift+Ctrl+H { move-column-to-monitor-left; }
+    Mod+Shift+Ctrl+J { move-column-to-monitor-down; }
+    Mod+Shift+Ctrl+K { move-column-to-monitor-up; }
+    Mod+Shift+Ctrl+L { move-column-to-monitor-right; }
+    Mod+Shift+Ctrl+Left  { move-column-to-monitor-left; }
+    Mod+Shift+Ctrl+Down  { move-column-to-monitor-down; }
+    Mod+Shift+Ctrl+Up    { move-column-to-monitor-up; }
+    Mod+Shift+Ctrl+Right { move-column-to-monitor-right; }
+
+    // 工作区
+    Mod+Page_Down { focus-workspace-down; }
+    Mod+Page_Up   { focus-workspace-up; }
+    Mod+U { focus-workspace-down; }
+    Mod+I { focus-workspace-up; }
+
+    Mod+Ctrl+Page_Down { move-column-to-workspace-down; }
+    Mod+Ctrl+Page_Up   { move-column-to-workspace-up; }
+    Mod+Ctrl+U { move-column-to-workspace-down; }
+    Mod+Ctrl+I { move-column-to-workspace-up; }
+
+    Mod+Shift+Page_Down { move-workspace-down; }
+    Mod+Shift+Page_Up   { move-workspace-up; }
+    Mod+Shift+U { move-workspace-down; }
+    Mod+Shift+I { move-workspace-up; }
+
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace 9; }
+
+    Mod+Ctrl+1 { move-column-to-workspace 1; }
+    Mod+Ctrl+2 { move-column-to-workspace 2; }
+    Mod+Ctrl+3 { move-column-to-workspace 3; }
+    Mod+Ctrl+4 { move-column-to-workspace 4; }
+    Mod+Ctrl+5 { move-column-to-workspace 5; }
+    Mod+Ctrl+6 { move-column-to-workspace 6; }
+    Mod+Ctrl+7 { move-column-to-workspace 7; }
+    Mod+Ctrl+8 { move-column-to-workspace 8; }
+    Mod+Ctrl+9 { move-column-to-workspace 9; }
+
+    // 滚轮
+    Mod+WheelScrollDown cooldown-ms=150 { focus-workspace-down; }
+    Mod+WheelScrollUp   cooldown-ms=150 { focus-workspace-up; }
+    Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
+    Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
+    Mod+WheelScrollRight { focus-column-right; }
+    Mod+WheelScrollLeft  { focus-column-left; }
+    Mod+Ctrl+WheelScrollRight { move-column-right; }
+    Mod+Ctrl+WheelScrollLeft  { move-column-left; }
+
+    Mod+Shift+WheelScrollDown { focus-column-right; }
+    Mod+Shift+WheelScrollUp   { focus-column-left; }
+    Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
+    Mod+Ctrl+Shift+WheelScrollUp   { move-column-left; }
+
+    // 总览
+    Mod+O { toggle-overview; }
+
+    // ═══════════════════════════════════════════════════════
+    // 截图 — niri 内置
+    // ═══════════════════════════════════════════════════════
+    Print       { screenshot; }
+    Ctrl+Print  { screenshot-screen; }
+    Alt+Print   { screenshot-window; }
+
+    // ═══════════════════════════════════════════════════════
+    // 音量 — wpctl (PipeWire)
+    // ═══════════════════════════════════════════════════════
+    XF86AudioRaiseVolume allow-when-locked=true {
+        spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ && notify-send -r 9902 'Volume' $(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{printf \"%.0f%%\", $2 * 100}') -u normal";
+    }
+    XF86AudioLowerVolume allow-when-locked=true {
+        spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && notify-send -r 9902 'Volume' $(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{printf \"%.0f%%\", $2 * 100}') -u normal";
+    }
+    XF86AudioMute allow-when-locked=true {
+        spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && notify-send -r 9902 'Volume' $(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{printf \"%.0f%%\", $2 * 100}') -u normal";
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // 亮度 — br 脚本 (与 Hyprland 一致)
+    // ═══════════════════════════════════════════════════════
+    XF86MonBrightnessUp allow-when-locked=true {
+        spawn-sh "br +10 && notify-send -r 9901 'Brightness' $(cat /sys/class/backlight/nvidia_wmi_ec_backlight/brightness) -u normal";
+    }
+    XF86MonBrightnessDown allow-when-locked=true {
+        spawn-sh "br -10 && notify-send -r 9901 'Brightness' $(cat /sys/class/backlight/nvidia_wmi_ec_backlight/brightness) -u normal";
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // 媒体键
+    // ═══════════════════════════════════════════════════════
+    XF86AudioPlay  allow-when-locked=true { spawn-sh "playerctl play-pause"; }
+    XF86AudioStop  allow-when-locked=true { spawn-sh "playerctl stop"; }
+    XF86AudioPrev  allow-when-locked=true { spawn-sh "playerctl previous"; }
+    XF86AudioNext  allow-when-locked=true { spawn-sh "playerctl next"; }
+
+    // ═══════════════════════════════════════════════════════
+    // 键盘 LED — 复用 Hyprland 脚本
+    // ═══════════════════════════════════════════════════════
+    F2 { spawn-sh "python3 ~/Scripts/led.py cg '0xDB7093'"; }
+    F3 { spawn-sh "python3 ~/Scripts/led.py close"; }
+    F4 { spawn-sh "python3 ~/Scripts/led.py iridescent"; }
+    F5 { spawn-sh "python3 ~/Scripts/led.py cloud"; }
+
+    // ── 电源管理 ──────────────────────────────────────────
+    Mod+Shift+P { power-off-monitors; }
+
+    // ── 快捷键抑制（远程桌面等） ──────────────────────────
+    Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+}
+
+// 半透明窗口（kitty 等）会透出 niri 画在窗口背后的 focus-ring 实心矩形，
+// 关掉它，让 ring 只画在窗口四周。
+window-rule {
+    draw-border-with-background false
+}

@@ -1,194 +1,129 @@
 {
-        "custom/launcher": {
-            "format": "  ",
-            "on-click": "rofi -modi drun -show drun",
+    "custom/launcher": {
+        "format": " <span color='#8aadf4'>\uf313</span>",
+        "tooltip": false,
+        "on-click": "rofi -show drun"
+    },
+    "custom/weather": {
+        "exec": "python3 ~/.config/waybar/scripts/weather.py",
+        "return-type": "json",
+        "interval": 300,
+        "on-click": "xdg-open https://wttr.in/Harbin"
+    },
+    "tray": {
+        "icon-size": 18,
+        "spacing": 12
+    },
+    "niri/workspaces": {
+        "format": "{icon}",
+        "format-icons": {
+            "1": "\uebc6",
+            "2": "\uf268",
+            "3": "\uf249",
+            "4": "\uf1bc",
+            "5": "\udb82\udcb9",
+            "6": "\uf086",
+            "urgent": "\uf06a",
+            "default": "\uf111"
         },
-        "custom/weather": {
-            "exec": "python3 ~/.config/waybar/scripts/weather.py",
-            "restart-interval": 300,
-            "return-type": "json",
-            "on-click": "xdg-open https://weather.com/en-IN/weather/today/l/a319796a4173829988d68c4e3a5f90c1b6832667ea7aaa201757a1c887ec667a"
-        },
-        "tray": {
-            "icon-size": 17,
-            "spacing": 15,
-        },
-        "hyprland/workspaces": {
-            "format": "{icon}",
-            "format-icons": {
-                "1": "",
-                "2": "",
-                "3": "",
-                "4": "",
-                "5": "󰢹",
-                "6": "",
-                "urgent": "",
-                "default": ""
-            },
-            "on-scroll-up": "hyprctl dispatch workspace e+1",
-            "on-scroll-down": "hyprctl dispatch workspace e-1",
-            /* "persistent-workspaces": {
-                "*": 5
-            } */
-        },
-        "hyprland/window": {
-            "format": " {}",
-            "rewrite": {
-                "(.*) - .*Microsoft.*Edge.*": "  edge",
-                "(.*) - YesPlayMusic":  "  Music",
-                "(.*) - Google Chrome": "  chrome",
-                "(.*) — Okular":  "  Okular",
-            }
-        },
-        "clock": {
-            "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-            "format": "{:%H:%M 󱫟 %b %d,%a}",
-            "format-alt": "{:%Y-%m-%d}"
-        },
-        "cpu": {
-            "format": "\uf2db {usage}%",
-            "on-click": "kitty btop",
-            "tooltip": true
-        },
-        "memory": {
-            "format":  "\uf538 {used:0.1f}G",
-            "format-alt": "\uf538 {}%",
-        },
-        "backlight": {
-            "device": "DP-1",
-            "format": " {icon} {percent}%",
-            "format-icons": ["", "", "", "", "", "", "", "", ""],
-            "on-click": "",
-        },
-        "battery": {
-            "bat": "BAT0",
-            "adapter": "ADP0",
-            "interval": 60,
-            "states": {
-                "warning": 30,
-                "critical": 15
-            },
-            "max-length": 20,
-            "format": "{icon} {capacity}%",
-            "format-warning": "{icon} {capacity}%",
-            "format-critical": "{icon} {capacity}%",
-            "format-charging": "<span font-family='Font Awesome 6 Free'></span> {capacity}%",
-            "format-plugged": " {capacity}%",
-            "format-alt": "{icon} {time}",
-            "format-full": " {capacity}%",
-            "format-icons": ["", "", "", "", ""],
-        },
-        "disk": {
-            "format": " {percentage_used}%"
-        },
-        "temperature": {
-            "hwmon-path-abs": "/sys/devices/platform/coretemp.0/hwmon",
-            "input-filename": "temp1_input",
-            "critical-threshold": 80,
-            "format": " {temperatureC}°C",
-            "format-critical": " {temperatureC}°C ",
-            "tooltip": true,
-            "tooltip-format": "CPU Temp: {temperatureC}°C (High: {high}C, Crit: {crit}C)",
-            "interval": 2,
-        },
-        "network": {
-            "interval": 1,
-            "format-wifi": "",
-            "format-ethernet": "",
-            "tooltip-format": " {ifname} via {gwaddr}\nconnected to {essid} at {signalStrength}% strength",
-            "format-linked": " {ifname} (No IP)",
-            "format-disconnected": " Disconnected",
-            "format-alt": "{ifname}: {ipaddr}/{cidr}",
-            "on-click": "bash ~/.config/waybar/scripts/rofi-wifi-menu.sh",
-        },
-        "pulseaudio": {
-            "format": "{icon} {volume}%",
-            "format-bluetooth": "  {volume}%",
-            "format-muted": "",
-            "format-icons": {
-                "headset": "",
-                "headphone": "󱡏",
-                "phone": "",
-                "car": "",
-                "default": ["", ""]
-            },
-            "scroll-step": 1,
-            "on-click": "pavucontrol",
-            "ignored-sinks": ["Easy Effects Sink"]
-        },
-        "bluetooth": {
-            "format": "{status}",
-            "format-disabled": "", // an empty format will hide the module
-            "format-connected": "{num_connections}",
-            "tooltip-format": "{controller_alias}\t{controller_address}",
-            "tooltip-format-connected": "{controller_alias}\t{controller_address}\n{device_enumerate}",
-            "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
-            "on-click": "~/.config/waybar/scripts/rofi-bluetooth &",
-        },
-        "custom/separator-right": {
-            "format": "",
-            "on-click": "sleep 0.1 && bash ~/.config/waybar/scripts/wallpaper.sh",
-            "tooltip": false
-        },
-        "custom/separator-left": {
-            "format": "",
-            "tooltip": false
-        },
-        "custom/github": {
-            "format": " {}",
-            "return-type": "json",
-            "interval": 60,
-            "exec": "$HOME/.config/waybar/scripts/github.sh",
-            "on-click": "xdg-open https://github.com/notifications"
-        },
-        "custom/updates": {
-            "format": "{icon} {0}",
-            "return-type": "json",
-            "format-icons": {
-                "has-updates": "󱍷",
-                "updated": "󰂪"
-            },
-            "exec-if": "which waybar-module-pacman-updates",
-            "exec": "waybar-module-pacman-updates"
-        },
-        "custom/spotify": {
-            "exec": "$HOME/.config/waybar/scripts/spotify.sh",
-            "max-length": 33,
-            "format": "{}",
-            "on-click": "sleep 0.1 && eww open --toggle dashboard",
-            "tooltip": false,
-            "return-type": "json",
-            "playerctl_player_name": ["*"],
-            "playerctl_listen": true,
-        },
-        "custom/notification": {
-            "escape": true,
-            "exec": "swaync-client -swb",
-            "exec-if": "which swaync-client",
-            "format": " {icon} ",
-            "format-icons": {
-                "dnd-inhibited-none": "󰂚<sup></sup>",
-                "dnd-inhibited-notification": "󰂚<span foreground='#f38ba8'><sup></sup></span>",
-                "dnd-none": "󰂛",
-                "dnd-notification": "󰂛<span foreground='#f38ba8'><sup></sup></span>",
-                "inhibited-none": "󰂚<sup>󰜺</sup>",
-                "inhibited-notification": "󰵙<span foreground='#f38ba8'><sup></sup></span>",
-                "none": "󰂚<span color='#6c7086'><sup></sup></span>",
-                "notification": "󰂚<span foreground='#f38ba8'><sup></sup></span>"
-            },
-            "on-click": "sleep 0.1 && swaync-client -t -sw",
-            "on-click-right": "sleep 0.1 && swaync-client -d -sw",
-            "return-type": "json",
-            "tooltip": false
-        },
-        "group/notifications": {
-            "orientation": "horizontal",
-            "modules": [
-                "battery",
-                "pulseaudio",
-                "temperature",
-                "bluetooth",
-                "custom/github",
-            ]
+        "on-scroll-up": "niri msg action focus-workspace-up",
+        "on-scroll-down": "niri msg action focus-workspace-down"
+    },
+    "niri/window": {
+        "format": "{}",
+        "max-length": 60,
+        "rewrite": {
+            "(.*) - .*Microsoft.*Edge.*": "\uf282 edge",
+            "(.*) - YesPlayMusic": "\uf1bc Music",
+            "(.*) - Google Chrome": "\uf268 chrome",
+            "(.*) — Okular": "\ueebe Okular",
+            "org.pwmt.zathura": "\uf1ea zathura",
+            "Spotify": "\uf1bc spotify"
         }
+    },
+    "clock": {
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format": "{:%a %d %b  %H:%M}",
+        "format-alt": "{:%Y-%m-%d}"
+    },
+    "cpu": {
+        "format": "\udb83\udee0 {usage}%",
+        "on-click": "kitty btop",
+        "tooltip": true
+    },
+    "memory": {
+        "format": "\udb80\udf5b {used:0.1f}G",
+        "format-alt": "\udb80\udf5b {}%"
+    },
+    "battery": {
+        "bat": "BAT0",
+        "adapter": "AC",
+        "interval": 30,
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "max-length": 20,
+        "format": "{icon} {capacity}%",
+        "format-warning": "{icon} {capacity}%",
+        "format-critical": "{icon} {capacity}%",
+        "format-charging": "\udb80\udc84 {capacity}%",
+        "format-plugged": "\udb80\udc79 {capacity}%",
+        "format-full": "\udb80\udc79 {capacity}%",
+        "format-alt": "{icon} {time}",
+        "format-icons": ["\udb80\udc7a", "\udb80\udc7c", "\udb80\udc7e", "\udb80\udc80", "\udb80\udc82"]
+    },
+    "custom/gpu-temperature": {
+        "exec": "nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits",
+        "format": "\udb81\udd0f {}°C",
+        "return-type": "",
+        "interval": 5,
+        "on-click": "nvidia-settings"
+    },
+    "network": {
+        "interval": 1,
+        "format-wifi": "\udb81\udda9",
+        "format-ethernet": "\udb80\ude00",
+        "tooltip-format": "\udb81\udda9 {ifname} via {gwaddr}\nconnected to {essid} at {signalStrength}% strength",
+        "format-linked": "\udb81\udda8 {ifname} (No IP)",
+        "format-disconnected": "",
+        "format-alt": "{ifname}: {ipaddr}/{cidr}",
+        "on-click": "bash ~/.config/waybar/scripts/rofi-wifi-menu.sh"
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-bluetooth": "\udb80\udcaf {icon} {volume}%",
+        "format-muted": "\udb81\udd81",
+        "format-icons": {
+            "headset": "\uf025",
+            "headphone": "\udb86\udc4f",
+            "phone": "\uf095",
+            "car": "\uf1b9",
+            "default": ["\udb81\udd7f", "\udb81\udd80", "\udb81\udd7e"]
+        },
+        "scroll-step": 1,
+        "on-click": "pavucontrol",
+        "ignored-sinks": ["Easy Effects Sink"]
+    },
+    "bluetooth": {
+        "format": "",
+        "format-disabled": "",
+        "format-connected": "\udb80\udcaf {num_connections}",
+        "tooltip-format": "{controller_alias}\t{controller_address}",
+        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+        "on-click": "~/.config/waybar/scripts/rofi-bluetooth &"
+    },
+    "group/status": {
+        "orientation": "horizontal",
+        "modules": [
+            "custom/gpu-temperature",
+            "cpu",
+            "memory",
+            "battery",
+            "pulseaudio",
+            "network",
+            "bluetooth"
+        ]
+    }
 }
