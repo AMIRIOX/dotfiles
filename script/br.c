@@ -1,36 +1,26 @@
 /*
+ * br — brightness wrapper around brightnessctl(1)
+ * Usage: br <+N|-N>
+ */
 
-run the following commands to configure: 
-# gcc br.c -o br
-# chown root br
-# chmod u+s  br
-# mv br /usr/local/bin/
-# setcap cap_dac_override+ep /usr/local/bin/br
-
-*/
-
-#include <stdlib.h>
 #include <stdio.h>
-#define BUFSIZE 10
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 
 int main(int argc, char **argv) {
-  FILE *fp;
-  char scurr[BUFSIZE];
-  long new, curr, incr, min = 1;
+  long incr;
+  char delta[32];
 
-  /* An argument with an integer increment must be supplied */
-  if (argc != 2 || (incr = strtol(argv[1], NULL, 10)) == 0) { return(1); }
+  if (argc != 2 || (incr = strtol(argv[1], NULL, 10)) == 0)
+    return 1;
 
-  /* Retrieve the current brightness and increment it in the brightness file */
-  if ((fp = fopen("/sys/class/backlight/nvidia_wmi_ec_backlight/brightness", "r+")) 
-      && fgets(scurr, BUFSIZE, fp)) {
-    curr = strtol(scurr, NULL, 10);
-    rewind(fp);
-    new = curr + incr;
-    if (new < min) { new = min; }
-    fprintf(fp, "%ld\n", new);
-    fclose(fp);
-  } else { return(2); }
+  if (incr > 0)
+    snprintf(delta, sizeof(delta), "+%ld", incr);
+  else
+    snprintf(delta, sizeof(delta), "%ld-", -incr);
 
-  return(0);
+  execlp("brightnessctl", "brightnessctl", "-q", "s", delta, (char *)NULL);
+  perror("execlp");
+  return 2;
 }
