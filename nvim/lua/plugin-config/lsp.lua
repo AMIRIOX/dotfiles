@@ -17,6 +17,11 @@ vim.diagnostic.config({
 })
 
 require("mason").setup({
+    -- NixOS: mason 下载的 clangd/rust-analyzer 是通用动态链接二进制,
+    -- 没有 stub-ld 直接执行会报 "Could not start dynamically linked executable"。
+    -- 只在 NixOS 上把 mason 的 bin 放到 PATH 末尾,让系统/nix 提供的优先;
+    -- 其它系统保持 mason 默认(prepend),避免改变已有解析顺序。
+    PATH = vim.fn.filereadable("/etc/NIXOS") == 1 and "append" or "prepend",
     ui = {
         icons = {
             package_installed = "✓",
