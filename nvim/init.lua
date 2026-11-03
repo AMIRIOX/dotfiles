@@ -184,6 +184,7 @@ require("plugin-config.fterm")
 require("plugin-config.conform")
 require("plugin-config.gitsigns")
 require("plugin-config.treesitter")
+require("plugin-config.typst")
 
 -- Configure indent-blankline
 require("ibl").setup({
