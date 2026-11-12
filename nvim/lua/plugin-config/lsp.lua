@@ -159,6 +159,9 @@ lsp_setup("rust_analyzer", {
     settings = {
         -- 配置节名必须是带连字符的 "rust-analyzer";写成 rust_analyzer 会被 lspconfig 忽略。
         ["rust-analyzer"] = {
+            cargo = {
+                cfgs = { "debug_assertions", "test" },
+            },
             -- 先注释掉:AX_CONFIG_PATH 要按每个项目根求值,而 vim.fn.getcwd() 只在 nvim
             -- 启动时算一次,会让所有项目都指向同一个路径。要用就改成按 config.root_dir
             -- 求值(放 before_init 里),再取消注释。
